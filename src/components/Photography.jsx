@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { photos } from "../data/content";
+import { urlFor } from "../sanityClient";
 import "./Photography.css";
 
 const INITIAL_SHOW = 3;
 
-export default function Photography() {
+export default function Photography({ photos = [] }) {
   const [showAll, setShowAll] = useState(false);
   const visible = showAll ? photos : photos.slice(0, INITIAL_SHOW);
 
@@ -22,14 +22,14 @@ export default function Photography() {
         <div className="photo-grid">
           {visible.map((p) => (
             <div
-              key={p.id}
+              key={p._id}
               className="polaroid photo-card"
-              style={{ transform: `rotate(${p.rotation}deg)` }}
+              style={{ transform: `rotate(${p.rotation || 0}deg)` }}
             >
-              <div className={`tape ${p.tape}`} />
+              <div className={`tape ${p.tape || "tape-r"}`} />
               <div className="polaroid-img">
-                {p.src
-                  ? <img src={p.src} alt={p.caption} />
+                {p.image
+                  ? <img src={urlFor(p.image).width(400).url()} alt={p.caption} />
                   : <div className="polaroid-placeholder"><span>[ photo ]</span></div>
                 }
               </div>
@@ -45,7 +45,6 @@ export default function Photography() {
             </button>
           </div>
         )}
-
         {showAll && (
           <div className="view-more-wrap">
             <button className="view-more-btn" onClick={() => setShowAll(false)}>

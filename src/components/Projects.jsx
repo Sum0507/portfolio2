@@ -1,9 +1,29 @@
-import { projects, skills } from "../data/content";
 import "./Projects.css";
 
-const chipColor = { frontend: "accent-r", backend: "accent-t", tools: "accent-y", art: "accent-p" };
+const chipColor = {
+  frontend: "accent-r",
+  backend: "accent-t",
+  tools: "accent-y",
+  art: "accent-p"
+};
 
-export default function Projects() {
+const skills = [
+  { label: "React.js",           group: "frontend" },
+  { label: "Node.js",            group: "backend"  },
+  { label: "Django",             group: "backend"  },
+  { label: "MongoDB",            group: "backend"  },
+  { label: "WebSocket",          group: "backend"  },
+  { label: "Express.js",         group: "backend"  },
+  { label: "Python",             group: "backend"  },
+  { label: "Git",                group: "tools"    },
+  { label: "Vercel",             group: "tools"    },
+  { label: "LaTeX",              group: "tools"    },
+  { label: "Street Photography", group: "art"      },
+  { label: "Digital Art",        group: "art"      },
+  { label: "Collage",            group: "art"      },
+];
+
+export default function Projects({ projects = [] }) {
   return (
     <section className="section projects-section" id="projects">
       <div className="section-inner">
@@ -14,7 +34,7 @@ export default function Projects() {
 
         <div className="projects-grid">
           {projects.map(p => (
-            <div className="project-card" key={p.id}>
+            <div className="project-card" key={p._id}>
               <span className="proj-year label">{p.year}</span>
               <h3 className="proj-title display">{p.title}</h3>
               <p className="proj-stack">{p.stack}</p>

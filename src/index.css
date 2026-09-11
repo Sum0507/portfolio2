@@ -207,3 +207,14 @@ img { max-width: 100%; display: block; }
 @media (max-width: 480px) {
   .section { padding: 40px 16px; }
 }
+
+.loading-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--ink-muted);
+}

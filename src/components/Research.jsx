@@ -1,7 +1,6 @@
-import { research } from "../data/content";
 import "./Research.css";
 
-export default function Research() {
+export default function Research({ research = [] }) {
   return (
     <section className="section" id="research">
       <div className="section-inner">
@@ -11,15 +10,15 @@ export default function Research() {
         </div>
         <div className="research-list">
           {research.map(r => (
-            <div key={r.id} className="research-card">
+            <div key={r._id} className="research-card">
               <div className="research-main">
-                <span className={`res-status status-${r.status.replace(" ", "-")}`}>{r.status}</span>
+                <span className={`res-status status-${r.status?.replace(" ", "-")}`}>{r.status}</span>
                 <h3 className="res-title serif">{r.title}</h3>
                 <p className="res-venue">{r.venue}</p>
                 {r.coauthors && <p className="res-authors">{r.coauthors}</p>}
               </div>
               <div className="res-meta">
-                {r.tags.map(t => <span key={t} className="res-tag">{t}</span>)}
+                {r.tags?.map(t => <span key={t} className="res-tag">{t}</span>)}
                 <span className="label res-year">{r.year}</span>
               </div>
             </div>
