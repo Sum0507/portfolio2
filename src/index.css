@@ -163,17 +163,22 @@ img { max-width: 100%; display: block; }
 }
 .polaroid-img {
   width: 100%;
-  aspect-ratio: 1/1;
+  height: 260px;
   overflow: hidden;
-  background: linear-gradient(135deg, #c8c0b4, #a89880);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.polaroid-img img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.1) contrast(1.05); }
-.polaroid-placeholder {
-  width: 100%; height: 100%;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 8px; padding: 16px; text-align: center;
+
+.polaroid-img img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  filter: sepia(0.1) contrast(1.05);
 }
+
 .polaroid-placeholder span { font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 1px; }
 .polaroid-placeholder small { font-size: 8px; color: rgba(255,255,255,0.3); line-height: 1.4; }
 .polaroid-caption {

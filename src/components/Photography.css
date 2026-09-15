@@ -14,7 +14,8 @@
   box-shadow: 4px 8px 28px rgba(0,0,0,0.14);
   z-index: 2;
 }
-.photo-card:nth-child(even) { margin-top: 24px; }
+.photo-card:nth-child(even) { margin-top: 40px; }
+.photo-card:nth-child(3n) { margin-top: 16px; }
 
 @media (max-width: 768px) {
   .photo-grid {
