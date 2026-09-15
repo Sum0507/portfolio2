@@ -68,7 +68,7 @@ export default function Hero({ siteData }) {
           </div>
 
           <div className="hero-stamp">
-            <p>UAP</p><p>CSE</p><p>2025</p>
+            <p>UAP</p><p>CSE</p><p>2026</p>
           </div>
         </div>
 
