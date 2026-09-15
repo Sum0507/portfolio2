@@ -35,7 +35,9 @@ export default function Contact({ siteData }) {
       </div>
 
       <footer className="footer">
+        {siteData.tagline && (
         <em className="serif footer-tagline">"{siteData.tagline}"</em>
+)}
         <p className="footer-credit">made with too much chai · {siteData.name} © 2025</p>
       </footer>
     </section>

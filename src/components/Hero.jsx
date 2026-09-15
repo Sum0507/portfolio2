@@ -39,7 +39,10 @@ export default function Hero({ siteData }) {
             </span>
           </div>
 
-          <p className="hero-tagline serif">"{siteData.tagline}"</p>
+          {siteData.tagline && (
+            <p className="hero-tagline serif">"{siteData.tagline}"</p>
+          )}
+
           <p className="hero-bio">{siteData.bio}</p>
 
           <div className="hero-btns">
