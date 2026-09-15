@@ -163,7 +163,7 @@ img { max-width: 100%; display: block; }
 }
 .polaroid-img {
   width: 100%;
-  aspect-ratio: 4/5;
+  aspect-ratio: 1/1;
   overflow: hidden;
   background: linear-gradient(135deg, #c8c0b4, #a89880);
 }
