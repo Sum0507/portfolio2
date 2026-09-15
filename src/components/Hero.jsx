@@ -34,7 +34,6 @@ export default function Hero({ siteData }) {
           </h1>
 
           <div className="hero-role-row">
-            <span className="hero-role-prefix">a </span>
             <span className={`hero-role ${fading ? "fade-out" : "fade-in"}`}>
               {roles[roleIndex]}
             </span>
