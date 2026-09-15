@@ -162,7 +162,7 @@
     align-items: flex-start;
     gap: 0;
   }
-  .hero-polaroid { width: 180px; }
+  .hero-polaroid { width: 160px; max-height: 280px; overflow: hidden; }
   .hero-stamp { display: none; }
   .scroll-hint { padding: 0 20px; }
 }
