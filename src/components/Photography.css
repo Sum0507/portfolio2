@@ -19,10 +19,13 @@
 
 @media (max-width: 768px) {
   .photo-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 340px;
+    margin: 0 auto;
   }
-  .photo-card:nth-child(even) { margin-top: 14px; }
+  .photo-card:nth-child(even) { margin-top: 0; }
+  .photo-card:nth-child(3n) { margin-top: 0; }
 }
 
 @media (max-width: 400px) {

@@ -152,21 +152,22 @@
 @media (max-width: 768px) {
   .hero-inner {
     flex-direction: column;
-    gap: 36px;
+    gap: 28px;
     align-items: flex-start;
   }
   .hero-visual {
     width: 100%;
     display: flex;
-    align-items: center;
-    gap: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
   }
-  .hero-polaroid { width: 150px; }
-  .hero-stamp { position: relative; bottom: auto; right: auto; transform: rotate(12deg); }
+  .hero-polaroid { width: 180px; }
+  .hero-stamp { display: none; }
   .scroll-hint { padding: 0 20px; }
 }
 
 @media (max-width: 480px) {
   .hero { padding-top: 80px; }
-  .hero-polaroid { width: 130px; }
+  .hero-polaroid { width: 160px; }
 }
