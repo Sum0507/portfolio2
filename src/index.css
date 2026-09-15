@@ -14,13 +14,13 @@
 /* ── Tokens ── */
 :root {
   --bg:      #f7af1256;
-  --bg-alt:  #D8BA98;
+  --bg-alt:  #fafafa6b;
   --ink:           #0F414A;
   --ink-soft:      #1A5560;
   --ink-muted:     rgba(15,65,74,0.75);
   --accent-r:      #7f0303;
   --accent-t:      #69d3f7;
-  --accent-p:      #D8BA98;
+  --accent-p:      #fafafa70;
   --accent-g:      #0F414A;
   --accent-y:      #FFCA26;
   --accent-o:      #FB6015;
