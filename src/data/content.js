@@ -6,7 +6,6 @@
 export const siteConfig = {
   name: "Sumaiya",
   fullName: "Jannatun Nur Sumaiya",
-  tagline: "To love and be loved.",
   bio: "Final-year CSE student at UAP. I build things on the web, photograph streets, make art when deadlines allow, and obsess over things that are both technical and beautiful.",
   email: "jsumaiya290@gmail.com",           // ← change this
   github: "https://github.com/yourusername",    // ← change this

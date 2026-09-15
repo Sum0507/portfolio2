@@ -13,20 +13,20 @@
 
 /* ── Tokens ── */
 :root {
-  --bg:            #D8C8B8;
-  --bg-alt:        #CBBAA8;
+  --bg:      #f7af1256;
+  --bg-alt:  #D8BA98;
   --ink:           #0F414A;
   --ink-soft:      #1A5560;
   --ink-muted:     rgba(15,65,74,0.75);
-  --accent-r:      #7F0303;
-  --accent-t:      #96C0CE;
+  --accent-r:      #7f0303;
+  --accent-t:      #69d3f7;
   --accent-p:      #D8BA98;
   --accent-g:      #0F414A;
   --accent-y:      #FFCA26;
   --accent-o:      #FB6015;
-  --card-bg:       rgba(255,252,248,0.88);
+  --card-bg:       rgba(255, 252, 248, 0.384);
   --card-border:   rgba(15,65,74,0.1);
-  --nav-bg:        rgba(239,232,223,0.88);
+  --nav-bg:        rgba(255, 252, 248, 0.384);
   --nav-border:    rgba(15,65,74,0.08);
 
   --blob1: radial-gradient(ellipse, rgba(127,3,3,0.12) 0%, transparent 70%);
