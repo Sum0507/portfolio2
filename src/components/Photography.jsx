@@ -6,6 +6,7 @@ const INITIAL_SHOW = 3;
 
 export default function Photography({ photos = [] }) {
   const [showAll, setShowAll] = useState(false);
+  const [lightbox, setLightbox] = useState(null);
   const visible = showAll ? photos : photos.slice(0, INITIAL_SHOW);
 
   return (
@@ -25,11 +26,12 @@ export default function Photography({ photos = [] }) {
               key={p._id}
               className="polaroid photo-card"
               style={{ transform: `rotate(${p.rotation || 0}deg)` }}
+              onClick={() => setLightbox(p)}
             >
               <div className={`tape ${p.tape || "tape-r"}`} />
               <div className="polaroid-img">
                 {p.image
-                  ? <img src={urlFor(p.image).width(400).url()} alt={p.caption} />
+                  ? <img src={urlFor(p.image).width(600).url()} alt={p.caption} />
                   : <div className="polaroid-placeholder"><span>[ photo ]</span></div>
                 }
               </div>
@@ -53,6 +55,17 @@ export default function Photography({ photos = [] }) {
           </div>
         )}
       </div>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div className="lightbox" onClick={() => setLightbox(null)}>
+          <button className="lightbox-close" onClick={() => setLightbox(null)}>✕</button>
+          <div className="lightbox-content" onClick={e => e.stopPropagation()}>
+            <img src={urlFor(lightbox.image).width(1200).url()} alt={lightbox.caption} />
+            <p className="lightbox-caption">{lightbox.caption}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

@@ -12,7 +12,7 @@ export default function Navbar({ theme, toggleTheme }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const links = ["about", "projects", "skills", "research",  "photography", "art", "contact"];
+ const links = ["about", "projects", "skills", "research", "photography", "art", "contact"];
 
   return (
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>

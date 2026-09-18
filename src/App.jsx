@@ -9,8 +9,15 @@ import Projects from "./components/Projects";
 import Research from "./components/Research";
 import Contact from "./components/Contact";
 import Admin from "./pages/Admin";
+import NotFound from "./pages/NotFound";
 
-function Home({ theme, toggleTheme, siteData, photos, artworks, projects, research }) {
+function Home({ theme, toggleTheme, siteData, photos, artworks, projects, research, loading }) {
+  if (loading) return (
+    <div className="loading-screen">
+      <p>loading...</p>
+    </div>
+  );
+
   return (
     <>
       <div className="wc-canvas" aria-hidden="true">
@@ -68,12 +75,6 @@ export default function App() {
     setTheme(t => t === "light" ? "dark" : "light");
   }
 
-  if (loading) return (
-    <div className="loading-screen">
-      <p>loading...</p>
-    </div>
-  );
-
   return (
     <BrowserRouter>
       <Routes>
@@ -86,9 +87,11 @@ export default function App() {
             artworks={artworks}
             projects={projects}
             research={research}
+            loading={loading}
           />
         } />
         <Route path="/admin" element={<Admin />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
