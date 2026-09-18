@@ -29,8 +29,8 @@ export default function Contact({ siteData }) {
 
       <div className="contact-ribbon">
         <span>
-          ✦ sumaiya nur · dhaka · 2025 ✦ engineer · artist · photographer ✦
-          sumaiya nur · dhaka · 2025 ✦ engineer · artist · photographer ✦&nbsp;
+          ✦ Jannatun nur · dhaka · 2025 ✦ engineer · artist · photographer ✦
+          Jannatun nur · dhaka · 2025 ✦ engineer · artist · photographer ✦&nbsp;
         </span>
       </div>
 
