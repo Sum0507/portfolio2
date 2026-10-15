@@ -28,10 +28,10 @@ export default function Hero({ siteData }) {
         <div className="hero-text">
           <p className="label hero-eyebrow">est. 2001 · {siteData.location}</p>
 
-          <h1 className="hero-name display">
-            <span className="hero-name-first">{siteData.name}</span>
-            <span className="hero-name-last">Nur<span className="hero-dot">.</span></span>
-          </h1>
+    <h1 className="hero-name display">
+      <span className="hero-name-first">{siteData.name}</span>
+      <span className="hero-name-last">{siteData.fullName?.split(" ").slice(-1)[0]}<span className="hero-dot">.</span></span>
+    </h1>
 
           <div className="hero-role-row">
             <span className={`hero-role ${fading ? "fade-out" : "fade-in"}`}>
