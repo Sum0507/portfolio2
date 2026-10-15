@@ -3,14 +3,26 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 120px 60px 80px;
+  justify-content: flex-end;
+  padding: 120px 60px 100px;
   overflow: hidden;
+}
+
+.hero-full::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  z-index: 3;
+  pointer-events: none;
 }
 
 /* Background image — b&w by default, colour on scroll */
 .hero-bg {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-size: cover;
   background-position: center;
@@ -50,7 +62,7 @@
 }
 
 .hero-typed {
-  font-size: clamp(48px, 7vw, 96px);
+  font-size: clamp(32px, 5vw, 64px);
   color: #fff;
   line-height: 1;
   margin-bottom: 24px;

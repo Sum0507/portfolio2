@@ -56,7 +56,7 @@ export default function App() {
 
   useEffect(() => {
     Promise.all([
-      client.fetch(`*[_type == "siteConfig"][0]`),
+      client.fetch(`*[_type == "siteConfig"][0]{ ..., heroImage{ asset->{ url } }, photo{ asset->{ url } } }`),
       client.fetch(`*[_type == "photo"] | order(order asc)`),
       client.fetch(`*[_type == "artwork"] | order(order asc)`),
       client.fetch(`*[_type == "project"] | order(order asc)`),
