@@ -179,7 +179,13 @@ img { max-width: 100%; display: block; }
   width: 100%;
   height: auto;
   display: block;
-  filter: sepia(0.1) contrast(1.05);
+  filter: grayscale(1) contrast(1.05);
+  transition: filter 0.4s ease;
+}
+
+.photo-card:hover .polaroid-img img,
+.photo-card:active .polaroid-img img {
+  filter: grayscale(0) contrast(1.05);
 }
 
 .polaroid-placeholder {

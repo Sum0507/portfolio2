@@ -1,83 +1,93 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { urlFor } from "../sanityClient";
 import "./Hero.css";
 
+const TYPED_WORDS = ["I'm Sumaiya.", "CSE student.", "Photographer.", "Artist.", "Dreamer."];
+
 export default function Hero({ siteData }) {
   const [roleIndex, setRoleIndex] = useState(0);
-  const [fading, setFading] = useState(false);
+  const [displayed, setDisplayed] = useState("");
+  const [deleting, setDeleting] = useState(false);
+  const [coloured, setColoured] = useState(false);
+  const heroRef = useRef(null);
 
-  const roles = siteData?.roles || ["engineer", "artist", "photographer"];
-
+  // Typing animation
   useEffect(() => {
-    const interval = setInterval(() => {
-      setFading(true);
-      setTimeout(() => {
-        setRoleIndex(i => (i + 1) % roles.length);
-        setFading(false);
-      }, 380);
-    }, 2400);
-    return () => clearInterval(interval);
-  }, [roles.length]);
+    const current = TYPED_WORDS[roleIndex];
+    let timeout;
+
+    if (!deleting && displayed.length < current.length) {
+      timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 80);
+    } else if (!deleting && displayed.length === current.length) {
+      timeout = setTimeout(() => setDeleting(true), 1800);
+    } else if (deleting && displayed.length > 0) {
+      timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 40);
+    } else if (deleting && displayed.length === 0) {
+      setDeleting(false);
+      setRoleIndex(i => (i + 1) % TYPED_WORDS.length);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayed, deleting, roleIndex]);
+
+  // Colour on scroll
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.scrollY > 80) setColoured(true);
+      else setColoured(false);
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   if (!siteData) return null;
 
+  const heroBg = siteData.heroImage
+    ? urlFor(siteData.heroImage).width(1600).url()
+    : null;
+
   return (
-    <section className="hero section" id="about">
-      <div className="section-inner hero-inner">
+    <section
+      className={`hero-full ${coloured ? "coloured" : ""}`}
+      id="about"
+      ref={heroRef}
+    >
+      {/* Background image */}
+      {heroBg && (
+        <div
+          className="hero-bg"
+          style={{ backgroundImage: `url(${heroBg})` }}
+        />
+      )}
 
-        <div className="hero-text">
-          <p className="label hero-eyebrow">est. 2001 · {siteData.location}</p>
+      {/* Overlay */}
+      <div className="hero-overlay" />
 
-    <h1 className="hero-name display">
-      <span className="hero-name-first">{siteData.name}</span>
-      <span className="hero-name-last">{siteData.fullName?.split(" ").slice(-1)[0]}<span className="hero-dot">.</span></span>
-    </h1>
+      {/* Content */}
+      <div className="hero-content">
+        <p className="hero-eyebrow label">est. 2001 · {siteData.location}</p>
 
-          <div className="hero-role-row">
-            <span className={`hero-role ${fading ? "fade-out" : "fade-in"}`}>
-              {roles[roleIndex]}
-            </span>
-          </div>
+        <h1 className="hero-typed display">
+          {displayed}
+          <span className="cursor">|</span>
+        </h1>
 
-          {siteData.tagline && (
-            <p className="hero-tagline serif">"{siteData.tagline}"</p>
-          )}
+        {siteData.tagline && (
+          <p className="hero-tagline serif">"{siteData.tagline}"</p>
+        )}
 
-          <p className="hero-bio">{siteData.bio}</p>
+        <p className="hero-bio">{siteData.bio}</p>
 
-          <div className="hero-btns">
-            <a href="#projects" className="btn btn-primary">see my work</a>
-            <a href={siteData.cvUrl || "#"} target="_blank" rel="noreferrer" className="btn btn-secondary">
-              download cv
-            </a>
-          </div>
+        <div className="hero-btns">
+          <a href="#projects" className="btn btn-primary">see my work</a>
+          <a href={siteData.cvUrl || "#"} target="_blank" rel="noreferrer" className="btn btn-secondary">
+            download cv
+          </a>
         </div>
-
-        <div className="hero-visual">
-          <div className="hero-polaroid polaroid">
-            <div className="tape tape-r" />
-            <div className="polaroid-img">
-              {siteData.photo
-                ? <img src={urlFor(siteData.photo).width(400).url()} alt={siteData.name} />
-                : (
-                  <div className="polaroid-placeholder">
-                    <span>your photo</span>
-                    <small>add in Sanity Studio → Site Config</small>
-                  </div>
-                )
-              }
-            </div>
-            <p className="polaroid-caption">that's me!</p>
-          </div>
-
-          <div className="hero-stamp">
-            <p>UAP</p><p>CSE</p><p>2026</p>
-          </div>
-        </div>
-
       </div>
 
-      <div className="scroll-hint">
+      {/* Scroll hint */}
+      <div className="hero-scroll-hint">
         <span>scroll</span>
         <div className="scroll-line" />
       </div>
