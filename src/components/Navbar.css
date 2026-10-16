@@ -17,14 +17,20 @@
   padding: 12px 48px;
 }
 
+/* ── Logo ── */
 .nav-logo {
   font-family: var(--font-display);
   font-size: 24px;
-  color: var(--ink);
   font-weight: 700;
   letter-spacing: -0.5px;
+  color: #ffffff;
+  transition: color 0.3s;
+}
+.navbar.scrolled .nav-logo {
+  color: var(--ink);
 }
 
+/* ── Links ── */
 .nav-links {
   display: flex;
   gap: 28px;
@@ -36,22 +42,31 @@
   font-family: var(--font-body);
   font-size: 11px;
   letter-spacing: 2px;
-  color: var(--ink-muted);
   text-transform: lowercase;
-  transition: color 0.2s;
+  color: rgba(255,255,255,0.75);
+  transition: color 0.3s;
+}
+.navbar.scrolled .nav-links a {
+  color: var(--ink-muted);
 }
 
-.nav-links a:hover { color: var(--accent-r); }
+.nav-links a:hover { color: var(--accent-y) !important; }
 
+/* ── CV button ── */
 .nav-cv {
-  color: var(--accent-t) !important;
-  border: 1px solid var(--accent-t);
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.6);
   padding: 4px 12px;
   border-radius: 2px;
-  transition: background 0.2s !important;
+  transition: background 0.2s, border-color 0.3s, color 0.3s !important;
 }
-.nav-cv:hover { background: rgba(90,155,136,0.12) !important; }
+.navbar.scrolled .nav-cv {
+  color: var(--accent-t) !important;
+  border-color: var(--accent-t);
+}
+.nav-cv:hover { background: rgba(255,255,255,0.12) !important; }
 
+/* ── Theme toggle ── */
 .nav-right {
   display: flex;
   align-items: center;
@@ -60,8 +75,8 @@
 
 .theme-toggle {
   background: none;
-  border: 1px solid var(--card-border);
-  color: var(--ink);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #ffffff;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -70,13 +85,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, border-color 0.3s, color 0.3s;
+}
+.navbar.scrolled .theme-toggle {
+  border-color: var(--card-border);
+  color: var(--ink);
 }
 .theme-toggle:hover {
-  background: var(--card-bg);
+  background: rgba(255,255,255,0.12);
   border-color: var(--accent-y);
 }
 
+/* ── Burger ── */
 .nav-burger {
   display: none;
   flex-direction: column;
@@ -90,11 +110,15 @@
   display: block;
   width: 22px;
   height: 2px;
-  background: var(--ink);
+  background: #ffffff;
   border-radius: 1px;
-  transition: background 0.2s;
+  transition: background 0.3s;
+}
+.navbar.scrolled .nav-burger span {
+  background: var(--ink);
 }
 
+/* ── Mobile ── */
 @media (max-width: 768px) {
   .navbar { padding: 14px 20px; }
   .navbar.scrolled { padding: 12px 20px; }
@@ -113,4 +137,5 @@
     border-bottom: 1px solid var(--nav-border);
   }
   .nav-links.open { display: flex; }
+  .nav-links.open a { color: var(--ink-muted); }
 }

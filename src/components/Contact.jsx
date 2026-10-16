@@ -9,7 +9,7 @@ export default function Contact({ siteData }) {
         <p className="label">— say hello</p>
         <h2 className="contact-title display">let's talk</h2>
         <p className="contact-sub serif">
-          "For collaborations, opportunities, or just a conversation."
+          "For opportunities or just a conversation."
         </p>
         <a href={`mailto:${siteData.email}`} className="contact-email">
           {siteData.email}
@@ -29,8 +29,8 @@ export default function Contact({ siteData }) {
 
       <div className="contact-ribbon">
         <span>
-          ✦ Jannatun nur · dhaka · 2025 ✦ engineer · artist · photographer ✦
-          Jannatun nur · dhaka · 2025 ✦ engineer · artist · photographer ✦&nbsp;
+          ✦ Jannatun Nur · dhaka · 2026 ✦ engineer · artist · photographer ✦
+          Jannatun Nur · dhaka · 2026 ✦ engineer · artist · photographer ✦&nbsp;
         </span>
       </div>
 
@@ -38,7 +38,7 @@ export default function Contact({ siteData }) {
         {siteData.tagline && (
         <em className="serif footer-tagline">"{siteData.tagline}"</em>
 )}
-        <p className="footer-credit">made with too much chai · {siteData.name} © 2025</p>
+        <p className="footer-credit">made with too much coffee · {siteData.name} © 2026</p>
       </footer>
     </section>
   );

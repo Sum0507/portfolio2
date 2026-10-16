@@ -11,7 +11,7 @@ import Contact from "./components/Contact";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
-function Home({ theme, toggleTheme, siteData, photos, artworks, projects, research, loading }) {
+function Home({ siteData, photos, artworks, projects, research, loading }) {
   if (loading) return (
     <div className="loading-screen">
       <p>loading...</p>
@@ -28,7 +28,7 @@ function Home({ theme, toggleTheme, siteData, photos, artworks, projects, resear
         <div className="wc-blob wc-blob-5" />
       </div>
       <div className="page-content">
-        <Navbar theme={theme} toggleTheme={toggleTheme} siteData={siteData} />
+        <Navbar siteData={siteData} />
         <Hero siteData={siteData} />
         <Projects projects={projects} />
         <Research research={research} />
@@ -41,18 +41,12 @@ function Home({ theme, toggleTheme, siteData, photos, artworks, projects, resear
 }
 
 export default function App() {
-  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
   const [siteData, setSiteData] = useState(null);
   const [photos, setPhotos] = useState([]);
   const [artworks, setArtworks] = useState([]);
   const [projects, setProjects] = useState([]);
   const [research, setResearch] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
 
   useEffect(() => {
     Promise.all([
@@ -71,17 +65,11 @@ export default function App() {
     });
   }, []);
 
-  function toggleTheme() {
-    setTheme(t => t === "light" ? "dark" : "light");
-  }
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={
           <Home
-            theme={theme}
-            toggleTheme={toggleTheme}
             siteData={siteData}
             photos={photos}
             artworks={artworks}

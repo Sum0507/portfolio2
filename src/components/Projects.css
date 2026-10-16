@@ -1,3 +1,7 @@
+.projects-section {
+  background: linear-gradient(to bottom, transparent 0%, var(--bg) 180px);
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

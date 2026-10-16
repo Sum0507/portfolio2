@@ -5,38 +5,18 @@
   flex-direction: column;
   justify-content: flex-end;
   padding: 120px 60px 100px;
-  overflow: hidden;
 }
 
-.hero-full::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 180px;
-  background: linear-gradient(to bottom, transparent, var(--bg));
-  z-index: 3;
-  pointer-events: none;
-}
 
-/* Background image — b&w by default, colour on scroll */
 .hero-bg {
   position: fixed;
   inset: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: grayscale(1) brightness(0.45);
-  transition: filter 1.2s ease;
   z-index: 0;
 }
 
-.hero-full.coloured .hero-bg {
-  filter: grayscale(0) brightness(0.55);
-}
-
-/* Dark overlay */
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -44,15 +24,14 @@
     to bottom,
     rgba(0,0,0,0.3) 0%,
     rgba(0,0,0,0.15) 50%,
-    rgba(0,0,0,0.6) 100%
+    transparent 100%
   );
   z-index: 1;
 }
 
-/* Content */
 .hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   max-width: 700px;
 }
 
@@ -101,7 +80,6 @@
   flex-wrap: wrap;
 }
 
-/* Scroll hint */
 .hero-scroll-hint {
   position: absolute;
   bottom: 36px;
@@ -109,7 +87,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  z-index: 2;
+  z-index: 3;
 }
 
 .hero-scroll-hint span {
@@ -139,8 +117,17 @@
 
 @keyframes slide { to { left: 100%; } }
 
-/* Responsive */
 @media (max-width: 768px) {
   .hero-full { padding: 100px 24px 60px; }
   .hero-scroll-hint { left: 24px; }
+}
+
+.hero-btns .btn-secondary {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.7);
+}
+.hero-btns .btn-secondary:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: #ffffff;
 }
