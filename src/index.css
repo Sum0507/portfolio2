@@ -1,7 +1,5 @@
 /* ============================================================
    SUMAIYA PORTFOLIO — GLOBAL STYLES
-   Light mode: alabaster base
-   Dark mode: deep midnight base
    ============================================================ */
 @font-face {
   font-family: 'Zolla';
@@ -13,8 +11,8 @@
 
 /* ── Tokens ── */
 :root {
-  --bg:            #F5E6C8;
-  --bg-alt:        #EDD9B0;
+  --bg:            #f7af1256;
+  --bg-alt:        #fafafa6b;
   --ink:           #0F414A;
   --ink-soft:      #1A5560;
   --ink-muted:     rgba(15,65,74,0.75);
@@ -24,10 +22,10 @@
   --accent-g:      #0F414A;
   --accent-y:      #FFCA26;
   --accent-o:      #FB6015;
-  --card-bg:       rgba(255,252,248,0.95);
+  --card-bg:       rgba(255,252,248,0.384);
   --card-border:   rgba(15,65,74,0.1);
-  --nav-bg:        rgba(245,230,200,0.95);
-  --nav-border:    rgba(15,65,74,0.12);
+  --nav-bg:        rgba(255,252,248,0.384);
+  --nav-border:    rgba(15,65,74,0.08);
 
   --blob1: radial-gradient(ellipse, rgba(127,3,3,0.12) 0%, transparent 70%);
   --blob2: radial-gradient(ellipse, rgba(150,192,206,0.22) 0%, transparent 70%);
@@ -41,8 +39,6 @@
   --font-stitch:  'Courier Prime', monospace;
   --transition: 0.3s ease;
 }
-
-
 
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -146,13 +142,11 @@ img { max-width: 100%; display: block; }
   position: relative;
   box-shadow: 2px 4px 16px rgba(0,0,0,0.10);
 }
-
 .polaroid-img {
   width: 100%;
   overflow: hidden;
   background: #ffffff;
 }
-
 .polaroid-img img {
   width: 100%;
   height: auto;
@@ -160,12 +154,10 @@ img { max-width: 100%; display: block; }
   filter: grayscale(1) contrast(1.05);
   transition: filter 0.4s ease;
 }
-
 .photo-card:hover .polaroid-img img,
 .photo-card:active .polaroid-img img {
   filter: grayscale(0) contrast(1.05);
 }
-
 .polaroid-placeholder {
   width: 100%;
   padding: 40px 16px;
@@ -178,7 +170,6 @@ img { max-width: 100%; display: block; }
 }
 .polaroid-placeholder span { font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 1px; }
 .polaroid-placeholder small { font-size: 8px; color: rgba(255,255,255,0.3); line-height: 1.4; }
-
 .polaroid-caption {
   font-family: var(--font-display);
   font-size: 16px;
@@ -223,8 +214,4 @@ img { max-width: 100%; display: block; }
   font-size: 12px;
   letter-spacing: 3px;
   color: var(--ink-muted);
-}
-
-.section {
-  background: var(--bg);
 }

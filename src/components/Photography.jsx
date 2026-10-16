@@ -2,7 +2,7 @@ import { useState } from "react";
 import { urlFor } from "../sanityClient";
 import "./Photography.css";
 
-const INITIAL_SHOW = 3;
+const INITIAL_SHOW = 5;
 
 export default function Photography({ photos = [] }) {
   const [showAll, setShowAll] = useState(false);
@@ -56,7 +56,6 @@ export default function Photography({ photos = [] }) {
         )}
       </div>
 
-      {/* Lightbox */}
       {lightbox && (
         <div className="lightbox" onClick={() => setLightbox(null)}>
           <button className="lightbox-close" onClick={() => setLightbox(null)}>✕</button>
