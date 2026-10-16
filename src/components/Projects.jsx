@@ -30,6 +30,7 @@ export default function Projects({ projects = [] }) {
         <div className="section-header">
           <p className="label">— cse stuff</p>
           <h2 className="section-title">things i built</h2>
+          <p className="section-sub">A mix of web apps, games, and research tools — built to learn, ship, and sometimes win hackathons.</p>
         </div>
 
         <div className="projects-grid">

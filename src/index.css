@@ -224,3 +224,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: 3px;
   color: var(--ink-muted);
 }
+
+.section {
+  background: var(--bg);
+}
