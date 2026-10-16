@@ -8,6 +8,7 @@ import Art from "./components/Art";
 import Projects from "./components/Projects";
 import Research from "./components/Research";
 import Contact from "./components/Contact";
+import Cursor from "./components/Cursor";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -20,6 +21,7 @@ function Home({ siteData, photos, artworks, projects, research, loading }) {
 
   return (
     <>
+      <Cursor />
       <div className="wc-canvas" aria-hidden="true">
         <div className="wc-blob wc-blob-1" />
         <div className="wc-blob wc-blob-2" />
