@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { client } from "./sanityClient";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import Skills from "./components/Skills";
 import Photography from "./components/Photography";
 import Art from "./components/Art";
 import Projects from "./components/Projects";
@@ -32,6 +33,7 @@ function Home({ siteData, photos, artworks, projects, research, loading }) {
       <div className="page-content">
         <Navbar siteData={siteData} />
         <Hero siteData={siteData} />
+        <Skills siteData={siteData} />
         <Projects projects={projects} />
         <Research research={research} />
         <Photography photos={photos} />

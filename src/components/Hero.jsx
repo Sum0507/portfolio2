@@ -2,6 +2,48 @@ import { useState, useEffect, useRef } from "react";
 import { urlFor } from "../sanityClient";
 import "./Hero.css";
 
+function MagneticBtn({ href, className, children, target, rel }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const onEnter = () => {
+      el.style.transition = "transform 0.1s ease";
+    };
+
+    const onMove = (e) => {
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      el.style.transform = `translate(${dx * 0.35}px, ${dy * 0.35}px)`;
+    };
+
+    const onLeave = () => {
+      el.style.transition = "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+      el.style.transform = "translate(0, 0)";
+    };
+
+    el.addEventListener("mouseenter", onEnter);
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
+    return () => {
+      el.removeEventListener("mouseenter", onEnter);
+      el.removeEventListener("mousemove", onMove);
+      el.removeEventListener("mouseleave", onLeave);
+    };
+  }, []);
+
+  return (
+    <a ref={ref} href={href} className={className} target={target} rel={rel}>
+      {children}
+    </a>
+  );
+}
+
 export default function Hero({ siteData }) {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayed, setDisplayed] = useState("");
@@ -81,13 +123,23 @@ export default function Hero({ siteData }) {
           {siteData.bio}
         </p>
         <div className="hero-btns hero-anim" style={{ transitionDelay: "0.7s" }}>
-          <a href="#projects" className="btn btn-primary">see my work</a>
-          <a href={siteData.cvUrl || "#"} target="_blank" rel="noreferrer" className="btn btn-secondary">
+          <MagneticBtn href="#projects" className="btn btn-primary">
+            see my work
+          </MagneticBtn>
+          <MagneticBtn
+            href={siteData.cvUrl || "#"}
+            className="btn btn-secondary"
+            target="_blank"
+            rel="noreferrer"
+          >
             download cv
-          </a>
+          </MagneticBtn>
         </div>
       </div>
-      <div className={`hero-scroll-hint hero-anim ${loaded ? "hero-content--visible" : ""}`} style={{ transitionDelay: "0.9s" }}>
+      <div
+        className={`hero-scroll-hint hero-anim ${loaded ? "hero-content--visible" : ""}`}
+        style={{ transitionDelay: "0.9s" }}
+      >
         <span>scroll</span>
         <div className="scroll-line" />
       </div>
