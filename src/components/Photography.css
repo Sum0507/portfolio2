@@ -107,10 +107,24 @@
 }
 .lightbox-close:hover { opacity: 1; }
 
-.section-header {
-  background: rgba(245, 230, 200, 0.75);
-  backdrop-filter: blur(4px);
+.section-header{
+  background: rgba(245, 230, 200, 0);
+  backdrop-filter: blur(0px);
   padding: 20px 24px;
   border-radius: 4px;
   margin-bottom: 40px;
+}
+
+.section-label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 8px;
+  
+}
+
+.section-heading.display{
+  color: #fff  !important;
 }

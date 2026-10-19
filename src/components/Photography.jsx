@@ -2,7 +2,7 @@ import { useState } from "react";
 import { urlFor } from "../sanityClient";
 import "./Photography.css";
 
-const INITIAL_SHOW = 5;
+const INITIAL_SHOW = 3;
 
 export default function Photography({ photos = [] }) {
   const [showAll, setShowAll] = useState(false);
@@ -13,11 +13,8 @@ export default function Photography({ photos = [] }) {
     <section className="section photo-section" id="photography">
       <div className="section-inner">
         <div className="section-header">
-          <p className="label">— street photography</p>
-          <h2 className="section-title">through the lens</h2>
-          <p className="section-sub">
-            Mostly Dhaka. Mostly streets. Mostly what catches the eye before the moment disappears.
-          </p>
+          <p className="section-label">— street photography</p>
+          <h2 className="section-heading display">through the lens</h2>
         </div>
 
         <div className="photo-grid">

@@ -1,3 +1,25 @@
+.proj-header {
+  background: rgba(245, 230, 200, 0);
+  backdrop-filter: blur(0px);
+  padding: 20px 24px;
+  border-radius: 4px;
+  margin-bottom: 40px;
+}
+
+.proj-label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 8px;
+  
+}
+
+.proj-heading.display {
+  color: #fff  !important;
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -28,37 +50,6 @@
 .proj-link { font-size: 11px; letter-spacing: 2px; color: var(--accent-t); transition: color 0.2s; }
 .proj-link:hover { color: var(--accent-r); }
 
-/* Skills */
-.skills-wrap { padding-top: 40px; border-top: 1px solid var(--card-border); }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip {
-  font-family: var(--font-body);
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  padding: 5px 14px;
-  border: 1px solid;
-  border-radius: 20px;
-  transition: background 0.2s;
-}
-
-.chip-accent-r { background: var(--accent-r); color: #fff; border-color: var(--accent-r); }
-.chip-accent-t { background: #3A7A8E; color: #fff; border-color: #3A7A8E; }
-.chip-accent-y { background: #C4940A; color: #fff; border-color: #C4940A; }
-.chip-accent-p { background: #0F414A; color: #fff; border-color: #0F414A; }
-
-.chip-accent-r:hover { background: #5A0202; border-color: #5A0202; }
-.chip-accent-t:hover { background: #2A5A6E; border-color: #2A5A6E; }
-.chip-accent-y:hover { background: #A07808; border-color: #A07808; }
-.chip-accent-p:hover { background: #071F26; border-color: #071F26; }
-
 @media (max-width: 768px) {
   .projects-grid { grid-template-columns: 1fr; }
-}
-
-.section-header {
-  background: rgba(245, 245, 244, 0.75);
-  backdrop-filter: blur(4px);
-  padding: 20px 24px;
-  border-radius: 4px;
-  margin-bottom: 40px;
 }

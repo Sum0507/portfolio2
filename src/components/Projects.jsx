@@ -1,36 +1,12 @@
 import "./Projects.css";
 
-const chipColor = {
-  frontend: "accent-r",
-  backend: "accent-t",
-  tools: "accent-y",
-  art: "accent-p"
-};
-
-const skills = [
-  { label: "React.js",           group: "frontend" },
-  { label: "Node.js",            group: "backend"  },
-  { label: "Django",             group: "backend"  },
-  { label: "MongoDB",            group: "backend"  },
-  { label: "WebSocket",          group: "backend"  },
-  { label: "Express.js",         group: "backend"  },
-  { label: "Python",             group: "backend"  },
-  { label: "Git",                group: "tools"    },
-  { label: "Vercel",             group: "tools"    },
-  { label: "LaTeX",              group: "tools"    },
-  { label: "Street Photography", group: "art"      },
-  { label: "Digital Art",        group: "art"      },
-  { label: "Collage",            group: "art"      },
-];
-
 export default function Projects({ projects = [] }) {
   return (
     <section className="section projects-section" id="projects">
       <div className="section-inner">
-        <div className="section-header">
-          <p className="label">— cse stuff</p>
-          <h2 className="section-title">things i built</h2>
-          <p className="section-sub">A mix of web apps, games, and research tools — built to learn, ship, and sometimes win hackathons.</p>
+        <div className="proj-header">
+          <p className="proj-label">— cse stuff</p>
+          <h2 className="proj-heading display">things i built</h2>
         </div>
 
         <div className="projects-grid">
@@ -47,15 +23,6 @@ export default function Projects({ projects = [] }) {
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="skills-wrap" id="skills">
-          <p className="label" style={{ marginBottom: 16 }}>— skills & tools</p>
-          <div className="chips">
-            {skills.map((s, i) => (
-              <span key={i} className={`chip chip-${chipColor[s.group]}`}>{s.label}</span>
-            ))}
-          </div>
         </div>
       </div>
     </section>

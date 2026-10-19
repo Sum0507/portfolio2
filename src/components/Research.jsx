@@ -5,8 +5,8 @@ export default function Research({ research = [] }) {
     <section className="section" id="research">
       <div className="section-inner">
         <div className="section-header">
-          <p className="label">— academic work</p>
-          <h2 className="section-title">research</h2>
+          <p className="section-label">— academic work</p>
+          <h2 className="section-heading display">research</h2>
         </div>
         <div className="research-list">
           {research.map(r => (

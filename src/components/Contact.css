@@ -1,17 +1,31 @@
 .contact-section { padding-bottom: 0; }
 
-.contact-inner {
+
+.contact-header{
   text-align: center;
   max-width: 560px;
   margin: 0 auto;
   padding: 40px;
   padding-bottom: 64px;
-  background: rgba(245, 230, 200, 0.75);
+  background: rgba(245, 230, 200, 0.5);
   backdrop-filter: blur(4px);
   border-radius: 4px;
   margin-top: 0;
 }
 
+.contact-label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 8px;
+  
+}
+
+.contact-heading.display{
+  color: #fff  !important;
+}
 .contact-title {
   font-size: clamp(52px, 8vw, 92px);
   color: var(--ink);
@@ -19,7 +33,7 @@
   margin: 10px 0 18px;
 }
 
-.contact-sub { font-size: 15px; color: var(--ink-muted); margin-bottom: 32px; }
+.contact-sub { font-size: 15px; color: #fff; margin-bottom: 32px; }
 
 .contact-email {
   display: inline-block;

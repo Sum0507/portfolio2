@@ -6,11 +6,11 @@ export default function Contact({ siteData }) {
   return (
     <section className="section contact-section" id="contact">
       <div className="section-inner">
-        <div className="contact-inner">
-          <p className="label">— let's connect</p>
-          <h2 className="contact-title display">say hello.</h2>
+        <div className="contact-header">
+          <p className="contact-label">— let's connect</p>
+          <h2 className="contact-heading display">say hello.</h2>
           <p className="contact-sub serif">
-            "Whether it's a project, a collab, or just a chat — I'm usually down."
+            "Whether it's a project, a collab, or just a chat ........... I'm down."
           </p>
           <a href={`mailto:${siteData.email}`} className="contact-email">
             {siteData.email}

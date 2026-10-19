@@ -12,11 +12,8 @@ export default function Art({ artworks = [] }) {
     <section className="section art-section" id="art">
       <div className="section-inner">
         <div className="section-header">
-          <p className="label">— artbook</p>
-          <h2 className="section-title">from the pages</h2>
-          <p className="section-sub">
-            Sketches, collages, digital things. Artsy without too many skills — and that's exactly the point.
-          </p>
+          <p className="section-label">— artbook</p>
+          <h2 className="section-heading display">from the pages</h2>
         </div>
 
         <div className="art-grid">
