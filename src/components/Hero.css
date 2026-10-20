@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: flex-end;
   padding: 120px 60px 100px;
+  overflow: hidden;
 }
 
 .hero-bg {

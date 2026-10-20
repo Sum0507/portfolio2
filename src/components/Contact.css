@@ -1,4 +1,8 @@
-.contact-section { padding-bottom: 0; }
+.contact-section { 
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
 
 .contact-header {
   text-align: center;
@@ -46,12 +50,12 @@
 
 /* Ribbon */
 .contact-ribbon {
-  background: var(--bg);
   padding: 9px 0;
   overflow: hidden;
   white-space: nowrap;
-  border-top: 1px solid var(--card-border);
-  border-bottom: 1px solid var(--card-border);
+  border-top: 1px solid rgba(255,255,255,0.12);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  margin-top: 48px;
 }
 .contact-ribbon span {
   color: #fff6e5;
@@ -60,6 +64,7 @@
   font-size: 9px;
   letter-spacing: 3px;
   animation: ribbonScroll 20s linear infinite;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.7);
 }
 @keyframes ribbonScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
@@ -71,10 +76,23 @@
   padding: 20px 48px;
   flex-wrap: wrap;
   gap: 10px;
+  margin-bottom: 80px;
 }
 
-.footer-tagline { font-size: 13px; color: #faf2e1; opacity: 0.85; }
-.footer-credit { font-family: var(--font-body); font-size: 10px; letter-spacing: 1px; color: #f0e8d8; opacity: 0.65; }
+.footer-tagline {
+  font-size: 13px;
+  color: #faf2e1;
+  opacity: 0.85;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.9);
+}
+.footer-credit {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #f0e8d8;
+  opacity: 0.65;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.9);
+}
 
 @media (max-width: 480px) {
   .footer { padding: 18px 20px; flex-direction: column; text-align: center; }

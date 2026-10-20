@@ -1,14 +1,14 @@
 .back-to-top {
   position: fixed;
-  bottom: 32px;
+  bottom: 32px;  /* ছিল 100px */
   right: 32px;
-  z-index: 200;
+  z-index: 9999;
   width: 44px;
   height: 52px;
-  background: #ffe29285;
+  background: #ffe292cc;
   border: none;
   border-radius: 2px;
-  color: #222222cc;
+  color: #222;
   font-size: 16px;
   cursor: pointer;
   display: flex;
@@ -19,8 +19,6 @@
   transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
   pointer-events: none;
   box-shadow: 2px 4px 16px rgba(0,0,0,0.25);
-
-  /* polaroid bottom strip */
   padding-bottom: 10px;
 }
 
@@ -31,7 +29,7 @@
   left: 0;
   right: 0;
   height: 14px;
-  background: #f5e6cd88;
+  background: #f5e6cdcc;
   border-radius: 0 0 2px 2px;
 }
 

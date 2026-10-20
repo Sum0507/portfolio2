@@ -106,7 +106,7 @@ export default function Hero({ siteData }) {
       <div className="hero-overlay" />
       <div
         className={`hero-content ${loaded ? "hero-content--visible" : ""}`}
-        style={{ transform: `translateY(${offsetY * 0.3}px)` }}
+        style={{ transform: `translateY(${offsetY * 0.15}px)` }}
       >
         <p className="hero-eyebrow label hero-anim" style={{ transitionDelay: "0.1s" }}>
           est. 2001 · {siteData.location}
