@@ -70,7 +70,6 @@ export default function App() {
       client.fetch(`*[_type == "research"] | order(order asc)`),
     ]).then(([site, photos, art, projects, research]) => {
       if (cancelled) return;
-      console.log("photos count:", photos.length);
       setSiteData(site);
       setPhotos(photos);
       setArtworks(art);

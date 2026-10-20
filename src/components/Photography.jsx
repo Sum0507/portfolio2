@@ -8,7 +8,6 @@ export default function Photography({ photos = [] }) {
   const [showAll, setShowAll] = useState(false);
   const [lightbox, setLightbox] = useState(null);
   const visible = showAll ? photos : photos.slice(0, INITIAL_SHOW);
-  console.log("photography photos:", photos.length);
 
   return (
     <section className="section photo-section" id="photography">

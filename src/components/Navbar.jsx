@@ -5,11 +5,30 @@ import "./Navbar.css";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = ["about", "skills", "projects", "research", "photography", "art", "contact"];
+    const observers = [];
+
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActive(id); },
+         { threshold: 0.15 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+
+    return () => observers.forEach(o => o.disconnect());
   }, []);
 
   const links = ["about", "skills", "projects", "research", "photography", "art", "contact"];
@@ -21,7 +40,11 @@ export default function Navbar() {
       <ul className={`nav-links ${open ? "open" : ""}`}>
         {links.map(l => (
           <li key={l}>
-            <a href={`#${l}`} onClick={() => setOpen(false)}>{l}</a>
+            <a
+              href={`#${l}`}
+              onClick={() => setOpen(false)}
+              className={active === l ? "nav-active" : ""}
+            >{l}</a>
           </li>
         ))}
         <li>

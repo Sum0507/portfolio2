@@ -139,3 +139,9 @@
   .nav-links.open { display: flex; }
   .nav-links.open a { color: var(--ink-muted); }
 }
+
+.nav-links a.nav-active {
+  color: var(--accent-y) !important;
+  border-bottom: 1px solid var(--accent-y);
+  padding-bottom: 2px;
+}
