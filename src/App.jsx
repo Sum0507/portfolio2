@@ -10,6 +10,7 @@ import Projects from "./components/Projects";
 import Research from "./components/Research";
 import Contact from "./components/Contact";
 import Cursor from "./components/Cursor";
+import BackToTop from "./components/BackToTop";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -46,6 +47,7 @@ function Home({ siteData, photos, artworks, projects, research, loading, error }
         <Art artworks={artworks} />
         <Contact siteData={siteData} />
       </div>
+      <BackToTop />
     </>
   );
 }
@@ -83,9 +85,7 @@ export default function App() {
       setLoading(false);
     });
 
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, []);
 
   return (

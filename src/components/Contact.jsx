@@ -4,7 +4,7 @@ import { FiGithub, FiInstagram, FiLinkedin, FiMail } from "react-icons/fi";
 import "./Contact.css";
 
 const SERVICE_ID  = "service_r24rly3";
-const TEMPLATE_ID = "template_rlbf06b";
+const TEMPLATE_ID = "template_a7swzko";
 const PUBLIC_KEY  = "e3pn3AhmRJRhENZmR";
 
 export default function Contact({ siteData }) {
@@ -16,7 +16,19 @@ export default function Contact({ siteData }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatus("sending");
-    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
+
+    const formData = new FormData(formRef.current);
+
+    emailjs.send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      {
+        from_name: formData.get("from_name"),
+        from_email: formData.get("from_email"),
+        message: formData.get("message"),
+      },
+      PUBLIC_KEY
+    )
       .then(() => { setStatus("sent"); formRef.current.reset(); })
       .catch(() => setStatus("error"));
   };

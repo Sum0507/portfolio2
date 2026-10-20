@@ -1,0 +1,48 @@
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 200;
+  width: 44px;
+  height: 52px;
+  background: #ffe29285;
+  border: none;
+  border-radius: 2px;
+  color: #222222cc;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+  pointer-events: none;
+  box-shadow: 2px 4px 16px rgba(0,0,0,0.25);
+
+  /* polaroid bottom strip */
+  padding-bottom: 10px;
+}
+
+.back-to-top::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: #f5e6cd88;
+  border-radius: 0 0 2px 2px;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.back-to-top:hover {
+  box-shadow: 2px 4px 24px rgba(105, 211, 247, 0.5),
+              0 0 40px rgba(105, 211, 247, 0.2);
+  transform: translateY(-2px);
+}
