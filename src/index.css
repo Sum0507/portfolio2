@@ -45,7 +45,11 @@
 html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
 body {
   font-family: var(--font-body);
-  background-color: var(--bg);
+  background-color: #0d0d0d;
+  background-image: url("https://cdn.sanity.io/images/lyb8bzsd/production/7e7c9668cc5ca9c0a4db20aed0dee80bc186fe5d-5184x3456.jpg?w=1600");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: var(--ink);
   overflow-x: hidden;
   transition: background-color var(--transition), color var(--transition);
@@ -210,5 +214,6 @@ img { max-width: 100%; display: block; }
   font-family: var(--font-body);
   font-size: 12px;
   letter-spacing: 3px;
-  color: var(--ink-muted);
+  color: #c8b89a;
+  background-color: #ffe99ffa;
 }

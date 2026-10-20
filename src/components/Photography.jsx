@@ -8,6 +8,7 @@ export default function Photography({ photos = [] }) {
   const [showAll, setShowAll] = useState(false);
   const [lightbox, setLightbox] = useState(null);
   const visible = showAll ? photos : photos.slice(0, INITIAL_SHOW);
+  console.log("photography photos:", photos.length);
 
   return (
     <section className="section photo-section" id="photography">
@@ -22,7 +23,10 @@ export default function Photography({ photos = [] }) {
             <div
               key={p._id}
               className="polaroid photo-card"
-              style={{ transform: `rotate(${p.rotation || 0}deg)` }}
+              style={{ 
+                transform: `rotate(${p.rotation || 0}deg)`,
+                '--rotation': `${p.rotation || 0}deg`
+              }}
               onClick={() => setLightbox(p)}
             >
               <div className={`tape ${p.tape || "tape-r"}`} />

@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c07a1364.css",
+    "main.js": "/static/js/main.2b8b80fe.js",
+    "static/js/825.e9092ee9.chunk.js": "/static/js/825.e9092ee9.chunk.js",
+    "static/js/901.a4848805.chunk.js": "/static/js/901.a4848805.chunk.js",
+    "static/media/Zolla.woff": "/static/media/Zolla.b13092de89a749056c12.woff",
+    "static/media/Zolla.woff2": "/static/media/Zolla.0da32af8efc69902cee1.woff2",
+    "index.html": "/index.html",
+    "main.c07a1364.css.map": "/static/css/main.c07a1364.css.map",
+    "main.2b8b80fe.js.map": "/static/js/main.2b8b80fe.js.map",
+    "825.e9092ee9.chunk.js.map": "/static/js/825.e9092ee9.chunk.js.map",
+    "901.a4848805.chunk.js.map": "/static/js/901.a4848805.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c07a1364.css",
+    "static/js/main.2b8b80fe.js"
+  ]
+}

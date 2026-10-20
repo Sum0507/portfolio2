@@ -13,10 +13,16 @@ import Cursor from "./components/Cursor";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
-function Home({ siteData, photos, artworks, projects, research, loading }) {
+function Home({ siteData, photos, artworks, projects, research, loading, error }) {
   if (loading) return (
     <div className="loading-screen">
-      <p>loading...</p>
+      <p>Have patience...</p>
+    </div>
+  );
+
+  if (error) return (
+    <div className="loading-screen">
+      <p>Unable to load portfolio content.</p>
     </div>
   );
 
@@ -51,8 +57,11 @@ export default function App() {
   const [projects, setProjects] = useState([]);
   const [research, setResearch] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
+
     Promise.all([
       client.fetch(`*[_type == "siteConfig"][0]{ ..., heroImage{ asset->{ url } }, photo{ asset->{ url } } }`),
       client.fetch(`*[_type == "photo"] | order(order asc)`),
@@ -60,13 +69,24 @@ export default function App() {
       client.fetch(`*[_type == "project"] | order(order asc)`),
       client.fetch(`*[_type == "research"] | order(order asc)`),
     ]).then(([site, photos, art, projects, research]) => {
+      if (cancelled) return;
+      console.log("photos count:", photos.length);
       setSiteData(site);
       setPhotos(photos);
       setArtworks(art);
       setProjects(projects);
       setResearch(research);
+      setError(false);
+      setLoading(false);
+    }).catch(() => {
+      if (cancelled) return;
+      setError(true);
       setLoading(false);
     });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
@@ -80,6 +100,7 @@ export default function App() {
             projects={projects}
             research={research}
             loading={loading}
+            error={error}
           />
         } />
         <Route path="/admin" element={<Admin />} />
