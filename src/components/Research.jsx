@@ -8,22 +8,33 @@ export default function Research({ research = [] }) {
           <p className="section-label">— academic work</p>
           <h2 className="section-heading display">research</h2>
         </div>
-        <div className="research-list">
-          {research.map(r => (
-            <div key={r._id} className="research-card">
-              <div className="research-main">
-                <span className={`res-status status-${r.status?.replace(" ", "-")}`}>{r.status}</span>
-                <h3 className="res-title serif">{r.title}</h3>
-                <p className="res-venue">{r.venue}</p>
-                {r.coauthors && <p className="res-authors">{r.coauthors}</p>}
-              </div>
-              <div className="res-meta">
-                {r.tags?.map(t => <span key={t} className="res-tag">{t}</span>)}
-                <span className="label res-year">{r.year}</span>
-              </div>
+
+        {(!research || research.length === 0) ? (
+          <div className="research-empty">
+            <div className="research-empty-card">
+              <p className="research-empty-text serif">
+                nothing published yet — but the ideas are brewing.
+              </p>
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div className="research-list">
+            {research.map(r => (
+              <div key={r._id} className="research-card">
+                <div className="research-main">
+                  <span className={`res-status status-${r.status?.replace(" ", "-")}`}>{r.status}</span>
+                  <h3 className="res-title serif">{r.title}</h3>
+                  <p className="res-venue">{r.venue}</p>
+                  {r.coauthors && <p className="res-authors">{r.coauthors}</p>}
+                </div>
+                <div className="res-meta">
+                  {r.tags?.map(t => <span key={t} className="res-tag">{t}</span>)}
+                  <span className="label res-year">{r.year}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

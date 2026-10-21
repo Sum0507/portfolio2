@@ -63,3 +63,21 @@
 .section-heading.display{
   color: #fff  !important;
 }
+
+.research-empty {
+  padding: 48px 0;
+  text-align: center;
+}
+.research-empty-card {
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  padding: 24px 32px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.research-empty-text {
+  font-size: 16px;
+  color: #fff;
+  font-style: italic;
+}
