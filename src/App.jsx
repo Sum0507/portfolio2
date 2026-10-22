@@ -70,7 +70,7 @@ export default function App() {
       client.fetch(`*[_type == "siteConfig"][0]{ ..., heroImage{ asset->{ url } }, photo{ asset->{ url } } }`),
       client.fetch(`*[_type == "photo"] | order(order asc)`),
       client.fetch(`*[_type == "artwork"] | order(order asc)`),
-      client.fetch(`*[_type == "project"] | order(order asc)`),
+      client.fetch(`*[_type == "project"] | order(order asc){ ..., previewImage{ asset->{ url } } }`),
       client.fetch(`*[_type == "research"] | order(order asc)`),
     ]).then(([site, photos, art, projects, research]) => {
       if (cancelled) return;

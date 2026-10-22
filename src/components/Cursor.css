@@ -22,3 +22,8 @@
   z-index: 9998;
   transition: transform 0.2s ease, left 0.08s ease, top 0.08s ease;
 }
+
+@media (max-width: 768px) {
+  *, *::before, *::after { cursor: auto !important; }
+  .cursor-dot, .cursor-ring { display: none; }
+}
