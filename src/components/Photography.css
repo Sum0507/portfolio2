@@ -46,16 +46,10 @@
 }
 
 @media (max-width: 768px) {
-  .photo-grid {
-    columns: 2;
-    column-gap: 16px;
-  }
+  .photo-grid { columns: 2; column-gap: 16px; }
 }
-
 @media (max-width: 480px) {
-  .photo-grid {
-    columns: 1;
-  }
+  .photo-grid { columns: 1; }
 }
 
 .lightbox {

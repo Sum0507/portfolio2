@@ -11,6 +11,7 @@ import Research from "./components/Research";
 import Contact from "./components/Contact";
 import Cursor from "./components/Cursor";
 import BackToTop from "./components/BackToTop";
+import Currently from "./components/Currently";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -48,6 +49,7 @@ function Home({ siteData, photos, artworks, projects, research, loading, error }
         <Contact siteData={siteData} />
       </div>
       <BackToTop />
+      <Currently text={siteData?.currently} />
     </>
   );
 }
