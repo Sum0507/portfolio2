@@ -1,8 +1,19 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { urlFor } from "../sanityClient";
 import "./Photography.css";
 
 const INITIAL_SHOW = 3;
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 80, scale: 0.97 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: "easeOut" } }
+};
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } }
+};
 
 export default function Photography({ photos = [] }) {
   const [showAll, setShowAll] = useState(false);
@@ -12,20 +23,23 @@ export default function Photography({ photos = [] }) {
   return (
     <section className="section photo-section" id="photography">
       <div className="section-inner">
-        <div className="section-header">
+        <motion.div className="section-header"
+          variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}>
           <p className="section-label">— street photography</p>
           <h2 className="section-heading display">through the lens</h2>
-        </div>
+        </motion.div>
 
-        <div className="photo-grid">
+        <motion.div className="photo-grid"
+            variants={stagger} initial="animate" whileInView="show" viewport={{ once: true, amount: 0.1 }}>
           {visible.map((p) => (
-            <div
+            <motion.div
               key={p._id}
               className="polaroid photo-card"
-              style={{ 
+              style={{
                 transform: `rotate(${p.rotation || 0}deg)`,
                 '--rotation': `${p.rotation || 0}deg`
               }}
+              variants={fadeUp}
               onClick={() => setLightbox(p)}
             >
               <div className={`tape ${p.tape || "tape-r"}`} />
@@ -36,9 +50,9 @@ export default function Photography({ photos = [] }) {
                 }
               </div>
               <p className="polaroid-caption">{p.caption}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {!showAll && photos.length > INITIAL_SHOW && (
           <div className="view-more-wrap">

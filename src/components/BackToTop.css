@@ -1,11 +1,11 @@
 .back-to-top {
   position: fixed;
-  bottom: 32px;  /* ছিল 100px */
+  bottom: 88px;
   right: 32px;
   z-index: 9999;
   width: 44px;
   height: 52px;
-  background: #ffe292cc;
+  background: #fdd871b6;
   border: none;
   border-radius: 2px;
   color: #222;

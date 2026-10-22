@@ -1,8 +1,19 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { urlFor } from "../sanityClient";
 import "./Art.css";
 
 const INITIAL_SHOW = 2;
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 80, scale: 0.97 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: "easeOut" } }
+};
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } }
+};
 
 export default function Art({ artworks = [] }) {
   const [showAll, setShowAll] = useState(false);
@@ -11,17 +22,20 @@ export default function Art({ artworks = [] }) {
   return (
     <section className="section art-section" id="art">
       <div className="section-inner">
-        <div className="section-header">
+        <motion.div className="section-header"
+          variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}>
           <p className="section-label">— artbook</p>
           <h2 className="section-heading display">from the pages</h2>
-        </div>
+        </motion.div>
 
-        <div className="art-grid">
+        <motion.div className="art-grid"
+          variants={stagger} initial="animate" whileInView="show" viewport={{ once: true, amount: 0.1 }}>
           {visible.map((a) => (
-            <div
+            <motion.div
               key={a._id}
               className="polaroid art-card"
               style={{ transform: `rotate(${a.rotation || 0}deg)` }}
+              variants={fadeUp}
             >
               <div className={`tape ${a.tape || "tape-r"}`} />
               <div className="polaroid-img art-img">
@@ -41,9 +55,9 @@ export default function Art({ artworks = [] }) {
               </div>
               <p className="polaroid-caption">{a.caption}</p>
               <div className="corner-fold" />
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {!showAll && artworks.length > INITIAL_SHOW && (
           <div className="view-more-wrap">

@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { FiGithub, FiInstagram, FiLinkedin, FiMail } from "react-icons/fi";
 import "./Contact.css";
@@ -6,6 +7,16 @@ import "./Contact.css";
 const SERVICE_ID  = "service_r24rly3";
 const TEMPLATE_ID = "template_a7swzko";
 const PUBLIC_KEY  = "e3pn3AhmRJRhENZmR";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 80, scale: 0.97 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: "easeOut" } }
+};
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } }
+};
 
 export default function Contact({ siteData }) {
   const formRef = useRef();
@@ -16,19 +27,12 @@ export default function Contact({ siteData }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatus("sending");
-
     const formData = new FormData(formRef.current);
-
-    emailjs.send(
-      SERVICE_ID,
-      TEMPLATE_ID,
-      {
-        from_name: formData.get("from_name"),
-        from_email: formData.get("from_email"),
-        message: formData.get("message"),
-      },
-      PUBLIC_KEY
-    )
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+      from_name: formData.get("from_name"),
+      from_email: formData.get("from_email"),
+      message: formData.get("message"),
+    }, PUBLIC_KEY)
       .then(() => { setStatus("sent"); formRef.current.reset(); })
       .catch(() => setStatus("error"));
   };
@@ -36,14 +40,15 @@ export default function Contact({ siteData }) {
   return (
     <section className="section contact-section" id="contact">
       <div className="section-inner">
-        <div className="contact-header">
-          <p className="contact-label">— let's connect</p>
-          <h2 className="contact-heading display">say hello.</h2>
-          <p className="contact-sub serif">
+        <motion.div className="contact-header"
+          variants={stagger} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.2 }}>
+          <motion.p className="contact-label" variants={fadeUp}>— let's connect</motion.p>
+          <motion.h2 className="contact-heading display" variants={fadeUp}>say hello.</motion.h2>
+          <motion.p className="contact-sub serif" variants={fadeUp}>
             Whether it's a project, a collab, or just a chat ........... I'm down.
-          </p>
+          </motion.p>
 
-          <form ref={formRef} onSubmit={handleSubmit} className="contact-form">
+          <motion.form ref={formRef} onSubmit={handleSubmit} className="contact-form" variants={fadeUp}>
             <input type="text" name="from_name" placeholder="your name" required />
             <input type="email" name="from_email" placeholder="your email" required />
             <textarea name="message" placeholder="your message" rows={5} required />
@@ -51,9 +56,9 @@ export default function Contact({ siteData }) {
               {status === "sending" ? "sending..." : status === "sent" ? "sent ✓" : "send →"}
             </button>
             {status === "error" && <p className="form-error">something went wrong. try emailing directly.</p>}
-          </form>
+          </motion.form>
 
-          <div className="contact-socials">
+          <motion.div className="contact-socials" variants={fadeUp}>
             {siteData.email && (
               <a href={`mailto:${siteData.email}`} target="_blank" rel="noreferrer" className="social-icon" title={siteData.email}>
                 <FiMail />
@@ -74,8 +79,8 @@ export default function Contact({ siteData }) {
                 <FiInstagram />
               </a>
             )}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       <div className="contact-ribbon">
