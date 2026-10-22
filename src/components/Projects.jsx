@@ -10,19 +10,27 @@ export default function Projects({ projects = [] }) {
         </div>
 
         <div className="projects-grid">
-          {projects.map(p => (
-            <div className="project-card" key={p._id}>
-              <span className="proj-year label">{p.year}</span>
-              <h3 className="proj-title display">{p.title}</h3>
-              <p className="proj-stack">{p.stack}</p>
-              <div className="proj-divider" />
-              <p className="proj-desc">{p.description}</p>
-              <div className="proj-links">
-                {p.github && <a href={p.github} target="_blank" rel="noreferrer" className="proj-link">github →</a>}
-                {p.live   && <a href={p.live}   target="_blank" rel="noreferrer" className="proj-link">live →</a>}
+          {projects.map(p => {
+            const gifUrl = p.previewImage?.asset?.url;
+            return (
+              <div className="project-card" key={p._id}>
+                {gifUrl && (
+                  <div className="proj-preview">
+                    <img src={gifUrl} alt={`${p.title} preview`} className="proj-preview-img" />
+                  </div>
+                )}
+                <span className="proj-year label">{p.year}</span>
+                <h3 className="proj-title display">{p.title}</h3>
+                <p className="proj-stack">{p.stack}</p>
+                <div className="proj-divider" />
+                <p className="proj-desc">{p.description}</p>
+                <div className="proj-links">
+                  {p.github && <a href={p.github} target="_blank" rel="noreferrer" className="proj-link">github →</a>}
+                  {p.live   && <a href={p.live}   target="_blank" rel="noreferrer" className="proj-link">live →</a>}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
