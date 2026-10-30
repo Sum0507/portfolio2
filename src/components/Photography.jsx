@@ -45,7 +45,11 @@ export default function Photography({ photos = [] }) {
               <div className={`tape ${p.tape || "tape-r"}`} />
               <div className="polaroid-img">
                 {p.image
-                  ? <img src={urlFor(p.image).width(600).url()} alt={p.caption} />
+                  ? <img
+                      src={urlFor(p.image).width(600).auto("format").quality(75).url()}
+                      alt={p.caption}
+                      loading="lazy"
+                    />
                   : <div className="polaroid-placeholder"><span>[ photo ]</span></div>
                 }
               </div>
@@ -74,7 +78,10 @@ export default function Photography({ photos = [] }) {
         <div className="lightbox" onClick={() => setLightbox(null)}>
           <button className="lightbox-close" onClick={() => setLightbox(null)}>✕</button>
           <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-            <img src={urlFor(lightbox.image).width(1200).url()} alt={lightbox.caption} />
+            <img
+              src={urlFor(lightbox.image).width(1200).auto("format").quality(80).url()}
+              alt={lightbox.caption}
+            />
             <p className="lightbox-caption">{lightbox.caption}</p>
           </div>
         </div>

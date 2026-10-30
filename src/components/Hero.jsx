@@ -89,7 +89,7 @@ export default function Hero({ siteData }) {
   if (!siteData) return null;
 
   const heroBg = siteData.heroImage
-    ? urlFor(siteData.heroImage).width(1600).url()
+    ? urlFor(siteData.heroImage).width(1600).auto("format").quality(80).url()
     : null;
 
   return (

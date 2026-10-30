@@ -40,7 +40,11 @@ export default function Art({ artworks = [] }) {
               <div className={`tape ${a.tape || "tape-r"}`} />
               <div className="polaroid-img art-img">
                 {a.image
-                  ? <img src={urlFor(a.image).width(400).url()} alt={a.caption} />
+                  ? <img
+                      src={urlFor(a.image).width(400).auto("format").quality(75).url()}
+                      alt={a.caption}
+                      loading="lazy"
+                    />
                   : (
                     <div className="polaroid-placeholder art-placeholder">
                       <div className="sketch-lines">

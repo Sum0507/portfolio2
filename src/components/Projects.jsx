@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { urlFor } from "../sanityClient";
 import "./Projects.css";
 
 const fadeUp = {
@@ -24,12 +25,19 @@ export default function Projects({ projects = [] }) {
         <motion.div className="projects-grid"
           variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }}>
           {projects.map(p => {
-            const gifUrl = p.previewImage?.asset?.url;
+            const gifUrl = p.previewImage?.asset
+              ? urlFor(p.previewImage).width(800).auto("format").quality(75).url()
+              : null;
             return (
               <motion.div className="project-card" key={p._id} variants={fadeUp}>
                 {gifUrl && (
                   <div className="proj-thumbnail">
-                    <img src={gifUrl} alt={`${p.title} preview`} className="proj-thumbnail-img" />
+                    <img
+                      src={gifUrl}
+                      alt={`${p.title} preview`}
+                      className="proj-thumbnail-img"
+                      loading="lazy"
+                    />
                   </div>
                 )}
                 <div className="proj-body">
