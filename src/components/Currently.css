@@ -2,7 +2,7 @@
   position: fixed;
   bottom: 32px;
   right: 32px; 
-  z-index: 9998;
+  z-index: 198;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -70,4 +70,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
+
+body.nav-open .currently-widget {
+  opacity: 0 !important;
+  pointer-events: none;
 }
