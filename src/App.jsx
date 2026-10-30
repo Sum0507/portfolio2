@@ -39,7 +39,7 @@ function Home({ siteData, photos, artworks, projects, research, loading, error }
         <div className="wc-blob wc-blob-5" />
       </div>
       <div className="page-content">
-        <Navbar siteData={siteData} navPhotos={siteData?.navPhotos} />
+        <Navbar siteData={siteData} />
         <Hero siteData={siteData} />
         <Skills siteData={siteData} />
         <Projects projects={projects} />
@@ -70,14 +70,7 @@ export default function App() {
       client.fetch(`*[_type == "siteConfig"][0]{
         ...,
         heroImage{ asset->{ url } },
-        photo{ asset->{ url } },
-        navPhotos{
-         about{ asset->{ _id, url } },
-         projects{ asset->{ _id, url } },
-         photography{ asset->{ _id, url } },
-         art{ asset->{ _id, url } },
-         contact{ asset->{ _id, url } }
-         }
+        photo{ asset->{ url } }
       }`),
       client.fetch(`*[_type == "photo"] | order(order asc)`),
       client.fetch(`*[_type == "artwork"] | order(order asc)`),
@@ -86,7 +79,6 @@ export default function App() {
     ]).then(([site, photos, art, projects, research]) => {
       if (cancelled) return;
       setSiteData(site);
-      console.log("navPhotos:", site?.navPhotos);
       setPhotos(photos);
       setArtworks(art);
       setProjects(projects);

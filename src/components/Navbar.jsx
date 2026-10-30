@@ -3,26 +3,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import NavBlobPattern from "./NavBlobPattern";
 import "./Navbar.css";
 
-const FALLBACKS = {
-  about:       "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800&q=80",
-  projects:    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
-  photography: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=800&q=80",
-  art:         "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&q=80",
-  contact:     "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80",
-};
-
-function buildNavItems(navPhotos) {
-  navPhotos = navPhotos || {};
-  return [
-    { label: "about",       href: "#about",       photo: navPhotos.about?.asset?.url       || FALLBACKS.about },
-    { label: "projects",    href: "#projects",    photo: navPhotos.projects?.asset?.url    || FALLBACKS.projects },
-    { label: "photography", href: "#photography", photo: navPhotos.photography?.asset?.url || FALLBACKS.photography },
-    { label: "art",         href: "#art",         photo: navPhotos.art?.asset?.url         || FALLBACKS.art },
-    { label: "contact",     href: "#contact",     photo: navPhotos.contact?.asset?.url     || FALLBACKS.contact },
-  ];
-}
-
-// Socials built dynamically from siteData in component
+const NAV_ITEMS = [
+  { label: "about",       href: "#about" },
+  { label: "projects",    href: "#projects" },
+  { label: "photography", href: "#photography" },
+  { label: "art",         href: "#art" },
+  { label: "contact",     href: "#contact" },
+];
 
 function FlipWord({ label }) {
   return (
@@ -41,12 +28,10 @@ function FlipWord({ label }) {
   );
 }
 
-export default function Navbar({ siteData, navPhotos }) {
+export default function Navbar({ siteData }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [active, setActive] = useState("");
   const [hoveredIndex, setHoveredIndex] = useState(null);
-
-  const NAV_ITEMS = buildNavItems(navPhotos);
 
   const SOCIALS = [
     { label: "github",   href: siteData?.github   || "#" },
@@ -70,7 +55,6 @@ export default function Navbar({ siteData, navPhotos }) {
     return () => observers.forEach(o => o.disconnect());
   }, []);
 
-  // Lock scroll + hide Currently widget when menu open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     document.body.classList.toggle("nav-open", menuOpen);
@@ -87,8 +71,6 @@ export default function Navbar({ siteData, navPhotos }) {
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     }, 400);
   };
-
-  const activePhoto = hoveredIndex !== null ? NAV_ITEMS[hoveredIndex].photo : null;
 
   return (
     <>
@@ -112,30 +94,11 @@ export default function Navbar({ siteData, navPhotos }) {
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
           >
-            {/* Background layers */}
             <div className="fs-nav__bg">
-              {/* Blob pattern — always visible */}
               <NavBlobPattern />
-
-              {/* Photo — fades in on hover */}
-              <AnimatePresence mode="wait">
-                {activePhoto && (
-                  <motion.div
-                    key={activePhoto}
-                    className="fs-nav__photo is-active"
-                    initial={{ opacity: 0, scale: 1.04 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                    style={{ backgroundImage: `url(${activePhoto})` }}
-                  />
-                )}
-              </AnimatePresence>
-
-              <div className={`fs-nav__overlay ${activePhoto ? "fs-nav__overlay--photo" : ""}`} />
+              <div className="fs-nav__overlay" />
             </div>
 
-            {/* Nav links */}
             <motion.ul
               className="fs-nav__links"
               initial="hidden"
@@ -168,7 +131,6 @@ export default function Navbar({ siteData, navPhotos }) {
               ))}
             </motion.ul>
 
-            {/* Bottom row */}
             <motion.div
               className="fs-nav__bottom"
               initial={{ opacity: 0, y: 20 }}
