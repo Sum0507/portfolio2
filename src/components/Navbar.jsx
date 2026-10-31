@@ -34,9 +34,7 @@ export default function Navbar({ siteData }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const SOCIALS = [
-    { label: "github",   href: siteData?.github   || "#" },
-    { label: "linkedin", href: siteData?.linkedin  || "#" },
-    { label: "email",    href: `mailto:${siteData?.email || ""}` },
+    { label: "github", href: siteData?.github || "#" },
   ];
 
   useEffect(() => {
