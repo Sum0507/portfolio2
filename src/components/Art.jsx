@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { urlFor } from "../sanityClient";
 import "./Art.css";
 
-const INITIAL_SHOW = 2;
+const INITIAL_SHOW = 6;
 
 const fadeUp = {
   hidden: { opacity: 0, y: 80, scale: 0.97 },
@@ -17,6 +17,7 @@ const stagger = {
 
 export default function Art({ artworks = [] }) {
   const [showAll, setShowAll] = useState(false);
+  const [lightbox, setLightbox] = useState(null);
   const visible = showAll ? artworks : artworks.slice(0, INITIAL_SHOW);
 
   return (
@@ -34,8 +35,8 @@ export default function Art({ artworks = [] }) {
             <motion.div
               key={a._id}
               className="polaroid art-card"
-              style={{ transform: `rotate(${a.rotation || 0}deg)` }}
               variants={fadeUp}
+              onClick={() => a.image && setLightbox(a)}
             >
               <div className={`tape ${a.tape || "tape-r"}`} />
               <div className="polaroid-img art-img">
@@ -44,6 +45,7 @@ export default function Art({ artworks = [] }) {
                       src={urlFor(a.image).width(400).auto("format").quality(75).url()}
                       alt={a.caption}
                       loading="lazy"
+                      className="art-photo"
                     />
                   : (
                     <div className="polaroid-placeholder art-placeholder">
@@ -78,6 +80,19 @@ export default function Art({ artworks = [] }) {
           </div>
         )}
       </div>
+
+      {lightbox && (
+        <div className="lightbox" onClick={() => setLightbox(null)}>
+          <button className="lightbox-close" onClick={() => setLightbox(null)}>✕</button>
+          <div className="lightbox-content" onClick={e => e.stopPropagation()}>
+            <img
+              src={urlFor(lightbox.image).width(1200).auto("format").quality(85).url()}
+              alt={lightbox.caption}
+            />
+            {lightbox.caption && <p className="lightbox-caption">{lightbox.caption}</p>}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

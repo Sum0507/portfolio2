@@ -35,10 +35,6 @@ export default function Photography({ photos = [] }) {
             <motion.div
               key={p._id}
               className="polaroid photo-card"
-              style={{
-                transform: `rotate(${p.rotation || 0}deg)`,
-                '--rotation': `${p.rotation || 0}deg`
-              }}
               variants={fadeUp}
               onClick={() => setLightbox(p)}
             >
@@ -49,6 +45,7 @@ export default function Photography({ photos = [] }) {
                       src={urlFor(p.image).width(600).auto("format").quality(75).url()}
                       alt={p.caption}
                       loading="lazy"
+                      className="photo-img"
                     />
                   : <div className="polaroid-placeholder"><span>[ photo ]</span></div>
                 }

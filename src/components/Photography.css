@@ -19,6 +19,25 @@
   z-index: 2;
 }
 
+/* greyscale by default, colour on hover — desktop only */
+.photo-img {
+  filter: grayscale(100%);
+  transition: filter 0.4s ease;
+  display: block;
+  width: 100%;
+}
+
+.photo-card:hover .photo-img {
+  filter: grayscale(0%);
+}
+
+/* mobile: always colour */
+@media (hover: none) {
+  .photo-img {
+    filter: grayscale(0%);
+  }
+}
+
 .view-more-wrap {
   display: flex;
   justify-content: center;
