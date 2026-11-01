@@ -34,7 +34,7 @@
 .hero-content {
   position: relative;
   z-index: 3;
-  max-width: 700px;
+  max-width: 900px;
 }
 
 .hero-eyebrow {
@@ -42,8 +42,16 @@
   margin-bottom: 20px;
 }
 
+.age-counter {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--accent-y);
+}
+
 .hero-typed {
-  font-size: clamp(32px, 5vw, 64px);
+  font-size: clamp(48px, 9vw, 120px);
+  letter-spacing: -0.03em;
   color: #fff;
   line-height: 1;
   margin-bottom: 24px;

@@ -8,11 +8,7 @@ function MagneticBtn({ href, className, children, target, rel }) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
-    const onEnter = () => {
-      el.style.transition = "transform 0.1s ease";
-    };
-
+    const onEnter = () => { el.style.transition = "transform 0.1s ease"; };
     const onMove = (e) => {
       const rect = el.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
@@ -21,12 +17,10 @@ function MagneticBtn({ href, className, children, target, rel }) {
       const dy = e.clientY - cy;
       el.style.transform = `translate(${dx * 0.35}px, ${dy * 0.35}px)`;
     };
-
     const onLeave = () => {
       el.style.transition = "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
       el.style.transform = "translate(0, 0)";
     };
-
     el.addEventListener("mouseenter", onEnter);
     el.addEventListener("mousemove", onMove);
     el.addEventListener("mouseleave", onLeave);
@@ -44,11 +38,50 @@ function MagneticBtn({ href, className, children, target, rel }) {
   );
 }
 
+function AgeCounter() {
+  const BIRTH = new Date("2000-07-05T00:00:00");
+
+  const calc = () => {
+    const now = new Date();
+    const diff = now - BIRTH;
+    const totalSec = Math.floor(diff / 1000);
+    const sec = totalSec % 60;
+    const totalMin = Math.floor(totalSec / 60);
+    const min = totalMin % 60;
+    const totalHrs = Math.floor(totalMin / 60);
+    const hrs = totalHrs % 24;
+
+    const birthYear = BIRTH.getFullYear();
+    const nowYear = now.getFullYear();
+    let years = nowYear - birthYear;
+    const anniv = new Date(nowYear, BIRTH.getMonth(), BIRTH.getDate());
+    if (now < anniv) years--;
+    const lastAnniv = new Date(nowYear - (now < anniv ? 1 : 0), BIRTH.getMonth(), BIRTH.getDate());
+    const days = Math.floor((now - lastAnniv) / (1000 * 60 * 60 * 24));
+
+    return { years, days, hrs, min, sec };
+  };
+
+  const [age, setAge] = useState(calc);
+
+  useEffect(() => {
+    const id = setInterval(() => setAge(calc()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <span className="age-counter">
+      {age.years}y {age.days}d {String(age.hrs).padStart(2,"0")}h {String(age.min).padStart(2,"0")}m {String(age.sec).padStart(2,"0")}s
+    </span>
+  );
+}
+
 export default function Hero({ siteData }) {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [deleting, setDeleting] = useState(false);
   const [grayscale, setGrayscale] = useState(1);
+  const [opacity, setOpacity] = useState(1);
   const [loaded, setLoaded] = useState(false);
   const [offsetY, setOffsetY] = useState(0);
   const heroRef = useRef(null);
@@ -80,6 +113,7 @@ export default function Hero({ siteData }) {
     const onScroll = () => {
       const progress = Math.min(window.scrollY / (window.innerHeight * 0.8), 1);
       setGrayscale(1 - progress);
+      setOpacity(1 - progress);
       setOffsetY(window.scrollY);
     };
     window.addEventListener("scroll", onScroll);
@@ -99,7 +133,8 @@ export default function Hero({ siteData }) {
           className="hero-bg"
           style={{
             backgroundImage: `url(${heroBg})`,
-            filter: `grayscale(${grayscale}) brightness(${0.45 + (1 - grayscale) * 0.15})`
+            filter: `grayscale(${grayscale}) brightness(${0.45 + (1 - grayscale) * 0.15})`,
+            opacity: opacity
           }}
         />
       )}
@@ -109,7 +144,7 @@ export default function Hero({ siteData }) {
         style={{ transform: `translateY(${offsetY * 0.15}px)` }}
       >
         <p className="hero-eyebrow label hero-anim" style={{ transitionDelay: "0.1s" }}>
-          est. 2001 · {siteData.location}
+          <AgeCounter /> · {siteData.location}
         </p>
         <h1 className="hero-typed display hero-anim" style={{ transitionDelay: "0.25s" }}>
           {displayed}<span className="cursor">|</span>
