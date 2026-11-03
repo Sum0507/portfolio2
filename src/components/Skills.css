@@ -1,22 +1,33 @@
 .skills-section {
-  padding: 80px 48px;
+  padding: 80px 0 80px;
   position: relative;
   z-index: 2;
 }
 
-.skills-header {
+/* Bleeding heading — sits outside section-inner, runs past right edge */
+.skills-bleed-heading {
+  padding-left: 48px;
   margin-bottom: 56px;
+  overflow: hidden; /* clips only this block, not the page */
 }
 
-.skills-header .label {
+.skills-eyebrow {
   margin-bottom: 8px;
   color: rgba(255,255,255,0.45);
 }
 
-.skills-header .display {
+.skills-title {
+  font-size: clamp(72px, 16vw, 220px);
+  line-height: 0.9;
   color: #fff;
+  white-space: nowrap;
+  /* shift right so last letter(s) bleed off screen */
+  transform: translateX(8%);
+  display: block;
+  /* subtle text stroke for depth */
+  -webkit-text-stroke: 1px rgba(255,255,255,0.15);
 }
-npm 
+
 .skills-list {
   display: flex;
   flex-direction: column;
@@ -52,15 +63,26 @@ npm
   letter-spacing: 0.02em;
 }
 
-@media (max-width: 600px) {
-  .skills-section {
-    padding: 56px 24px;
+@media (max-width: 768px) {
+  .skills-bleed-heading {
+    padding-left: 20px;
   }
+  .skills-title {
+    transform: translateX(5%);
+  }
+  .skills-section {
+    padding: 56px 0 56px;
+  }
+}
 
+@media (max-width: 600px) {
   .skills-row {
     grid-template-columns: 1fr;
     gap: 6px;
     padding: 16px 0;
   }
+  .skills-title {
+    font-size: clamp(60px, 20vw, 120px);
+    transform: translateX(4%);
+  }
 }
-

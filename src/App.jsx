@@ -12,6 +12,7 @@ import Contact from "./components/Contact";
 import Cursor from "./components/Cursor";
 import BackToTop from "./components/BackToTop";
 import Currently from "./components/Currently";
+import ThreadLine from "./components/ThreadLine";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -31,6 +32,7 @@ function Home({ siteData, photos, artworks, projects, research, loading, error }
   return (
     <>
       <Cursor />
+      <ThreadLine />
       <div className="wc-canvas" aria-hidden="true">
         <div className="wc-blob wc-blob-1" />
         <div className="wc-blob wc-blob-2" />

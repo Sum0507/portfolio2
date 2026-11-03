@@ -16,12 +16,20 @@ export default function Skills({ siteData }) {
 
   return (
     <section className="section skills-section" id="skills">
+
+      {/* Bleed heading — outside section-inner */}
+      <motion.div
+        className="skills-bleed-heading"
+        initial={{ opacity: 0, x: 60 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.9, ease: "easeOut" }}
+      >
+        <p className="label skills-eyebrow">— what i work with</p>
+        <h2 className="display skills-title">skills.</h2>
+      </motion.div>
+
       <div className="section-inner">
-        <motion.div className="skills-header"
-          variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}>
-          <p className="label">— what i work with</p>
-          <h2 className="display">skills.</h2>
-        </motion.div>
         <motion.div className="skills-list"
           variants={stagger} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.2 }}>
           {siteData.skills.map((group, i) => (

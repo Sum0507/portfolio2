@@ -1,88 +1,179 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { urlFor } from "../sanityClient";
 import "./Photography.css";
 
-const INITIAL_SHOW = 3;
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 80, scale: 0.97 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: "easeOut" } }
-};
-
-const stagger = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1 } }
-};
+// Static tilts per card index — consistent, never random
+const TILTS = [-4, 2, -6, 3, -2, 5, -3, 4, -5, 2, -4, 3];
 
 export default function Photography({ photos = [] }) {
-  const [showAll, setShowAll] = useState(false);
-  const [lightbox, setLightbox] = useState(null);
-  const visible = showAll ? photos : photos.slice(0, INITIAL_SHOW);
+  const sectionRef = useRef(null);
+  const [lightbox, setLightbox] = useState(null); // index of open photo, or null
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+
+  const cardWidth = 320 + 32;
+  const totalWidth = photos.length * cardWidth;
+  const translateX = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, -(totalWidth - (typeof window !== "undefined" ? window.innerWidth * 0.85 : 900))]
+  );
+
+  // Close on Escape
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") setLightbox(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  if (!photos.length) return null;
+
+  const openPhoto = photos[lightbox];
 
   return (
-    <section className="section photo-section" id="photography">
-      <div className="section-inner">
-        <motion.div className="section-header"
-          variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}>
-          <p className="section-label">— street photography</p>
-          <h2 className="section-heading display">through the lens</h2>
-        </motion.div>
+    <>
+      <section
+        className="photo-filmstrip-section"
+        id="photography"
+        ref={sectionRef}
+        style={{ height: `${Math.max(photos.length * 80, 300)}vh` }}
+      >
+        {/* Sticky viewport */}
+        <div className="photo-filmstrip-sticky">
+          {/* Section label + big title */}
+          <motion.div
+            className="photo-filmstrip-header"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <p className="photo-eyebrow">— street photography</p>
+            <h2 className="photo-title display">through the lens</h2>
+          </motion.div>
 
-        <motion.div className="photo-grid"
-            variants={stagger} initial="animate" whileInView="show" viewport={{ once: true, amount: 0.1 }}>
-          {visible.map((p) => (
+          {/* Horizontal strip */}
+          <div className="photo-filmstrip-track">
             <motion.div
-              key={p._id}
-              className="polaroid photo-card"
-              variants={fadeUp}
-              onClick={() => setLightbox(p)}
+              className="photo-filmstrip-inner"
+              style={{ x: translateX }}
             >
-              <div className={`tape ${p.tape || "tape-r"}`} />
-              <div className="polaroid-img">
-                {p.image
-                  ? <img
+              {photos.map((p, i) => (
+                <div
+                  key={p._id}
+                  className="photo-film-card"
+                  style={{ rotate: `${TILTS[i % TILTS.length]}deg` }}
+                  onClick={() => setLightbox(i)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={p.caption || `Photo ${i + 1}`}
+                  onKeyDown={(e) => e.key === "Enter" && setLightbox(i)}
+                >
+                  {p.image ? (
+                    <img
                       src={urlFor(p.image).width(600).auto("format").quality(75).url()}
-                      alt={p.caption}
+                      alt={p.caption || ""}
                       loading="lazy"
-                      className="photo-img"
+                      draggable={false}
                     />
-                  : <div className="polaroid-placeholder"><span>[ photo ]</span></div>
-                }
-              </div>
-              <p className="polaroid-caption">{p.caption}</p>
+                  ) : (
+                    <div className="photo-film-placeholder" />
+                  )}
+                  {p.caption && (
+                    <p className="photo-film-caption">{p.caption}</p>
+                  )}
+                  {/* Expand hint — fades in on hover */}
+                  <div className="photo-expand-hint" aria-hidden="true">
+                    <span>click to expand</span>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path d="M7 1h4v4M5 7L11 1M1 5v6h6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+              ))}
             </motion.div>
-          ))}
-        </motion.div>
-
-        {!showAll && photos.length > INITIAL_SHOW && (
-          <div className="view-more-wrap">
-            <button className="view-more-btn" onClick={() => setShowAll(true)}>
-              view more photos ({photos.length - INITIAL_SHOW} more) →
-            </button>
           </div>
-        )}
-        {showAll && (
-          <div className="view-more-wrap">
-            <button className="view-more-btn" onClick={() => setShowAll(false)}>
-              ← show less
-            </button>
-          </div>
-        )}
-      </div>
 
-      {lightbox && (
-        <div className="lightbox" onClick={() => setLightbox(null)}>
-          <button className="lightbox-close" onClick={() => setLightbox(null)}>✕</button>
-          <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-            <img
-              src={urlFor(lightbox.image).width(1200).auto("format").quality(80).url()}
-              alt={lightbox.caption}
-            />
-            <p className="lightbox-caption">{lightbox.caption}</p>
+          {/* Scroll hint */}
+          <div className="photo-scroll-hint">
+            <span>scroll to explore</span>
+            <div className="photo-scroll-arrow">→</div>
           </div>
         </div>
-      )}
-    </section>
+      </section>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightbox !== null && openPhoto && (
+          <motion.div
+            className="photo-lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setLightbox(null)}
+          >
+            <motion.div
+              className="photo-lightbox-inner"
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {openPhoto.image && (
+                <img
+                  src={urlFor(openPhoto.image).width(1400).auto("format").quality(90).url()}
+                  alt={openPhoto.caption || ""}
+                />
+              )}
+              {openPhoto.caption && (
+                <p className="photo-lightbox-caption">{openPhoto.caption}</p>
+              )}
+            </motion.div>
+
+            {/* Close button */}
+            <button
+              className="photo-lightbox-close"
+              onClick={() => setLightbox(null)}
+              aria-label="Close"
+            >
+              ×
+            </button>
+
+            {/* Prev / Next */}
+            {lightbox > 0 && (
+              <button
+                className="photo-lightbox-nav photo-lightbox-prev"
+                onClick={(e) => { e.stopPropagation(); setLightbox(lightbox - 1); }}
+                aria-label="Previous"
+              >
+                ‹
+              </button>
+            )}
+            {lightbox < photos.length - 1 && (
+              <button
+                className="photo-lightbox-nav photo-lightbox-next"
+                onClick={(e) => { e.stopPropagation(); setLightbox(lightbox + 1); }}
+                aria-label="Next"
+              >
+                ›
+              </button>
+            )}
+
+            {/* Counter */}
+            <div className="photo-lightbox-counter">
+              {lightbox + 1} / {photos.length}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

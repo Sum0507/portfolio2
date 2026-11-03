@@ -13,14 +13,21 @@ const stagger = {
 
 export default function Research({ research = [] }) {
   return (
-    <section className="section" id="research">
-      <div className="section-inner">
-        <motion.div className="section-header"
-          variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}>
-          <p className="section-label">— academic work</p>
-          <h2 className="section-heading display">research</h2>
-        </motion.div>
+    <section className="section research-section" id="research">
 
+      {/* Bleed heading — outside section-inner */}
+      <motion.div
+        className="research-bleed-heading"
+        initial={{ opacity: 0, x: 60 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.9, ease: "easeOut" }}
+      >
+        <p className="label research-eyebrow">— academic work</p>
+        <h2 className="display research-title">research.</h2>
+      </motion.div>
+
+      <div className="section-inner">
         {(!research || research.length === 0) ? (
           <motion.div className="research-empty"
             variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}>

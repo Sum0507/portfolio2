@@ -29,9 +29,9 @@ export default function Contact({ siteData }) {
     setStatus("sending");
     const formData = new FormData(formRef.current);
     emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-      from_name: formData.get("from_name"),
+      from_name:  formData.get("from_name"),
       from_email: formData.get("from_email"),
-      message: formData.get("message"),
+      message:    formData.get("message"),
     }, PUBLIC_KEY)
       .then(() => { setStatus("sent"); formRef.current.reset(); })
       .catch(() => setStatus("error"));
@@ -39,19 +39,32 @@ export default function Contact({ siteData }) {
 
   return (
     <section className="section contact-section" id="contact">
+
+      {/* Bleed heading — outside section-inner */}
+      <motion.div
+        className="contact-bleed-heading"
+        initial={{ opacity: 0, x: 60 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.9, ease: "easeOut" }}
+      >
+        <p className="label contact-eyebrow">— let's connect</p>
+        <h2 className="display contact-title">say hello.</h2>
+      </motion.div>
+
       <div className="section-inner">
-        <motion.div className="contact-header"
-          variants={stagger} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.2 }}>
-          <motion.p className="contact-label" variants={fadeUp}>— let's connect</motion.p>
-          <motion.h2 className="contact-heading display" variants={fadeUp}>say hello.</motion.h2>
+        <motion.div
+          className="contact-body"
+          variants={stagger} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.2 }}
+        >
           <motion.p className="contact-sub serif" variants={fadeUp}>
             Whether it's a project, a collab, or just a chat ........... I'm down.
           </motion.p>
 
           <motion.form ref={formRef} onSubmit={handleSubmit} className="contact-form" variants={fadeUp}>
-            <input type="text" name="from_name" placeholder="your name" required />
-            <input type="email" name="from_email" placeholder="your email" required />
-            <textarea name="message" placeholder="your message" rows={5} required />
+            <input type="text"  name="from_name"  placeholder="your name"    required />
+            <input type="email" name="from_email" placeholder="your email"   required />
+            <textarea           name="message"    placeholder="your message" rows={5} required />
             <button type="submit" disabled={status === "sending"}>
               {status === "sending" ? "sending..." : status === "sent" ? "sent ✓" : "send →"}
             </button>

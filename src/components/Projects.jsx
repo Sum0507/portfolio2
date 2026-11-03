@@ -15,13 +15,20 @@ const stagger = {
 export default function Projects({ projects = [] }) {
   return (
     <section className="section projects-section" id="projects">
-      <div className="section-inner">
-        <motion.div className="proj-header"
-          variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}>
-          <p className="proj-label">— cse stuff</p>
-          <h2 className="proj-heading display">things i built</h2>
-        </motion.div>
 
+      {/* Bleed heading — outside section-inner */}
+      <motion.div
+        className="proj-bleed-heading"
+        initial={{ opacity: 0, x: 60 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.9, ease: "easeOut" }}
+      >
+        <p className="label proj-eyebrow">— cse stuff</p>
+        <h2 className="display proj-title">things i built.</h2>
+      </motion.div>
+
+      <div className="section-inner">
         <motion.div className="projects-grid"
           variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }}>
           {projects.map(p => {
@@ -42,7 +49,7 @@ export default function Projects({ projects = [] }) {
                 )}
                 <div className="proj-body">
                   <span className="proj-year label">{p.year}</span>
-                  <h3 className="proj-title display">{p.title}</h3>
+                  <h3 className="proj-name display">{p.title}</h3>
                   <p className="proj-stack">{p.stack}</p>
                   <div className="proj-divider" />
                   <p className="proj-desc">{p.description}</p>
