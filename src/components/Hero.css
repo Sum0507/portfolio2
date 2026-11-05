@@ -104,7 +104,7 @@
   z-index: 3;
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .hero-scroll-hint span {
@@ -164,7 +164,7 @@
 .hero-anim {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .hero-content--visible .hero-anim {
@@ -175,4 +175,9 @@
 .hero-scroll-hint.hero-content--visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Phones: drop the grain overlay (blend-mode painting is expensive on mobile CPUs) */
+@media (max-width: 768px) {
+  .hero-full::after { display: none; }
 }

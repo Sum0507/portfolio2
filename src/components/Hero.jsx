@@ -86,8 +86,9 @@ export default function Hero({ siteData }) {
   const [offsetY, setOffsetY] = useState(0);
   const heroRef = useRef(null);
 
+  // Entrance starts almost immediately (was 300ms) so the text appears sooner
   useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 300);
+    const t = setTimeout(() => setLoaded(true), 50);
     return () => clearTimeout(t);
   }, []);
 
@@ -109,6 +110,8 @@ export default function Hero({ siteData }) {
     return () => clearTimeout(timeout);
   }, [displayed, deleting, roleIndex, siteData]);
 
+  // Scroll fade: unchanged. The only difference is { passive: true }, which
+  // lets the browser scroll without waiting for this handler.
   useEffect(() => {
     const onScroll = () => {
       const progress = Math.min(window.scrollY / (window.innerHeight * 0.8), 1);
@@ -116,7 +119,7 @@ export default function Hero({ siteData }) {
       setOpacity(1 - progress);
       setOffsetY(window.scrollY);
     };
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -143,21 +146,21 @@ export default function Hero({ siteData }) {
         className={`hero-content ${loaded ? "hero-content--visible" : ""}`}
         style={{ transform: `translateY(${offsetY * 0.15}px)` }}
       >
-        <p className="hero-eyebrow label hero-anim" style={{ transitionDelay: "0.1s" }}>
+        <p className="hero-eyebrow label hero-anim" style={{ transitionDelay: "0.05s" }}>
           <AgeCounter /> · {siteData.location}
         </p>
-        <h1 className="hero-typed display hero-anim" style={{ transitionDelay: "0.25s" }}>
+        <h1 className="hero-typed display hero-anim" style={{ transitionDelay: "0.12s" }}>
           {displayed}<span className="cursor">|</span>
         </h1>
         {siteData.tagline && (
-          <p className="hero-tagline serif hero-anim" style={{ transitionDelay: "0.4s" }}>
+          <p className="hero-tagline serif hero-anim" style={{ transitionDelay: "0.2s" }}>
             "{siteData.tagline}"
           </p>
         )}
-        <p className="hero-bio hero-anim" style={{ transitionDelay: "0.55s" }}>
+        <p className="hero-bio hero-anim" style={{ transitionDelay: "0.28s" }}>
           {siteData.bio}
         </p>
-        <div className="hero-btns hero-anim" style={{ transitionDelay: "0.7s" }}>
+        <div className="hero-btns hero-anim" style={{ transitionDelay: "0.36s" }}>
           <MagneticBtn href="#projects" className="btn btn-primary">
             see my work
           </MagneticBtn>
@@ -173,7 +176,7 @@ export default function Hero({ siteData }) {
       </div>
       <div
         className={`hero-scroll-hint hero-anim ${loaded ? "hero-content--visible" : ""}`}
-        style={{ transitionDelay: "0.9s" }}
+        style={{ transitionDelay: "0.45s" }}
       >
         <span>scroll</span>
         <div className="scroll-line" />

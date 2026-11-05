@@ -12,7 +12,9 @@ const SECTIONS = [
   { id: "contact",     label: "contact" },
 ];
 
-export default function ThreadLine() {
+// `ready` turns true once the lower sections (projects, research, photos, art)
+// have been added to the page, so the dots and observers get set up again.
+export default function ThreadLine({ ready = true }) {
   const [active, setActive]   = useState("about");
   const [markers, setMarkers] = useState([]);
 
@@ -20,8 +22,11 @@ export default function ThreadLine() {
   // the element every frame, with NO React re-render and NO layout work.
   const { scrollYProgress } = useScroll();
 
-  // Calculate marker positions as % of page height
+  // Calculate marker positions as % of page height. Runs again whenever the
+  // page changes size (sections loading in, images loading, window resizing).
   useEffect(() => {
+    let raf = 0;
+
     const calcMarkers = () => {
       const pageH = document.documentElement.scrollHeight;
       const m = SECTIONS.map((s) => {
@@ -33,18 +38,28 @@ export default function ThreadLine() {
       setMarkers(m);
     };
 
+    const schedule = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(calcMarkers);
+    };
+
+    schedule();
     const t = setTimeout(calcMarkers, 800);
-    // Images and sticky sections change page height after load, so measure again
     const t2 = setTimeout(calcMarkers, 2500);
-    window.addEventListener("resize", calcMarkers);
-    window.addEventListener("load", calcMarkers);
+    const ro = new ResizeObserver(schedule);
+    ro.observe(document.body);
+    window.addEventListener("resize", schedule);
+    window.addEventListener("load", schedule);
+
     return () => {
+      cancelAnimationFrame(raf);
       clearTimeout(t);
       clearTimeout(t2);
-      window.removeEventListener("resize", calcMarkers);
-      window.removeEventListener("load", calcMarkers);
+      ro.disconnect();
+      window.removeEventListener("resize", schedule);
+      window.removeEventListener("load", schedule);
     };
-  }, []);
+  }, [ready]);
 
   // IntersectionObserver for the active section dot
   useEffect(() => {
@@ -60,7 +75,7 @@ export default function ThreadLine() {
       observers.push(obs);
     });
     return () => observers.forEach((o) => o.disconnect());
-  }, []);
+  }, [ready]);
 
   return (
     <div className="thread-line" aria-hidden="true">

@@ -176,6 +176,19 @@ img { max-width: 100%; display: block; }
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .section { padding: 80px 20px 28px; }
+
+  /* Phones: skip two expensive paint effects so scrolling stays smooth.
+     1) the film-grain layer over the hero (blend mode is costly to paint)
+     2) the thin outline on the big section headings */
+  .hero-full::after { display: none !important; }
+  .skills-title,
+  .proj-title,
+  .research-title,
+  .photo-title,
+  .art-title,
+  .contact-title {
+    -webkit-text-stroke: 0 !important;
+  }
 }
 @media (max-width: 480px) {
   .section { padding: 64px 16px 20px; }
@@ -192,4 +205,16 @@ img { max-width: 100%; display: block; }
   letter-spacing: 3px;
   color: #744c03ef;
   background-color: #ffe99fea;
+}
+
+/* Touch screens can't hover, and these hints use a costly blur filter */
+@media (hover: none) {
+  .photo-expand-hint,
+  .art-expand-hint { display: none; }
+}
+
+/* ── Phones: lighter painting ──
+   The thin outline on the big section headings is expensive to paint on mobile CPUs. */
+@media (max-width: 768px) {
+  h2.display { -webkit-text-stroke: 0 !important; }
 }
