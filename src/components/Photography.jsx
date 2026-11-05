@@ -152,7 +152,7 @@ export default function Photography({ photos = [] }) {
                 >
                   {p.image && (
                     <img
-                      src={urlFor(p.image).height(900).auto("format").quality(80).url()}
+                      src={urlFor(p.image).height(700).auto("format").quality(80).url()}
                       alt={p.caption || ""}
                       draggable={false}
                     />

@@ -148,7 +148,7 @@ export default function Art({ artworks = [] }) {
                 >
                   {a.image && (
                     <img
-                      src={urlFor(a.image).height(1000).auto("format").quality(80).url()}
+                      src={urlFor(a.image).height(760).auto("format").quality(80).url()}
                       alt={a.caption || ""}
                       draggable={false}
                     />
