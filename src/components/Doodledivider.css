@@ -1,0 +1,55 @@
+/* ── Doodle dividers — self-drawing lines between sections ── */
+.doodle-divider {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: clamp(90px, 11vw, 150px);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.doodle-divider svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.doodle-divider--flip svg {
+  transform: scaleX(-1);
+}
+
+.doodle-line {
+  stroke: rgba(255, 255, 255, 0.32);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.doodle-star {
+  stroke: var(--accent-y, #ffca26);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+@media (max-width: 768px) {
+  .doodle-divider {
+    height: 80px;
+  }
+  .doodle-line,
+  .doodle-star {
+    stroke-width: 1.5;
+  }
+}
+
+/* Respect reduced-motion: show the lines instantly */
+@media (prefers-reduced-motion: reduce) {
+  .doodle-line,
+  .doodle-star {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}

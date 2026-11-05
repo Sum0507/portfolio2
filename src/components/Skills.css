@@ -17,8 +17,8 @@
 }
 
 .skills-title {
-  font-size: clamp(72px, 16vw, 220px);
-  line-height: 0.9;
+  font-size: clamp(48px, 8vw, 110px);
+  line-height: 0.95;
   color: #fff;
   white-space: nowrap;
   /* shift right so last letter(s) bleed off screen */
@@ -82,7 +82,7 @@
     padding: 16px 0;
   }
   .skills-title {
-    font-size: clamp(60px, 20vw, 120px);
+    font-size: clamp(36px, 12vw, 80px);
     transform: translateX(4%);
   }
 }

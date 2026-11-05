@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
+import { motion, useScroll } from "framer-motion";
 import "./ThreadLine.css";
 
 const SECTIONS = [
@@ -14,14 +15,16 @@ const SECTIONS = [
 export default function ThreadLine() {
   const [active, setActive]   = useState("about");
   const [markers, setMarkers] = useState([]);
-  const [fillPct, setFillPct] = useState(0);
-  const rafRef = useRef(null);
+
+  // Scroll progress is a motion value: it updates the gold fill directly on
+  // the element every frame, with NO React re-render and NO layout work.
+  const { scrollYProgress } = useScroll();
 
   // Calculate marker positions as % of page height
   useEffect(() => {
     const calcMarkers = () => {
       const pageH = document.documentElement.scrollHeight;
-      const m = SECTIONS.map(s => {
+      const m = SECTIONS.map((s) => {
         const el = document.getElementById(s.id);
         if (!el) return null;
         const top = el.getBoundingClientRect().top + window.scrollY;
@@ -31,11 +34,19 @@ export default function ThreadLine() {
     };
 
     const t = setTimeout(calcMarkers, 800);
+    // Images and sticky sections change page height after load, so measure again
+    const t2 = setTimeout(calcMarkers, 2500);
     window.addEventListener("resize", calcMarkers);
-    return () => { clearTimeout(t); window.removeEventListener("resize", calcMarkers); };
+    window.addEventListener("load", calcMarkers);
+    return () => {
+      clearTimeout(t);
+      clearTimeout(t2);
+      window.removeEventListener("resize", calcMarkers);
+      window.removeEventListener("load", calcMarkers);
+    };
   }, []);
 
-  // IntersectionObserver for active section
+  // IntersectionObserver for the active section dot
   useEffect(() => {
     const observers = [];
     SECTIONS.forEach(({ id }) => {
@@ -48,33 +59,17 @@ export default function ThreadLine() {
       obs.observe(el);
       observers.push(obs);
     });
-    return () => observers.forEach(o => o.disconnect());
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
-
-  // Scroll fill — throttled with rAF so it never fires more than once per frame
-  const onScroll = useCallback(() => {
-    if (rafRef.current) return; // already queued
-    rafRef.current = requestAnimationFrame(() => {
-      const scrolled = window.scrollY;
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      setFillPct(total > 0 ? (scrolled / total) * 100 : 0);
-      rafRef.current = null;
-    });
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [onScroll]);
 
   return (
     <div className="thread-line" aria-hidden="true">
       <div className="thread-track" />
-      <div className="thread-fill" style={{ height: `${fillPct}%` }} />
-      {markers.map(m => (
+      <motion.div
+        className="thread-fill"
+        style={{ scaleY: scrollYProgress, originY: 0 }}
+      />
+      {markers.map((m) => (
         <a
           key={m.id}
           href={`#${m.id}`}

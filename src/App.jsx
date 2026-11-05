@@ -13,6 +13,7 @@ import Cursor from "./components/Cursor";
 import BackToTop from "./components/BackToTop";
 import Currently from "./components/Currently";
 import ThreadLine from "./components/ThreadLine";
+import DoodleDivider from "./components/Doodledivider";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -33,21 +34,19 @@ function Home({ siteData, photos, artworks, projects, research, loading, error }
     <>
       <Cursor />
       <ThreadLine />
-      <div className="wc-canvas" aria-hidden="true">
-        <div className="wc-blob wc-blob-1" />
-        <div className="wc-blob wc-blob-2" />
-        <div className="wc-blob wc-blob-3" />
-        <div className="wc-blob wc-blob-4" />
-        <div className="wc-blob wc-blob-5" />
-      </div>
       <div className="page-content">
         <Navbar siteData={siteData} />
         <Hero siteData={siteData} />
+        <DoodleDivider variant="wave" />
         <Skills siteData={siteData} />
+        <DoodleDivider variant="loop" flip />
         <Projects projects={projects} />
+        <DoodleDivider variant="swoosh" />
         <Research research={research} />
+        <DoodleDivider variant="spiral" flip />
         <Photography photos={photos} />
         <Art artworks={artworks} />
+        <DoodleDivider variant="stars" />
         <Contact siteData={siteData} />
       </div>
       <BackToTop />
