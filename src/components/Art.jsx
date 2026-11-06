@@ -190,7 +190,8 @@ export default function Art({ artworks = [] }) {
 
           {/* Scroll hint */}
           <div className="art-scroll-hint">
-            <span>scroll to explore</span>
+            <span className="hint-desktop">scroll to explore</span>
+            <span className="hint-mobile">swipe to explore</span>
             <div className="art-scroll-arrow">→</div>
           </div>
         </div>

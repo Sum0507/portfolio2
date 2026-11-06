@@ -199,6 +199,9 @@
   text-transform: uppercase;
 }
 
+/* "swipe" wording is only for phones; "scroll" wording is for desktop */
+.art-scroll-hint .hint-mobile { display: none; }
+
 .art-scroll-arrow {
   font-size: 14px;
   color: #fff;
@@ -461,7 +464,10 @@ body.gallery-open .to-top {
   }
   .art-film-card { width: auto; height: 320px; }
   .art-view-all-card { width: 160px; height: 320px; }
-  .art-scroll-hint { display: none; }
+  /* On phones the strip is a normal swipe, so show a swipe hint */
+  .art-scroll-hint { right: 20px; bottom: 22px; }
+  .art-scroll-hint .hint-desktop { display: none; }
+  .art-scroll-hint .hint-mobile  { display: inline; }
 
   .art-gallery-grid { columns: 2; column-gap: 12px; padding: 16px 20px 60px; }
   .art-gallery-header { padding: 24px 20px 16px; }

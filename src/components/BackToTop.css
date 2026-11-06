@@ -2,7 +2,8 @@
   position: fixed;
   bottom: 88px;
   right: 32px;
-  z-index: 9999;
+  /* below the navbar (200) and the full-screen menu (199) */
+  z-index: 150;
   width: 44px;
   height: 52px;
   background: #fdd871b6;
@@ -43,4 +44,17 @@
   box-shadow: 2px 4px 24px rgba(105, 211, 247, 0.5),
               0 0 40px rgba(105, 211, 247, 0.2);
   transform: translateY(-2px);
+}
+
+/* Hidden while the full-screen menu is open (Navbar adds this class to body) */
+body.nav-open .back-to-top {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: 24px;
+    right: 16px;
+  }
 }

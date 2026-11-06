@@ -199,6 +199,9 @@
   text-transform: uppercase;
 }
 
+/* "swipe" wording is only for phones; "scroll" wording is for desktop */
+.photo-scroll-hint .hint-mobile { display: none; }
+
 .photo-scroll-arrow {
   font-size: 14px;
   color: #fff;
@@ -461,7 +464,10 @@ body.gallery-open .to-top {
   }
   .photo-film-card { width: auto; height: 300px; }
   .photo-view-all-card { width: 160px; height: 300px; }
-  .photo-scroll-hint { display: none; }
+  /* On phones the strip is a normal swipe, so show a swipe hint */
+  .photo-scroll-hint { right: 20px; bottom: 22px; }
+  .photo-scroll-hint .hint-desktop { display: none; }
+  .photo-scroll-hint .hint-mobile  { display: inline; }
 
   .photo-gallery-grid { columns: 2; column-gap: 12px; padding: 16px 20px 60px; }
   .photo-gallery-header { padding: 24px 20px 16px; }
