@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import useHeadingParallax from "./useHeadingParallax";
 import "./Research.css";
 
 const fadeUp = {
@@ -12,12 +13,15 @@ const stagger = {
 };
 
 export default function Research({ research = [] }) {
+  const { ref, y } = useHeadingParallax();
+
   return (
-    <section className="section research-section" id="research">
+    <section className="section research-section" id="research" ref={ref}>
 
       {/* Bleed heading — outside section-inner */}
       <motion.div
         className="research-bleed-heading"
+        style={{ y }}
         initial={{ opacity: 0, x: 60 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, amount: 0.3 }}

@@ -26,12 +26,18 @@
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
 }
 
-/* ── Grid ── */
+/* ── Grid: staggered two columns ──
+   Every second card (the right column) sits lower, like a brick pattern. */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 24px;
+  align-items: start;
   margin-bottom: 56px;
+}
+
+.project-card:nth-child(even) {
+  margin-top: 72px;
 }
 
 /* ── Card ── */
@@ -89,7 +95,16 @@
 .proj-link:hover { color: var(--accent-r); }
 
 /* ── Responsive ── */
+
+/* The section has no side padding of its own, so give the content some
+   whenever the screen is narrower than the centred 1080px column. */
+@media (max-width: 1180px) {
+  .projects-section .section-inner { padding: 0 48px; }
+}
+
 @media (max-width: 768px) {
+  .projects-section .section-inner { padding: 0 20px; }
+
   .proj-bleed-heading {
     padding-left: 20px;
   }
@@ -102,9 +117,13 @@
     padding: 56px 0 56px;
   }
 
+  /* One column, but keep a little left/right stagger so it doesn't look flat */
   .projects-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
+  .project-card:nth-child(odd)  { margin-right: 20px; }
+  .project-card:nth-child(even) { margin-top: 0; margin-left: 20px; }
 
   .proj-thumbnail {
     height: 200px;

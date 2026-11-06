@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { FiGithub, FiInstagram, FiLinkedin, FiMail } from "react-icons/fi";
+import useHeadingParallax from "./useHeadingParallax";
 import "./Contact.css";
 
 const SERVICE_ID  = "service_r24rly3";
@@ -21,6 +22,7 @@ const stagger = {
 export default function Contact({ siteData }) {
   const formRef = useRef();
   const [status, setStatus] = useState("idle");
+  const { ref, y } = useHeadingParallax();
 
   if (!siteData) return null;
 
@@ -38,11 +40,12 @@ export default function Contact({ siteData }) {
   };
 
   return (
-    <section className="section contact-section" id="contact">
+    <section className="section contact-section" id="contact" ref={ref}>
 
       {/* Bleed heading — outside section-inner */}
       <motion.div
         className="contact-bleed-heading"
+        style={{ y }}
         initial={{ opacity: 0, x: 60 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, amount: 0.3 }}
@@ -57,10 +60,7 @@ export default function Contact({ siteData }) {
           className="contact-body"
           variants={stagger} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.2 }}
         >
-          <motion.p className="contact-sub serif" variants={fadeUp}>
-            Whether it's a project, a collab, or just a chat ........... I'm down.
-          </motion.p>
-
+          {/* Left: the form */}
           <motion.form ref={formRef} onSubmit={handleSubmit} className="contact-form" variants={fadeUp}>
             <input type="text"  name="from_name"  placeholder="your name"    required />
             <input type="email" name="from_email" placeholder="your email"   required />
@@ -71,27 +71,34 @@ export default function Contact({ siteData }) {
             {status === "error" && <p className="form-error">something went wrong. try emailing directly.</p>}
           </motion.form>
 
-          <motion.div className="contact-socials" variants={fadeUp}>
-            {siteData.email && (
-              <a href={`mailto:${siteData.email}`} target="_blank" rel="noreferrer" className="social-icon" title={siteData.email}>
-                <FiMail />
-              </a>
-            )}
-            {siteData.github && (
-              <a href={siteData.github} target="_blank" rel="noreferrer" className="social-icon" title="GitHub">
-                <FiGithub />
-              </a>
-            )}
-            {siteData.linkedin && (
-              <a href={siteData.linkedin} target="_blank" rel="noreferrer" className="social-icon" title="LinkedIn">
-                <FiLinkedin />
-              </a>
-            )}
-            {siteData.instagram && (
-              <a href={siteData.instagram} target="_blank" rel="noreferrer" className="social-icon" title="Instagram">
-                <FiInstagram />
-              </a>
-            )}
+          {/* Right: intro text + socials, sitting lower than the form */}
+          <motion.div className="contact-aside" variants={fadeUp}>
+            <p className="contact-sub serif">
+              Whether it's a project, a collab, or just a chat ........... I'm down.
+            </p>
+
+            <div className="contact-socials">
+              {siteData.email && (
+                <a href={`mailto:${siteData.email}`} target="_blank" rel="noreferrer" className="social-icon" title={siteData.email} aria-label="Email">
+                  <FiMail />
+                </a>
+              )}
+              {siteData.github && (
+                <a href={siteData.github} target="_blank" rel="noreferrer" className="social-icon" title="GitHub" aria-label="GitHub">
+                  <FiGithub />
+                </a>
+              )}
+              {siteData.linkedin && (
+                <a href={siteData.linkedin} target="_blank" rel="noreferrer" className="social-icon" title="LinkedIn" aria-label="LinkedIn">
+                  <FiLinkedin />
+                </a>
+              )}
+              {siteData.instagram && (
+                <a href={siteData.instagram} target="_blank" rel="noreferrer" className="social-icon" title="Instagram" aria-label="Instagram">
+                  <FiInstagram />
+                </a>
+              )}
+            </div>
           </motion.div>
         </motion.div>
       </div>

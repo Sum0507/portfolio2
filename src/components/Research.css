@@ -26,8 +26,17 @@
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
 }
 
-/* ── Cards ── */
-.research-list { display: flex; flex-direction: column; gap: 16px; }
+/* ── Cards: staggered two columns, same rhythm as Projects ── */
+.research-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.research-card:nth-child(even) {
+  margin-top: 56px;
+}
 
 .research-card {
   background: var(--card-bg);
@@ -84,7 +93,16 @@
 }
 
 /* ── Responsive ── */
+
+/* The section has no side padding of its own, so give the content some
+   whenever the screen is narrower than the centred 1080px column. */
+@media (max-width: 1180px) {
+  .research-section .section-inner { padding: 0 48px; }
+}
+
 @media (max-width: 768px) {
+  .research-section .section-inner { padding: 0 20px; }
+
   .research-bleed-heading {
     padding-left: 20px;
   }
@@ -94,6 +112,11 @@
   .research-section {
     padding: 56px 0 56px;
   }
+
+  /* One column, with a small left/right stagger */
+  .research-list { grid-template-columns: 1fr; gap: 16px; }
+  .research-card:nth-child(odd)  { margin-right: 20px; }
+  .research-card:nth-child(even) { margin-top: 0; margin-left: 20px; }
 }
 
 @media (max-width: 600px) {

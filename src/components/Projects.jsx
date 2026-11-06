@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { urlFor } from "../sanityClient";
+import useHeadingParallax from "./useHeadingParallax";
 import "./Projects.css";
 
 const fadeUp = {
@@ -101,12 +102,15 @@ function ProjectThumb({ image, title }) {
 }
 
 export default function Projects({ projects = [] }) {
+  const { ref, y } = useHeadingParallax();
+
   return (
-    <section className="section projects-section" id="projects">
+    <section className="section projects-section" id="projects" ref={ref}>
 
       {/* Bleed heading — outside section-inner */}
       <motion.div
         className="proj-bleed-heading"
+        style={{ y }}
         initial={{ opacity: 0, x: 60 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, amount: 0.3 }}
