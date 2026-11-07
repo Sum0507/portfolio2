@@ -2,7 +2,8 @@
   position: fixed;
   bottom: 88px;
   right: 32px;
-  /* below the navbar (200) and the full-screen menu (199) */
+  /* below the navbar (200) and the full-screen menu (199) so it never
+     covers them; the photo/art gallery overlays sit above it anyway */
   z-index: 150;
   width: 44px;
   height: 52px;
@@ -46,15 +47,18 @@
   transform: translateY(-2px);
 }
 
-/* Hidden while the full-screen menu is open (Navbar adds this class to body) */
-body.nav-open .back-to-top {
-  opacity: 0;
-  pointer-events: none;
+/* Hidden while the full-screen menu or a photo/art gallery is open */
+body.nav-open .back-to-top,
+body.gallery-open .back-to-top {
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 @media (max-width: 768px) {
   .back-to-top {
-    bottom: 24px;
     right: 16px;
+    bottom: 72px;
+    width: 40px;
+    height: 48px;
   }
 }

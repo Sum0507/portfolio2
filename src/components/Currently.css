@@ -1,78 +1,131 @@
-.currently-widget {
+/* ── "Currently" status pill ── */
+.currently {
   position: fixed;
-  bottom: 32px;
-  right: 32px; 
-  z-index: 198;
+  right: 32px;
+  bottom: 28px;
+  z-index: 140;
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(10, 10, 10, 0.75);
-  backdrop-filter: blur(8px);
+  gap: 10px;
+  max-width: min(420px, calc(100vw - 160px));
+  padding: 10px 18px;
+  background: rgba(13, 13, 13, 0.85);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-family: var(--font-body);
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  color: rgba(255,255,255,0.85);
-  max-width: 320px;
-  pointer-events: none;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  color: #fff;
+  font-family: var(--font-body, monospace);
+  text-align: left;
   cursor: default;
-
-  /* fade in/out */
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
-.currently-widget.currently-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.currently-dot {
-  width: 7px;
-  height: 7px;
+/* Green "live" dot with a soft pulse (transform + opacity only = cheap) */
+.currently__dot {
+  position: relative;
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  background: #4ade80;
+  background: #3ddc84;
+}
+
+.currently__dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #3ddc84;
+  animation: currentlyPulse 2.4s ease-out infinite;
+}
+
+@keyframes currentlyPulse {
+  from { transform: scale(1);   opacity: 0.6; }
+  to   { transform: scale(2.6); opacity: 0; }
+}
+
+.currently__label {
   flex-shrink: 0;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
-  50% { opacity: 0.8; box-shadow: 0 0 0 5px rgba(74,222,128,0); }
-}
-
-.currently-label {
-  color: rgba(255,255,255,0.4);
-  text-transform: uppercase;
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 2px;
-  flex-shrink: 0;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
 }
 
-.currently-text {
+.currently__emoji {
+  flex-shrink: 0;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.currently__text {
+  font-size: 12px;
+  letter-spacing: 1px;
   color: #fff;
   white-space: nowrap;
-  overflow: visible;
-  text-overflow: unset;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-@media (max-width: 480px) {
-  .currently-widget {
-    bottom: 20px;
-    right: 16px;
-    max-width: 240px;
-  }
-  .currently-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-body.nav-open .currently-widget {
-  opacity: 0 !important;
+/* Hidden while the full-screen menu or a photo/art gallery is open */
+body.nav-open .currently,
+body.gallery-open .currently {
+  opacity: 0;
   pointer-events: none;
+}
+
+/* ── Phones: compact chip, tap to expand ── */
+@media (max-width: 768px) {
+  .currently {
+    left: 16px;
+    right: auto;
+    bottom: 20px;
+    gap: 8px;
+    padding: 9px 12px;
+    /* leave room on the right for the back-to-top button */
+    max-width: calc(100vw - 32px - 64px);
+    cursor: pointer;
+  }
+
+  /* collapsed: just the dot and the emoji */
+  .currently__label,
+  .currently__text {
+    display: none;
+  }
+
+  /* if the text has no emoji, the collapsed chip would be only a dot,
+     so the label shows instead */
+  .currently:not(:has(.currently__emoji)) .currently__label {
+    display: inline;
+  }
+
+  /* expanded: full text, allowed to wrap onto two lines */
+  .currently--open {
+    border-radius: 18px;
+    align-items: flex-start;
+  }
+  .currently--open .currently__dot {
+    margin-top: 4px;
+  }
+  .currently--open .currently__label {
+    display: inline;
+    margin-top: 2px;
+  }
+  .currently--open .currently__text {
+    display: block;
+    white-space: normal;
+    overflow: visible;
+    animation: currentlyFade 0.25s ease;
+  }
+}
+
+@keyframes currentlyFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .currently__dot::after { animation: none; opacity: 0; }
+  .currently--open .currently__text { animation: none; }
 }

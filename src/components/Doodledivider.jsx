@@ -32,13 +32,14 @@ function starPath(cx, cy, r) {
   return `M${pts.join(" L")} Z`;
 }
 
-// Faster: the line draws in ~0.9s so it keeps up with quick scrolling
+// Fast: the line draws in ~0.7s so it keeps up with quick scrolling and
+// is finished even on slower phones.
 const lineVariants = {
   hidden: { pathLength: 0, opacity: 0 },
   show: {
     pathLength: 1,
     opacity: 1,
-    transition: { duration: 0.9, ease: "easeOut" },
+    transition: { duration: 0.7, ease: "easeOut" },
   },
 };
 
@@ -64,8 +65,9 @@ export default function DoodleDivider({ variant = "wave", flip = false }) {
       aria-hidden="true"
       initial="hidden"
       whileInView="show"
-      // starts as soon as a sliver of the divider enters the screen
-      viewport={{ once: true, amount: 0.1, margin: "0px 0px 15% 0px" }}
+      // starts drawing well BEFORE the divider reaches the screen (40% of the
+      // screen height early), so it is already complete when you see it
+      viewport={{ once: true, amount: 0.1, margin: "0px 0px 40% 0px" }}
     >
       <svg
         viewBox="0 0 1400 160"

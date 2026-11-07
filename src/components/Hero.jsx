@@ -174,13 +174,6 @@ export default function Hero({ siteData }) {
           </MagneticBtn>
         </div>
       </div>
-      <div
-        className={`hero-scroll-hint hero-anim ${loaded ? "hero-content--visible" : ""}`}
-        style={{ transitionDelay: "0.45s" }}
-      >
-        <span>scroll</span>
-        <div className="scroll-line" />
-      </div>
     </section>
   );
 }

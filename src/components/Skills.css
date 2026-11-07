@@ -63,8 +63,9 @@
   letter-spacing: 0.02em;
 }
 
-/* The section has no side padding of its own, so give the content some
-   whenever the screen is narrower than the centred 1080px column. */
+/* The section has no side padding of its own, so give the list some
+   whenever the screen is narrower than the centred 1080px column.
+   This is what stops the rows touching the screen edge on phones. */
 @media (max-width: 1180px) {
   .skills-section .section-inner { padding: 0 48px; }
 }

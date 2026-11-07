@@ -464,10 +464,18 @@ body.gallery-open .to-top {
   }
   .art-film-card { width: auto; height: 320px; }
   .art-view-all-card { width: 160px; height: 320px; }
-  /* On phones the strip is a normal swipe, so show a swipe hint */
-  .art-scroll-hint { right: 20px; bottom: 22px; }
+  /* On phones the strip is a normal swipe, so show a clear swipe hint
+     right under the strip (in the page flow, not floating in a corner) */
+  .art-scroll-hint {
+    position: static;
+    justify-content: center;
+    margin-top: 18px;
+    opacity: 1;
+  }
+  .art-scroll-hint span { font-size: 11px; }
   .art-scroll-hint .hint-desktop { display: none; }
   .art-scroll-hint .hint-mobile  { display: inline; }
+  .art-scroll-arrow { font-size: 18px; }
 
   .art-gallery-grid { columns: 2; column-gap: 12px; padding: 16px 20px 60px; }
   .art-gallery-header { padding: 24px 20px 16px; }

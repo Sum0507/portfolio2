@@ -464,10 +464,18 @@ body.gallery-open .to-top {
   }
   .photo-film-card { width: auto; height: 300px; }
   .photo-view-all-card { width: 160px; height: 300px; }
-  /* On phones the strip is a normal swipe, so show a swipe hint */
-  .photo-scroll-hint { right: 20px; bottom: 22px; }
+  /* On phones the strip is a normal swipe, so show a clear swipe hint
+     right under the strip (in the page flow, not floating in a corner) */
+  .photo-scroll-hint {
+    position: static;
+    justify-content: center;
+    margin-top: 18px;
+    opacity: 1;
+  }
+  .photo-scroll-hint span { font-size: 11px; }
   .photo-scroll-hint .hint-desktop { display: none; }
   .photo-scroll-hint .hint-mobile  { display: inline; }
+  .photo-scroll-arrow { font-size: 18px; }
 
   .photo-gallery-grid { columns: 2; column-gap: 12px; padding: 16px 20px 60px; }
   .photo-gallery-header { padding: 24px 20px 16px; }
