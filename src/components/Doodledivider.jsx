@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import "./Doodledivider.css";
 
 // All shapes are drawn on a 1400 x 160 canvas.
@@ -32,14 +32,15 @@ function starPath(cx, cy, r) {
   return `M${pts.join(" L")} Z`;
 }
 
-// Fast: the line draws in ~0.7s so it keeps up with quick scrolling and
-// is finished even on slower phones.
-const lineVariants = {
-  hidden: { pathLength: 0, opacity: 0 },
+// The line is revealed by a left-to-right "wipe" of the whole divider
+// instead of a dashed-stroke trick. A wipe always ends at the full width,
+// so the line can never stop short of the screen edge, whatever the screen
+// size, zoom level or phone speed.
+const wipeVariants = {
+  hidden: { clipPath: "inset(0 100% 0 0)" },
   show: {
-    pathLength: 1,
-    opacity: 1,
-    transition: { duration: 0.7, ease: "easeOut" },
+    clipPath: "inset(0 0% 0 0)",
+    transition: { duration: 0.9, ease: [0.4, 0, 0.2, 1] },
   },
 };
 
@@ -59,11 +60,14 @@ const starVariants = {
  * flip: mirror the shape horizontally
  */
 export default function DoodleDivider({ variant = "wave", flip = false }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.div
       className={`doodle-divider${flip ? " doodle-divider--flip" : ""}`}
       aria-hidden="true"
-      initial="hidden"
+      variants={wipeVariants}
+      initial={reduceMotion ? "show" : "hidden"}
       whileInView="show"
       // starts drawing well BEFORE the divider reaches the screen (40% of the
       // screen height early), so it is already complete when you see it
@@ -74,10 +78,9 @@ export default function DoodleDivider({ variant = "wave", flip = false }) {
         preserveAspectRatio="xMidYMid slice"
         fill="none"
       >
-        <motion.path
+        <path
           className="doodle-line"
           d={PATHS[variant] || PATHS.wave}
-          variants={lineVariants}
         />
         {variant === "stars" &&
           STARS.map(([x, y, r], i) => (
