@@ -54,6 +54,10 @@ img { max-width: 100%; display: block; }
   position: relative;
   z-index: 1;
   background: #0d0d0d;
+  /* Safety net: nothing inside the page can ever make it wider than the
+     screen. "clip" (unlike "hidden") does not turn this into a scroll box,
+     so the sticky photo/art strips keep working. */
+  overflow-x: clip;
 }
 
 /* ── Typography ── */
