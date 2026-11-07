@@ -1,4 +1,10 @@
-/* ── "Currently" status pill ── */
+/* ── "Currently" status chip ──
+   Collapsed by default (just the dot + emoji), on every screen size.
+   It opens to show the full text:
+   - desktop: when you hover it (or click it)
+   - phones: when you tap it (closes again after 5 seconds)
+   Long text wraps onto extra lines instead of being cut off. */
+
 .currently {
   position: fixed;
   right: 32px;
@@ -6,9 +12,8 @@
   z-index: 140;
   display: flex;
   align-items: center;
-  gap: 10px;
-  max-width: min(420px, calc(100vw - 160px));
-  padding: 10px 18px;
+  gap: 8px;
+  padding: 10px 14px;
   background: rgba(13, 13, 13, 0.85);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -17,7 +22,7 @@
   color: #fff;
   font-family: var(--font-body, monospace);
   text-align: left;
-  cursor: default;
+  cursor: pointer;
   transition: opacity 0.3s ease;
 }
 
@@ -61,11 +66,78 @@
 
 .currently__text {
   font-size: 12px;
+  line-height: 1.5;
   letter-spacing: 1px;
   color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+}
+
+/* ── Collapsed: hide the words ── */
+.currently__label,
+.currently__text {
+  display: none;
+}
+
+/* If the text has no emoji, the collapsed chip would be only a dot,
+   so the small "currently" label stays visible instead. */
+.currently:not(:has(.currently__emoji)) .currently__label {
+  display: inline;
+}
+
+/* ── Expanded: full text, wraps onto more lines ── */
+.currently--open,
+.currently:focus-visible {
+  max-width: min(380px, calc(100vw - 96px));
+  align-items: flex-start;
+  border-radius: 18px;
+  padding: 11px 16px;
+}
+
+@media (hover: hover) {
+  .currently:hover {
+    max-width: min(380px, calc(100vw - 96px));
+    align-items: flex-start;
+    border-radius: 18px;
+    padding: 11px 16px;
+  }
+}
+
+.currently--open .currently__label,
+.currently--open .currently__text,
+.currently:focus-visible .currently__label,
+.currently:focus-visible .currently__text {
+  display: block;
+}
+
+@media (hover: hover) {
+  .currently:hover .currently__label,
+  .currently:hover .currently__text {
+    display: block;
+  }
+}
+
+/* keep the dot, label and emoji lined up with the first line of text */
+.currently--open .currently__dot,
+.currently:focus-visible .currently__dot {
+  margin-top: 5px;
+}
+.currently--open .currently__label,
+.currently:focus-visible .currently__label {
+  margin-top: 3px;
+}
+
+@media (hover: hover) {
+  .currently:hover .currently__dot   { margin-top: 5px; }
+  .currently:hover .currently__label { margin-top: 3px; }
+}
+
+.currently--open .currently__text,
+.currently:focus-visible .currently__text {
+  animation: currentlyFade 0.25s ease;
+}
+
+@keyframes currentlyFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* Hidden while the full-screen menu or a photo/art gallery is open */
@@ -75,54 +147,21 @@ body.gallery-open .currently {
   pointer-events: none;
 }
 
-/* ── Phones: compact chip, tap to expand ── */
+/* ── Phones: sits bottom-left so it never meets the back-to-top button ── */
 @media (max-width: 768px) {
   .currently {
     left: 16px;
     right: auto;
     bottom: 20px;
-    gap: 8px;
     padding: 9px 12px;
+  }
+
+  .currently--open,
+  .currently:focus-visible {
     /* leave room on the right for the back-to-top button */
     max-width: calc(100vw - 32px - 64px);
-    cursor: pointer;
+    padding: 10px 14px;
   }
-
-  /* collapsed: just the dot and the emoji */
-  .currently__label,
-  .currently__text {
-    display: none;
-  }
-
-  /* if the text has no emoji, the collapsed chip would be only a dot,
-     so the label shows instead */
-  .currently:not(:has(.currently__emoji)) .currently__label {
-    display: inline;
-  }
-
-  /* expanded: full text, allowed to wrap onto two lines */
-  .currently--open {
-    border-radius: 18px;
-    align-items: flex-start;
-  }
-  .currently--open .currently__dot {
-    margin-top: 4px;
-  }
-  .currently--open .currently__label {
-    display: inline;
-    margin-top: 2px;
-  }
-  .currently--open .currently__text {
-    display: block;
-    white-space: normal;
-    overflow: visible;
-    animation: currentlyFade 0.25s ease;
-  }
-}
-
-@keyframes currentlyFade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {

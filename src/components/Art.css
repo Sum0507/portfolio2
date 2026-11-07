@@ -22,6 +22,9 @@
   padding-left: 48px;
   margin-bottom: 36px;
   flex-shrink: 0;
+  /* clips the heading's deliberate bleed past the right edge, so it can
+     never make the page wider than the screen (like the other sections) */
+  overflow: hidden;
 }
 
 .art-eyebrow {
