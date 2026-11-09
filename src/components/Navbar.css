@@ -106,7 +106,7 @@
   background-size: 100% auto;
   background-repeat: repeat-y;
   background-position: top center;
-  opacity: 0.18;
+  opacity: 0.25;
   pointer-events: none;
   z-index: 1;
 }
