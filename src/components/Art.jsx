@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { urlFor } from "../sanityClient";
 import "./Art.css";
 
-const PREVIEW_COUNT = 5; // cards shown in filmstrip
+const PREVIEW_COUNT = 4; // cards shown in filmstrip
 
 // Full-size image URL used by the lightbox. The same URL is used for
 // preloading, so the browser cache makes "click to expand" feel instant.

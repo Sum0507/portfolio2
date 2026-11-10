@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { urlFor } from "../sanityClient";
 import "./Photography.css";
 
-const PREVIEW_COUNT = 6; // cards shown in filmstrip
+const PREVIEW_COUNT = 4; // cards shown in filmstrip
 
 // Small static tilts for each preview card
 const TILTS = [-1.5, 1.2, -0.8, 1.8, -1.2, 0.9];

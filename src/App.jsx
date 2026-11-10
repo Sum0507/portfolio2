@@ -85,7 +85,8 @@ export default function App() {
     client.fetch(`*[_type == "siteConfig"][0]{
       ...,
       heroImage{ asset->{ url } },
-      photo{ asset->{ url } }
+      photo{ asset->{ url } },
+      "cvUrl": coalesce(cvFile.asset->url + "?dl=Sumaiya-CV.pdf", cvUrl)
     }`).then((site) => {
       if (cancelled) return;
       setSiteData(site);
