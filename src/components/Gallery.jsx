@@ -35,6 +35,10 @@ const VARIANTS = {
 
 const PREVIEW_COUNT = 4; // cards shown in the filmstrip
 
+// On phones the strip cards are only ~320px tall, so a smaller image is
+// plenty sharp (2x for high-density screens) and much lighter to download.
+const isPhone = () => typeof window !== "undefined" && window.innerWidth <= 768;
+
 // How much page scrolling the filmstrip takes up. It used to be 320vh
 // (more than 3 screens for 4 pictures); 220vh still feels unhurried.
 const STRIP_SCROLL_VH = 220;
@@ -225,8 +229,10 @@ export default function Gallery({ items = [], variant = "photo" }) {
                 >
                   {it.image && (
                     <img
-                      src={urlFor(it.image).height(v.stripHeight).auto("format").quality(80).url()}
+                      src={urlFor(it.image).height(isPhone() ? 640 : v.stripHeight).auto("format").quality(80).url()}
                       alt={it.caption || ""}
+                      loading="lazy"
+                      decoding="async"
                       draggable={false}
                     />
                   )}

@@ -26,6 +26,16 @@
     <meta name="twitter:image" content="https://cdn.sanity.io/images/lyb8bzsd/production/7e7c9668cc5ca9c0a4db20aed0dee80bc186fe5d-5184x3456.jpg?w=1200" />
 
     <link rel="preconnect" href="https://cdn.sanity.io" />
+    <link rel="preconnect" href="https://lyb8bzsd.apicdn.sanity.io" crossorigin />
+    <!-- Start downloading the site settings straight away, in parallel with
+         the JavaScript, so the page has its content sooner on slow phones.
+         Must match SITE_QUERY in src/sanityClient.js exactly. -->
+    <link
+      rel="preload"
+      as="fetch"
+      crossorigin="anonymous"
+      href="https://lyb8bzsd.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B_type%20%3D%3D%20%22siteConfig%22%5D%5B0%5D%7B...%2CheroImage%7Basset-%3E%7Burl%7D%7D%2Cphoto%7Basset-%3E%7Burl%7D%7D%2C%22cvUrl%22%3Acoalesce(cvFile.asset-%3Eurl%20%2B%20%22%3Fdl%3DSumaiya-CV.pdf%22%2C%20cvUrl)%7D"
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
