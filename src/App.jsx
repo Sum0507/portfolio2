@@ -1,7 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MotionConfig } from "framer-motion";
-import { client } from "./sanityClient";
+import { sanityFetch, SITE_QUERY, EXTRAS_QUERY } from "./sanityClient";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Skills from "./components/Skills";
@@ -15,7 +14,7 @@ import Currently from "./components/Currently";
 import ThreadLine from "./components/ThreadLine";
 import DoodleDivider from "./components/Doodledivider";
 
-// (The Sanity client already retries failed requests by itself.)
+// (sanityFetch retries failed requests a couple of times by itself.)
 // Used if Sanity can't be reached, so visitors still see who this is
 // and how to get in touch instead of an empty error screen.
 const FALLBACK_SITE = {
@@ -73,6 +72,10 @@ function Home({ siteData, photos, artworks, projects, research, loading, extrasR
   );
 }
 
+// "/" (and "/index.html") is the portfolio; every other path shows the 404
+const isHomePath =
+  typeof window === "undefined" || ["/", "/index.html"].includes(window.location.pathname.replace(/\/+$/, "/"));
+
 export default function App() {
   const [siteData, setSiteData] = useState(null);
   const [photos, setPhotos] = useState([]);
@@ -86,12 +89,8 @@ export default function App() {
     let cancelled = false;
 
     // 1) Site settings: the page can show as soon as this arrives
-    client.fetch(`*[_type == "siteConfig"][0]{
-      ...,
-      heroImage{ asset->{ url } },
-      photo{ asset->{ url } },
-      "cvUrl": coalesce(cvFile.asset->url + "?dl=Sumaiya-CV.pdf", cvUrl)
-    }`).then((site) => {
+    // (index.html already started downloading this, so it is usually instant)
+    sanityFetch(SITE_QUERY).then((site) => {
       if (cancelled) return;
       setSiteData(site || FALLBACK_SITE);
       setLoading(false);
@@ -102,17 +101,13 @@ export default function App() {
     });
 
     // 2) Everything else loads at the same time and fills in when ready
-    Promise.all([
-      client.fetch(`*[_type == "photo"] | order(order asc)`),
-      client.fetch(`*[_type == "artwork"] | order(order asc)`),
-      client.fetch(`*[_type == "project"] | order(order asc){ ..., previewImage{ asset->{ url } } }`),
-      client.fetch(`*[_type == "research"] | order(order asc)`),
-    ]).then(([photos, art, projects, research]) => {
+    //    (one request for all four instead of four separate ones)
+    sanityFetch(EXTRAS_QUERY).then((extras) => {
       if (cancelled) return;
-      setPhotos(photos);
-      setArtworks(art);
-      setProjects(projects);
-      setResearch(research);
+      setPhotos(extras?.photos || []);
+      setArtworks(extras?.artworks || []);
+      setProjects(extras?.projects || []);
+      setResearch(extras?.research || []);
       setExtrasReady(true);
     }).catch(() => {
       if (cancelled) return;
@@ -126,10 +121,10 @@ export default function App() {
     // reducedMotion="user": every framer animation respects the visitor's
     // "reduce motion" device setting automatically
     <MotionConfig reducedMotion="user">
-    <BrowserRouter>
       <Suspense fallback={null}>
-        <Routes>
-          <Route path="/" element={
+        {/* The site has just two pages, so a simple check replaces the
+            router library: "/" is the portfolio, anything else is the 404. */}
+        {isHomePath ? (
             <Home
               siteData={siteData}
               photos={photos}
@@ -139,11 +134,10 @@ export default function App() {
               loading={loading}
               extrasReady={extrasReady}
             />
-          } />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        ) : (
+          <NotFound />
+        )}
       </Suspense>
-    </BrowserRouter>
     </MotionConfig>
   );
 }
