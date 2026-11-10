@@ -243,21 +243,17 @@ img { max-width: 100%; display: block; }
 /* ═════════════════════════════════════════════
    COLOUR ROLES
    Every colour keeps one job, like a painter's palette:
-   - Sun yellow  #FFCA26  "look here": labels, years, links, cursor
+   - Sun yellow  #FFCA26  "look here": labels, years, links, stack lines
+                          (recruiter-first), cursor
    - Marigold    #FB6015  "click me": buttons you press
    - Oxblood     #7F0303  frames: card edges, tape
    - Cream       #FFF6E5  reading: longer text
-   - Light teal  #7CC3CC  information: research tags
-                          (same family as the deep teal, light enough to
-                          show on black; stack lines stay yellow, for
-                          recruiters)
    - Sky         #69D3F7  play: tape accents
    - Night       #0D0D0D  the canvas
    The hero is not touched.
    ═════════════════════════════════════════════ */
 :root {
   --cream: #fff6e5;
-  --info: #7cc3cc;
 }
 
 /* Skills */
@@ -271,7 +267,6 @@ img { max-width: 100%; display: block; }
 .page-content .res-year    { color: var(--accent-y) !important; }
 .page-content .res-venue   { color: rgba(255, 246, 229, 0.75); }
 .page-content .res-authors { color: rgba(255, 246, 229, 0.7); }
-.page-content .res-tag     { color: var(--info); border-color: rgba(124, 195, 204, 0.4); }
 
 /* Contact */
 .page-content .contact-sub { color: var(--cream); }
