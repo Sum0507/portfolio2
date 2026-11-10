@@ -12,7 +12,7 @@ const VARIANTS = {
   photo: {
     id: "photography",
     eyebrow: "— captured moments",
-    title: "through the lens.",
+    title: <>through the <span className="title-accent">lens</span>.</>,
     galleryEyebrow: "— all photographs",
     itemLabel: "Photo",
     stripHeight: 700,     // px height requested from Sanity for strip cards
@@ -23,7 +23,7 @@ const VARIANTS = {
   art: {
     id: "art",
     eyebrow: "— artbook",
-    title: "from the pages.",
+    title: <>from the <span className="title-accent">pages</span>.</>,
     galleryEyebrow: "— all artworks",
     itemLabel: "Artwork",
     stripHeight: 760,

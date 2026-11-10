@@ -221,6 +221,17 @@ img { max-width: 100%; display: block; }
 @media (max-width: 768px) {
   h2.display { -webkit-text-stroke: 0 !important; }
 }
+/* ── Title accent ──
+   One word per multi-word section title in yellow Playfair italic,
+   like the italic "LEGACY" on landonorris.com. Single-word titles
+   (skills., research.) stay as they are. */
+.title-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.92em;
+  color: var(--accent-y);
+}
+
 /* ── Keyboard focus ──
    Shows a clear ring only for keyboard users (not on mouse clicks). */
 :focus-visible {
