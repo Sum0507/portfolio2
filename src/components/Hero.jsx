@@ -42,7 +42,7 @@ function MagneticBtn({ href, className, children, target, rel }) {
 // The live counter (years, days, hours, minutes, seconds) lets anyone work
 // out the exact date of birth. Off by default: only the age in years shows.
 // Set to true to bring the ticking counter back.
-const SHOW_LIVE_COUNTER = false;
+const SHOW_LIVE_COUNTER = true;
 const BIRTH = new Date("2000-07-05T00:00:00");
 
 function calcAge() {
