@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { urlFor } from "../sanityClient";
 import "./Hero.css";
 
@@ -38,40 +39,46 @@ function MagneticBtn({ href, className, children, target, rel }) {
   );
 }
 
-function AgeCounter() {
-  const BIRTH = new Date("2000-07-05T00:00:00");
+// The live counter (years, days, hours, minutes, seconds) lets anyone work
+// out the exact date of birth. Off by default: only the age in years shows.
+// Set to true to bring the ticking counter back.
+const SHOW_LIVE_COUNTER = false;
+const BIRTH = new Date("2000-07-05T00:00:00");
 
-  const calc = () => {
-    const now = new Date();
-    const diff = now - BIRTH;
-    const totalSec = Math.floor(diff / 1000);
-    const sec = totalSec % 60;
-    const totalMin = Math.floor(totalSec / 60);
-    const min = totalMin % 60;
-    const totalHrs = Math.floor(totalMin / 60);
-    const hrs = totalHrs % 24;
-
-    const birthYear = BIRTH.getFullYear();
-    const nowYear = now.getFullYear();
-    let years = nowYear - birthYear;
-    const anniv = new Date(nowYear, BIRTH.getMonth(), BIRTH.getDate());
-    if (now < anniv) years--;
-    const lastAnniv = new Date(nowYear - (now < anniv ? 1 : 0), BIRTH.getMonth(), BIRTH.getDate());
-    const days = Math.floor((now - lastAnniv) / (1000 * 60 * 60 * 24));
-
-    return { years, days, hrs, min, sec };
+function calcAge() {
+  const now = new Date();
+  let years = now.getFullYear() - BIRTH.getFullYear();
+  const anniv = new Date(now.getFullYear(), BIRTH.getMonth(), BIRTH.getDate());
+  if (now < anniv) years--;
+  const lastAnniv = new Date(now.getFullYear() - (now < anniv ? 1 : 0), BIRTH.getMonth(), BIRTH.getDate());
+  const days = Math.floor((now - lastAnniv) / 86400000);
+  const totalSec = Math.floor((now - BIRTH) / 1000);
+  return {
+    years,
+    days,
+    hrs: Math.floor(totalSec / 3600) % 24,
+    min: Math.floor(totalSec / 60) % 60,
+    sec: totalSec % 60,
   };
+}
 
-  const [age, setAge] = useState(calc);
+function AgeCounter() {
+  const [age, setAge] = useState(calcAge);
 
   useEffect(() => {
-    const id = setInterval(() => setAge(calc()), 1000);
+    if (!SHOW_LIVE_COUNTER) return undefined;
+    const id = setInterval(() => setAge(calcAge()), 1000);
     return () => clearInterval(id);
   }, []);
 
+  if (!SHOW_LIVE_COUNTER) {
+    return <span className="age-counter">{age.years} years old</span>;
+  }
+
+  const pad = (n) => String(n).padStart(2, "0");
   return (
     <span className="age-counter">
-      {age.years}y {age.days}d {String(age.hrs).padStart(2,"0")}h {String(age.min).padStart(2,"0")}m {String(age.sec).padStart(2,"0")}s
+      {age.years}y {age.days}d {pad(age.hrs)}h {pad(age.min)}m {pad(age.sec)}s
     </span>
   );
 }
@@ -80,11 +87,20 @@ export default function Hero({ siteData }) {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [deleting, setDeleting] = useState(false);
-  const [grayscale, setGrayscale] = useState(1);
-  const [opacity, setOpacity] = useState(1);
   const [loaded, setLoaded] = useState(false);
-  const [offsetY, setOffsetY] = useState(0);
   const heroRef = useRef(null);
+  const reduceMotion = useReducedMotion();
+
+  // Scroll effects run on framer "motion values": they update the elements
+  // directly every frame without re-rendering React. Only opacity and
+  // transform change, which the browser can do cheaply.
+  const { scrollY } = useScroll();
+  const progress = useTransform(scrollY, (y) =>
+    Math.min(y / (typeof window !== "undefined" ? window.innerHeight * 0.8 : 800), 1)
+  );
+  const bgOpacity = useTransform(progress, (p) => 1 - p);   // whole image fades out
+  const colourOpacity = progress;                            // colour fades in over the grey copy
+  const contentY = useTransform(scrollY, (y) => (reduceMotion ? 0 : y * 0.15));
 
   // Entrance starts almost immediately (was 300ms) so the text appears sooner
   useEffect(() => {
@@ -96,6 +112,11 @@ export default function Hero({ siteData }) {
     if (!siteData) return;
     const TYPED_WORDS = siteData?.roles?.length ? siteData.roles : ["I'm Sumaiya."];
     const current = TYPED_WORDS[roleIndex];
+    // Visitors who asked for reduced motion get the first role, no typing loop
+    if (reduceMotion) {
+      if (displayed !== TYPED_WORDS[0]) setDisplayed(TYPED_WORDS[0]);
+      return undefined;
+    }
     let timeout;
     if (!deleting && displayed.length < current.length) {
       timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 80);
@@ -108,20 +129,7 @@ export default function Hero({ siteData }) {
       setRoleIndex(i => (i + 1) % TYPED_WORDS.length);
     }
     return () => clearTimeout(timeout);
-  }, [displayed, deleting, roleIndex, siteData]);
-
-  // Scroll fade: unchanged. The only difference is { passive: true }, which
-  // lets the browser scroll without waiting for this handler.
-  useEffect(() => {
-    const onScroll = () => {
-      const progress = Math.min(window.scrollY / (window.innerHeight * 0.8), 1);
-      setGrayscale(1 - progress);
-      setOpacity(1 - progress);
-      setOffsetY(window.scrollY);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [displayed, deleting, roleIndex, siteData, reduceMotion]);
 
   if (!siteData) return null;
 
@@ -132,24 +140,23 @@ export default function Hero({ siteData }) {
   return (
     <section className="hero-full" id="about" ref={heroRef}>
       {heroBg && (
-        <div
-          className="hero-bg"
-          style={{
-            backgroundImage: `url(${heroBg})`,
-            filter: `grayscale(${grayscale}) brightness(${0.45 + (1 - grayscale) * 0.15})`,
-            opacity: opacity
-          }}
-        />
+        <motion.div className="hero-bg-wrap" style={{ opacity: bgOpacity }} aria-hidden="true">
+          <div className="hero-bg hero-bg--grey" style={{ backgroundImage: `url(${heroBg})` }} />
+          <motion.div
+            className="hero-bg hero-bg--colour"
+            style={{ backgroundImage: `url(${heroBg})`, opacity: colourOpacity }}
+          />
+        </motion.div>
       )}
       <div className="hero-overlay" />
-      <div
+      <motion.div
         className={`hero-content ${loaded ? "hero-content--visible" : ""}`}
-        style={{ transform: `translateY(${offsetY * 0.15}px)` }}
+        style={{ y: contentY }}
       >
         <p className="hero-eyebrow label hero-anim" style={{ transitionDelay: "0.05s" }}>
           <AgeCounter /> · {siteData.location}
         </p>
-        <h1 className="hero-typed display hero-anim" style={{ transitionDelay: "0.12s" }}>
+        <h1 className="hero-typed display hero-anim" style={{ transitionDelay: "0.12s" }} aria-live="off">
           {displayed}<span className="cursor">|</span>
         </h1>
         {siteData.tagline && (
@@ -164,16 +171,18 @@ export default function Hero({ siteData }) {
           <MagneticBtn href="#projects" className="btn btn-primary">
             see my work
           </MagneticBtn>
-          <MagneticBtn
-            href={siteData.cvUrl || "#"}
-            className="btn btn-secondary"
-            target="_blank"
-            rel="noreferrer"
-          >
-            download cv
-          </MagneticBtn>
+          {siteData.cvUrl && (
+            <MagneticBtn
+              href={siteData.cvUrl}
+              className="btn btn-secondary"
+              target="_blank"
+              rel="noreferrer"
+            >
+              download cv
+            </MagneticBtn>
+          )}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

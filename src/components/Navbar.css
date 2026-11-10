@@ -139,7 +139,7 @@
   justify-content: center;
   gap: 12px;
   font-family: var(--font-display);
-  font-size: clamp(32px, 5.5vw, 76px);
+  font-size: clamp(28px, min(5.5vw, 8vh), 76px); /* also shrinks on short screens: 7 links now */
   font-weight: 700;
   letter-spacing: -0.02em;
   color: rgba(255, 255, 255, 0.92);
@@ -282,7 +282,7 @@
   }
 
   .fs-nav__link {
-    font-size: clamp(28px, 9vw, 48px);
+    font-size: clamp(24px, min(9vw, 6.5vh), 48px);
   }
 
   .fs-nav__bottom {

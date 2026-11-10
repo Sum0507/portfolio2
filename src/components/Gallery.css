@@ -1,12 +1,12 @@
 /* ─────────────────────────────────────────────
-   Art Filmstrip
+   Gallery filmstrip (shared by Photography and Art)
    ───────────────────────────────────────────── */
 
-.art-filmstrip-section {
+.gal-filmstrip-section {
   position: relative;
 }
 
-.art-filmstrip-sticky {
+.gal-filmstrip-sticky {
   position: sticky;
   top: 0;
   height: 100vh;
@@ -18,7 +18,7 @@
 }
 
 /* ─── Bleed heading ─── */
-.art-bleed-heading {
+.gal-bleed-heading {
   padding-left: 48px;
   margin-bottom: 36px;
   flex-shrink: 0;
@@ -27,12 +27,12 @@
   overflow: hidden;
 }
 
-.art-eyebrow {
+.gal-eyebrow {
   margin-bottom: 8px;
   color: rgba(255, 255, 255, 0.45);
 }
 
-.art-title {
+.gal-title {
   font-size: clamp(48px, 8vw, 110px);
   line-height: 0.95;
   color: #fff;
@@ -43,7 +43,7 @@
 }
 
 /* ─── Track ─── */
-.art-filmstrip-track {
+.gal-filmstrip-track {
   flex: 1;
   display: flex;
   align-items: center;
@@ -51,7 +51,7 @@
   min-height: 0;
 }
 
-.art-filmstrip-inner {
+.gal-filmstrip-inner {
   display: flex;
   gap: 32px;
   align-items: center;
@@ -61,10 +61,10 @@
 }
 
 /* ─── Card: fixed height, width follows the image ─── */
-.art-film-card {
+.gal-film-card {
   position: relative;
   width: auto;
-  height: min(60vh, 520px);
+  height: min(58vh, 480px);
   flex-shrink: 0;
   cursor: pointer;
   overflow: hidden;
@@ -72,34 +72,34 @@
   transition: transform 0.4s ease;
 }
 
-.art-film-card:hover {
-  transform: scale(1.02);
+.gal-film-card:hover {
+  transform: rotate(0deg) scale(1.02) !important;
 }
 
-.art-film-card img {
+.gal-film-card img {
   height: 100%;
   width: auto;
   max-width: none;
   display: block;
   object-fit: cover;
-  filter: grayscale(0.3) brightness(0.88);
+  filter: grayscale(0.4) brightness(0.88);
   transition: filter 0.45s ease, transform 0.5s ease;
   user-select: none;
   -webkit-user-drag: none;
 }
 
-.art-film-card:hover img {
+.gal-film-card:hover img {
   filter: grayscale(0) brightness(1);
   transform: scale(1.04);
 }
 
 /* Captions are hidden on filmstrip cards (still shown in lightbox + gallery) */
-.art-film-caption {
+.gal-film-caption {
   display: none;
 }
 
 /* ─── Expand hint ─── */
-.art-expand-hint {
+.gal-expand-hint {
   position: absolute;
   bottom: 12px;
   right: 12px;
@@ -117,7 +117,7 @@
   pointer-events: none;
 }
 
-.art-expand-hint span {
+.gal-expand-hint span {
   font-family: var(--font-mono, monospace);
   font-size: 9px;
   letter-spacing: 0.1em;
@@ -125,20 +125,20 @@
   text-transform: uppercase;
 }
 
-.art-expand-hint svg {
+.gal-expand-hint svg {
   color: rgba(255, 255, 255, 0.6);
   flex-shrink: 0;
 }
 
-.art-film-card:hover .art-expand-hint {
+.gal-film-card:hover .gal-expand-hint {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* ─── View all card ─── */
-.art-view-all-card {
-  width: 240px;
-  height: min(60vh, 520px);
+.gal-view-all-card {
+  width: 220px;
+  height: min(58vh, 480px);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -151,19 +151,19 @@
   background: rgba(255, 255, 255, 0.02);
 }
 
-.art-view-all-card:hover {
+.gal-view-all-card:hover {
   border-color: rgba(255, 255, 255, 0.35);
   background: rgba(255, 255, 255, 0.05);
 }
 
-.art-view-all-count {
+.gal-view-all-count {
   font-family: var(--font-mono, monospace);
   font-size: 28px;
   color: rgba(255, 255, 255, 0.5);
   letter-spacing: -0.02em;
 }
 
-.art-view-all-label {
+.gal-view-all-label {
   font-family: var(--font-mono, monospace);
   font-size: 10px;
   letter-spacing: 0.18em;
@@ -171,19 +171,19 @@
   color: rgba(255, 255, 255, 0.4);
 }
 
-.art-view-all-arrow {
+.gal-view-all-arrow {
   font-size: 20px;
   color: rgba(255, 255, 255, 0.3);
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.art-view-all-card:hover .art-view-all-arrow {
+.gal-view-all-card:hover .gal-view-all-arrow {
   transform: translateX(5px);
   color: rgba(255, 255, 255, 0.7);
 }
 
 /* ─── Scroll hint ─── */
-.art-scroll-hint {
+.gal-scroll-hint {
   position: absolute;
   bottom: 28px;
   right: 48px;
@@ -194,7 +194,7 @@
   pointer-events: none;
 }
 
-.art-scroll-hint span {
+.gal-scroll-hint span {
   font-family: var(--font-mono, monospace);
   font-size: 9px;
   letter-spacing: 0.15em;
@@ -202,25 +202,26 @@
   text-transform: uppercase;
 }
 
-/* "swipe" wording is only for phones; "scroll" wording is for desktop */
-.art-scroll-hint .hint-mobile { display: none; }
 
-.art-scroll-arrow {
+/* "swipe" wording is only for phones; "scroll" wording is for desktop */
+.gal-scroll-hint .hint-mobile { display: none; }
+
+.gal-scroll-arrow {
   font-size: 14px;
   color: #fff;
-  animation: artArrowDrift 1.8s ease-in-out infinite;
+  animation: galArrowDrift 1.8s ease-in-out infinite;
 }
 
-@keyframes artArrowDrift {
+@keyframes galArrowDrift {
   0%, 100% { transform: translateX(0); }
   50%       { transform: translateX(6px); }
 }
 
 /* ─────────────────────────────────────────────
-   Lightbox
+   Lightbox (shared by filmstrip + gallery)
    ───────────────────────────────────────────── */
 
-.art-lightbox {
+.gal-lightbox {
   position: fixed;
   inset: 0;
   z-index: 10000;
@@ -232,7 +233,7 @@
   cursor: zoom-out;
 }
 
-.art-lightbox-inner {
+.gal-lightbox-inner {
   position: relative;
   max-width: 90vw;
   max-height: 85vh;
@@ -243,7 +244,7 @@
   cursor: default;
 }
 
-.art-lightbox-inner img {
+.gal-lightbox-inner img {
   max-width: 100%;
   max-height: 80vh;
   object-fit: contain;
@@ -251,7 +252,7 @@
   border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.art-lightbox-caption {
+.gal-lightbox-caption {
   font-family: var(--font-mono, monospace);
   font-size: 11px;
   letter-spacing: 0.08em;
@@ -260,7 +261,7 @@
   margin: 0;
 }
 
-.art-lightbox-close {
+.gal-lightbox-close {
   position: fixed;
   top: 24px;
   right: 32px;
@@ -279,12 +280,12 @@
   z-index: 10001;
 }
 
-.art-lightbox-close:hover {
+.gal-lightbox-close:hover {
   border-color: rgba(255, 255, 255, 0.5);
   color: #fff;
 }
 
-.art-lightbox-nav {
+.gal-lightbox-nav {
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
@@ -303,15 +304,15 @@
   z-index: 10001;
 }
 
-.art-lightbox-nav:hover {
+.gal-lightbox-nav:hover {
   border-color: rgba(255, 255, 255, 0.5);
   color: #fff;
 }
 
-.art-lightbox-prev { left: 24px; }
-.art-lightbox-next { right: 24px; }
+.gal-lightbox-prev { left: 24px; }
+.gal-lightbox-next { right: 24px; }
 
-.art-lightbox-counter {
+.gal-lightbox-counter {
   position: fixed;
   bottom: 28px;
   left: 50%;
@@ -328,7 +329,7 @@
    Full Gallery Overlay
    ───────────────────────────────────────────── */
 
-.art-gallery-overlay {
+.gal-gallery-overlay {
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -349,7 +350,7 @@ body.gallery-open .to-top {
 }
 
 /* ─── Gallery header ─── */
-.art-gallery-header {
+.gal-gallery-header {
   position: sticky;
   top: 0;
   z-index: 10;
@@ -360,19 +361,19 @@ body.gallery-open .to-top {
   background: linear-gradient(to bottom, #0d0d0d 70%, transparent);
 }
 
-.art-gallery-eyebrow {
+.gal-gallery-eyebrow {
   color: rgba(255, 255, 255, 0.4);
   margin-bottom: 4px;
 }
 
-.art-gallery-title {
+.gal-gallery-title {
   font-size: clamp(28px, 4vw, 52px);
   color: #fff;
   line-height: 1;
   font-family: var(--font-display, serif);
 }
 
-.art-gallery-close {
+.gal-gallery-close {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -388,19 +389,19 @@ body.gallery-open .to-top {
   transition: border-color 0.2s, color 0.2s;
 }
 
-.art-gallery-close:hover {
+.gal-gallery-close:hover {
   border-color: rgba(255, 255, 255, 0.5);
   color: #fff;
 }
 
 /* ─── Masonry grid ─── */
-.art-gallery-grid {
+.gal-gallery-grid {
   columns: 3;
   column-gap: 20px;
   padding: 20px 48px 80px;
 }
 
-.art-gallery-item {
+.gal-gallery-item {
   break-inside: avoid;
   margin-bottom: 20px;
   cursor: pointer;
@@ -410,26 +411,26 @@ body.gallery-open .to-top {
   transition: transform 0.3s ease;
 }
 
-.art-gallery-item:hover {
+.gal-gallery-item:hover {
   transform: rotate(0deg) scale(1.02) !important;
   z-index: 2;
   position: relative;
 }
 
-.art-gallery-item img {
+.gal-gallery-item img {
   width: 100%;
   display: block;
   object-fit: cover;
-  filter: grayscale(0.15) brightness(0.9);
+  filter: grayscale(0.2) brightness(0.9);
   transition: filter 0.4s ease, transform 0.4s ease;
 }
 
-.art-gallery-item:hover img {
+.gal-gallery-item:hover img {
   filter: grayscale(0) brightness(1);
   transform: scale(1.03);
 }
 
-.art-gallery-caption {
+.gal-gallery-caption {
   margin: 0;
   padding: 8px 0 0;
   font-family: var(--font-mono, monospace);
@@ -443,54 +444,76 @@ body.gallery-open .to-top {
    ───────────────────────────────────────────── */
 
 @media (max-width: 768px) {
-  .art-bleed-heading { padding-left: 20px; }
-  .art-title { transform: translateX(5%); }
+  .gal-bleed-heading { padding-left: 20px; }
+  .gal-title { transform: translateX(5%); }
 
-  .art-filmstrip-section { height: auto !important; }
-  .art-filmstrip-sticky {
+  .gal-filmstrip-section { height: auto !important; }
+  .gal-filmstrip-sticky {
     position: relative;
     height: auto;
     overflow: visible;
     padding: 60px 0;
     justify-content: flex-start;
   }
-  .art-filmstrip-track {
+  .gal-filmstrip-track {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
-  .art-filmstrip-track::-webkit-scrollbar { display: none; }
-  .art-filmstrip-inner {
+  .gal-filmstrip-track::-webkit-scrollbar { display: none; }
+  .gal-filmstrip-inner {
     transform: none !important;
     padding: 0 20px;
-    gap: 16px;
+    gap: 20px;
   }
-  .art-film-card { width: auto; height: 320px; }
-  .art-view-all-card { width: 160px; height: 320px; }
+  .gal-film-card { width: auto; height: 300px; }
+  .gal-view-all-card { width: 160px; height: 300px; }
   /* On phones the strip is a normal swipe, so show a clear swipe hint
      right under the strip (in the page flow, not floating in a corner) */
-  .art-scroll-hint {
+  .gal-scroll-hint {
     position: static;
     justify-content: center;
     margin-top: 18px;
     opacity: 1;
   }
-  .art-scroll-hint span { font-size: 11px; }
-  .art-scroll-hint .hint-desktop { display: none; }
-  .art-scroll-hint .hint-mobile  { display: inline; }
-  .art-scroll-arrow { font-size: 18px; }
+  .gal-scroll-hint span { font-size: 11px; }
+  .gal-scroll-hint .hint-desktop { display: none; }
+  .gal-scroll-hint .hint-mobile  { display: inline; }
+  .gal-scroll-arrow { font-size: 18px; }
 
-  .art-gallery-grid { columns: 2; column-gap: 12px; padding: 16px 20px 60px; }
-  .art-gallery-header { padding: 24px 20px 16px; }
-  .art-gallery-title { font-size: clamp(22px, 6vw, 36px); }
+  .gal-gallery-grid { columns: 2; column-gap: 12px; padding: 16px 20px 60px; }
+  .gal-gallery-header { padding: 24px 20px 16px; }
+  .gal-gallery-title { font-size: clamp(22px, 6vw, 36px); }
 
-  .art-lightbox { padding: 20px; }
-  .art-lightbox-nav { width: 36px; height: 36px; font-size: 24px; }
-  .art-lightbox-prev { left: 8px; }
-  .art-lightbox-next { right: 8px; }
+  .gal-lightbox { padding: 20px; }
+  .gal-lightbox-nav { width: 36px; height: 36px; font-size: 24px; }
+  .gal-lightbox-prev { left: 8px; }
+  .gal-lightbox-next { right: 8px; }
 }
 
 @media (max-width: 600px) {
-  .art-title { font-size: clamp(36px, 12vw, 80px); transform: translateX(4%); }
-  .art-gallery-grid { columns: 1; }
+  .gal-title { font-size: clamp(36px, 12vw, 80px); transform: translateX(4%); }
+  .gal-gallery-grid { columns: 1; }
+}
+/* ─────────────────────────────────────────────
+   Art section: slightly bigger cards and softer grey than photos
+   ───────────────────────────────────────────── */
+.gal--art .gal-film-card,
+.gal--art .gal-view-all-card { height: min(60vh, 520px); }
+.gal--art .gal-view-all-card { width: 240px; }
+.gal--art .gal-film-card img { filter: grayscale(0.3) brightness(0.88); }
+.gal--art .gal-gallery-item img { filter: grayscale(0.15) brightness(0.9); }
+
+@media (max-width: 768px) {
+  .gal--art .gal-filmstrip-inner { gap: 16px; }
+  .gal--art .gal-film-card { height: 320px; }
+  .gal--art .gal-view-all-card { width: 160px; height: 320px; }
+}
+
+/* Keyboard users can see which card is selected */
+.gal-film-card:focus-visible,
+.gal-view-all-card:focus-visible,
+.gal-gallery-item:focus-visible {
+  outline: 2px solid var(--accent-y);
+  outline-offset: 4px;
 }

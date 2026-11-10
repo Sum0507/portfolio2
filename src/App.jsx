@@ -1,11 +1,11 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { MotionConfig } from "framer-motion";
 import { client } from "./sanityClient";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Skills from "./components/Skills";
-import Photography from "./components/Photography";
-import Art from "./components/Art";
+import Gallery from "./components/Gallery";
 import Projects from "./components/Projects";
 import Research from "./components/Research";
 import Contact from "./components/Contact";
@@ -15,21 +15,26 @@ import Currently from "./components/Currently";
 import ThreadLine from "./components/ThreadLine";
 import DoodleDivider from "./components/Doodledivider";
 
+// (The Sanity client already retries failed requests by itself.)
+// Used if Sanity can't be reached, so visitors still see who this is
+// and how to get in touch instead of an empty error screen.
+const FALLBACK_SITE = {
+  name: "Sumaiya",
+  roles: ["I'm Sumaiya."],
+  bio: "Final-year CSE student at UAP. Engineer, artist, photographer.",
+  github: "https://github.com/Sum0507",
+  instagram: "https://www.instagram.com/sum_plus_equal_1/",
+  email: "jsumaiya290@gmail.com",
+};
+
 // These pages are only needed when someone visits them, so they are
 // downloaded on demand instead of being part of the main bundle.
-const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-function Home({ siteData, photos, artworks, projects, research, loading, error, extrasReady }) {
+function Home({ siteData, photos, artworks, projects, research, loading, extrasReady }) {
   if (loading) return (
-    <div className="loading-screen">
+    <div className="loading-screen" role="status">
       <p>Have patience...</p>
-    </div>
-  );
-
-  if (error) return (
-    <div className="loading-screen">
-      <p>Unable to load portfolio content.</p>
     </div>
   );
 
@@ -52,8 +57,8 @@ function Home({ siteData, photos, artworks, projects, research, loading, error, 
             <DoodleDivider variant="swoosh" />
             <Research research={research} />
             <DoodleDivider variant="spiral" flip />
-            <Photography photos={photos} />
-            <Art artworks={artworks} />
+            <Gallery items={photos} variant="photo" />
+            <Gallery items={artworks} variant="art" />
           </>
         ) : (
           <div aria-hidden="true" style={{ minHeight: "100vh" }} />
@@ -75,7 +80,6 @@ export default function App() {
   const [projects, setProjects] = useState([]);
   const [research, setResearch] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
   const [extrasReady, setExtrasReady] = useState(false);
 
   useEffect(() => {
@@ -89,12 +93,11 @@ export default function App() {
       "cvUrl": coalesce(cvFile.asset->url + "?dl=Sumaiya-CV.pdf", cvUrl)
     }`).then((site) => {
       if (cancelled) return;
-      setSiteData(site);
-      setError(false);
+      setSiteData(site || FALLBACK_SITE);
       setLoading(false);
     }).catch(() => {
       if (cancelled) return;
-      setError(true);
+      setSiteData(FALLBACK_SITE);
       setLoading(false);
     });
 
@@ -120,6 +123,9 @@ export default function App() {
   }, []);
 
   return (
+    // reducedMotion="user": every framer animation respects the visitor's
+    // "reduce motion" device setting automatically
+    <MotionConfig reducedMotion="user">
     <BrowserRouter>
       <Suspense fallback={null}>
         <Routes>
@@ -131,14 +137,13 @@ export default function App() {
               projects={projects}
               research={research}
               loading={loading}
-              error={error}
               extrasReady={extrasReady}
             />
           } />
-          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
+    </MotionConfig>
   );
 }

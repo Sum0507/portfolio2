@@ -8,6 +8,17 @@
   /* overflow: hidden REMOVED */
 }
 
+.hero-bg-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.hero-bg--grey   { filter: grayscale(1) brightness(0.45); }
+.hero-bg--colour { filter: brightness(0.6); will-change: opacity; }
+
 .hero-bg {
   position: fixed;
   inset: 0;
@@ -16,11 +27,8 @@
   background-repeat: no-repeat;
   z-index: 0;
   pointer-events: none;
-  filter: grayscale(1) brightness(0.6);
-  transition: filter 0.1s linear, opacity 0.1s linear;
-  /* GPU layer — prevents repaint on every scroll tick */
-  will-change: transform;
-  transform: translateZ(0);
+  /* The filter is fixed (never animated), so it is painted only once.
+     Scrolling just fades the colour layer in, which is cheap. */
 }
 
 .hero-overlay {
