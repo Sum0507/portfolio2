@@ -136,3 +136,19 @@
     transform: translateX(4%);
   }
 }
+
+/* ── Card colours: dark card, cream title, yellow highlights ── */
+.project-card {
+  background: #161616;
+  border-color: rgba(255, 255, 255, 0.12);
+  border-left-color: var(--accent-r);
+  backdrop-filter: none;
+}
+.project-card:hover { border-left-color: var(--accent-y); }
+.project-card .proj-year { color: rgba(255, 255, 255, 0.55); }
+.proj-name    { color: #fff6e5; }
+.proj-stack   { color: var(--accent-y); }
+.proj-divider { background: rgba(255, 255, 255, 0.12); }
+.proj-desc    { color: rgba(255, 255, 255, 0.82); }
+.proj-link    { color: var(--accent-y); }
+.proj-link:hover { color: #fff6e5; }

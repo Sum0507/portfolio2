@@ -127,3 +127,25 @@
   .research-card { flex-direction: column; gap: 14px; }
   .res-meta { flex-direction: row; flex-wrap: wrap; align-items: flex-start; }
 }
+
+/* ── Card colours: same as Projects ── */
+.research-card {
+  background: #161616;
+  border-color: rgba(255, 255, 255, 0.12);
+  border-left-color: var(--accent-r);
+  backdrop-filter: none;
+}
+.research-card:hover { border-left-color: var(--accent-y); }
+.research-card .res-title {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: 22px;
+  line-height: 1.2;
+  color: #fff6e5;
+}
+.res-venue   { color: var(--accent-y); }
+.res-authors { color: rgba(255, 255, 255, 0.7); }
+.res-tag     { color: rgba(255, 255, 255, 0.8); border-color: rgba(255, 255, 255, 0.25); }
+.res-year    { color: rgba(255, 255, 255, 0.55) !important; }
+.status-under-review { color: var(--accent-o); background: rgba(251, 96, 21, 0.12); border-color: rgba(251, 96, 21, 0.4); }
+.status-in-progress  { background: rgba(255, 202, 38, 0.12); border-color: rgba(255, 202, 38, 0.4); }
