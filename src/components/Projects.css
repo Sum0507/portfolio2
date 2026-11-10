@@ -139,7 +139,7 @@
 
 /* ── Card colours: dark card, cream title, yellow highlights ── */
 .project-card {
-  background: #161616;
+  background: #363636cc;
   border-color: rgba(255, 255, 255, 0.12);
   border-left-color: var(--accent-r);
   backdrop-filter: none;

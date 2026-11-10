@@ -207,8 +207,8 @@ img { max-width: 100%; display: block; }
   font-family: var(--font-body);
   font-size: 12px;
   letter-spacing: 3px;
-  color: #744c03ef;
-  background-color: #ffe99fea;
+  color: rgba(94, 2, 2, 0.76);
+  background-color: #ffe285ea;
 }
 
 /* Touch screens can't hover, and these hints use a costly blur filter */
