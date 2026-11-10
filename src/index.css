@@ -239,3 +239,104 @@ img { max-width: 100%; display: block; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ═════════════════════════════════════════════
+   FLOW (inspired by landonorris.com / OFF+BRAND)
+   ═════════════════════════════════════════════ */
+
+/* ── 1. Colour journey ──
+   The page background drifts between section moods as you scroll
+   (see sectionTone.js). The hero stays on the original near-black. */
+:root {
+  --page-bg: #0d0d0d;
+  --paper-ink: #1c1610;
+}
+html[data-tone="ink"]      { --page-bg: #0d0d0d; }
+html[data-tone="warm"]     { --page-bg: #17120d; }
+html[data-tone="darkroom"] { --page-bg: #060606; }
+/* "paper" leaves the page itself dark: only the Art section turns
+   to paper (below), so no other section can end up on cream. */
+
+.page-content {
+  background: var(--page-bg);
+  transition: background-color 1.1s ease;
+}
+
+/* The photo/art strips used to paint their own solid black, which hid the
+   colour journey. Transparent now, and kept above the paper's soft edge. */
+.page-content .gal-filmstrip-sticky { background: transparent; z-index: 1; }
+
+/* Art section blooms into sketchbook paper, with feathered edges that
+   fade in from the sections around it (no hard line). */
+.page-content .gal--art.gal-filmstrip-section::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -10vh;
+  bottom: -10vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(236, 227, 210, 0) 0,
+    #ece3d2 10vh,
+    #ece3d2 calc(100% - 10vh),
+    rgba(236, 227, 210, 0) 100%
+  );
+  opacity: 0;
+  transition: opacity 1.1s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+html[data-tone="paper"] .page-content .gal--art.gal-filmstrip-section::before { opacity: 1; }
+
+/* Art section on paper: dark ink instead of white */
+.gal--art .gal-eyebrow,
+.gal--art .gal-title,
+.gal--art .gal-scroll-hint span,
+.gal--art .gal-scroll-arrow,
+.gal--art .gal-view-all-count,
+.gal--art .gal-view-all-label,
+.gal--art .gal-view-all-arrow {
+  transition: color 0.9s ease;
+}
+.gal--art .gal-view-all-card { transition: border-color 0.9s ease, background 0.3s ease; }
+
+html[data-tone="paper"] .gal--art .gal-title { color: var(--paper-ink); }
+html[data-tone="paper"] .gal--art .gal-eyebrow { color: rgba(28, 22, 16, 0.55); }
+html[data-tone="paper"] .gal--art .gal-scroll-hint span,
+html[data-tone="paper"] .gal--art .gal-scroll-arrow { color: var(--paper-ink); }
+html[data-tone="paper"] .gal--art .gal-view-all-card { border-color: rgba(28, 22, 16, 0.25); background: rgba(28, 22, 16, 0.03); }
+html[data-tone="paper"] .gal--art .gal-view-all-card:hover { border-color: rgba(28, 22, 16, 0.5); }
+html[data-tone="paper"] .gal--art .gal-view-all-count,
+html[data-tone="paper"] .gal--art .gal-view-all-label,
+html[data-tone="paper"] .gal--art .gal-view-all-arrow { color: rgba(28, 22, 16, 0.65); }
+/* artworks look truer on paper, so drop most of the grey-down filter */
+html[data-tone="paper"] .gal--art .gal-film-card img { filter: grayscale(0.1) brightness(0.97); }
+
+/* Navbar and cursor follow the paper too (not while the menu or a
+   full-screen gallery is open, since those stay dark) */
+.navbar, .nav-logo, .nav-burger span { transition: background 0.9s ease, color 0.9s ease; }
+html[data-tone="paper"] body.nav-on-paper:not(.menu-open):not(.gallery-open) .navbar {
+  background: linear-gradient(to bottom, rgba(236, 227, 210, 0.85) 0%, rgba(236, 227, 210, 0) 100%);
+}
+html[data-tone="paper"] body.nav-on-paper:not(.menu-open):not(.gallery-open) .nav-logo { color: var(--paper-ink); }
+html[data-tone="paper"] body.nav-on-paper:not(.menu-open):not(.gallery-open) .nav-burger span { background: var(--paper-ink); }
+html[data-tone="paper"] body:not(.menu-open):not(.gallery-open) .cursor-dot.on-paper { background: var(--paper-ink); }
+html[data-tone="paper"] body:not(.menu-open):not(.gallery-open) .cursor-ring--default.on-paper,
+html[data-tone="paper"] body:not(.menu-open):not(.gallery-open) .cursor-ring--link.on-paper {
+  border-color: rgba(28, 22, 16, 0.55);
+}
+
+/* ── 2. Tighter rhythm ──
+   Sections used to have ~300px of empty space around each doodle line.
+   Now the doodles read as a thread between sections, not a pause.
+   (The hero is untouched.) */
+#skills, #projects, #research { padding-top: 40px; padding-bottom: 40px; }
+#contact { padding-top: 56px; }
+.page-content .doodle-divider { height: clamp(64px, 7vw, 104px); }
+
+@media (max-width: 768px) {
+  #skills, #projects, #research { padding-top: 32px; padding-bottom: 32px; }
+  #contact { padding-top: 40px; }
+  .page-content .doodle-divider { height: 60px; }
+}

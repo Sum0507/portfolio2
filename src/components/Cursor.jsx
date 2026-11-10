@@ -41,7 +41,11 @@ export default function Cursor() {
       mouse.y = e.clientY;
       // e.target is free (no extra hit-testing like elementFromPoint)
       const el = e.target instanceof Element ? e.target : null;
-      if (el?.closest(".photo-film-card, .art-film-card, .photo-gallery-item, .art-gallery-item, .polaroid")) {
+      // Over the art section's paper background, the cursor turns dark
+      const onPaper = !!el?.closest(".gal--art.gal-filmstrip-section");
+      dot.classList.toggle("on-paper", onPaper);
+      ring.classList.toggle("on-paper", onPaper);
+      if (el?.closest(".gal-film-card, .gal-gallery-item, .polaroid")) {
         setType("zoom");
       } else if (el?.closest("button, a, [role='button'], input, textarea")) {
         setType("link");

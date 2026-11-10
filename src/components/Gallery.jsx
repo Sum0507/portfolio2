@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { urlFor } from "../sanityClient";
 import "./Gallery.css";
+import { lockScroll } from "../smoothScroll";
 
 /**
  * One component for both the Photography and Art sections.
@@ -74,6 +75,7 @@ function Lightbox({ items, index, onChange, onClose, zIndex }) {
   return (
     <motion.div
       className="gal-lightbox"
+      data-lenis-prevent
       style={zIndex ? { zIndex } : undefined}
       role="dialog"
       aria-modal="true"
@@ -175,7 +177,9 @@ export default function Gallery({ items = [], variant = "photo" }) {
     if (!galleryOpen) return undefined;
     document.body.style.overflow = "hidden";
     document.body.classList.add("gallery-open");
+    lockScroll(true);
     return () => {
+      lockScroll(false);
       document.body.style.overflow = "";
       document.body.classList.remove("gallery-open");
     };
@@ -275,6 +279,7 @@ export default function Gallery({ items = [], variant = "photo" }) {
         {galleryOpen && (
           <motion.div
             className={`gal-gallery-overlay gal--${variant}`}
+            data-lenis-prevent
             role="dialog"
             aria-modal="true"
             aria-label={v.galleryEyebrow.replace("— ", "")}

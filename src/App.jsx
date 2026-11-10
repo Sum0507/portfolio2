@@ -1,6 +1,8 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MotionConfig } from "framer-motion";
+import { startSmoothScroll } from "./smoothScroll";
+import { useSectionTone } from "./sectionTone";
 import { client } from "./sanityClient";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -81,6 +83,12 @@ export default function App() {
   const [research, setResearch] = useState([]);
   const [loading, setLoading] = useState(true);
   const [extrasReady, setExtrasReady] = useState(false);
+
+  // Smooth inertial scrolling (see smoothScroll.js)
+  useEffect(() => { startSmoothScroll(); }, []);
+
+  // Background colour journey between sections (see sectionTone.js)
+  useSectionTone(!loading && extrasReady);
 
   useEffect(() => {
     let cancelled = false;

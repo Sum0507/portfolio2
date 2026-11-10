@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FiArrowUp } from "react-icons/fi";
 import "./BackToTop.css";
+import { scrollToTarget } from "../smoothScroll";
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false);
@@ -15,7 +16,7 @@ export default function BackToTop() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollUp = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const scrollUp = () => scrollToTarget(0);
 
   return (
     <button className={`back-to-top ${visible ? "show" : ""}`} onClick={scrollUp} aria-label="Back to top">

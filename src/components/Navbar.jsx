@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NavBlobPattern from "./NavBlobPattern";
 import "./Navbar.css";
+import { scrollToTarget, lockScroll } from "../smoothScroll";
 
 const NAV_ITEMS = [
   { label: "about",       href: "#about" },
@@ -68,6 +69,8 @@ export default function Navbar({ siteData }) {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+    lockScroll(menuOpen);
+    document.body.classList.toggle("menu-open", menuOpen);
     document.body.classList.toggle("nav-open", menuOpen);
     return () => {
       document.body.style.overflow = "";
@@ -79,7 +82,8 @@ export default function Navbar({ siteData }) {
     setMenuOpen(false);
     setTimeout(() => {
       const id = href.replace("#", "");
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      const el = document.getElementById(id);
+      if (el) scrollToTarget(el);
     }, 400);
   };
 
@@ -103,6 +107,7 @@ export default function Navbar({ siteData }) {
           <motion.div
             className="fs-nav"
             id="site-menu"
+            data-lenis-prevent
             role="dialog"
             aria-modal="true"
             aria-label="Site menu"
