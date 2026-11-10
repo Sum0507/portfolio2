@@ -189,8 +189,7 @@ img { max-width: 100%; display: block; }
   .skills-title,
   .proj-title,
   .research-title,
-  .photo-title,
-  .art-title,
+  .gal-title,
   .contact-title {
     -webkit-text-stroke: 0 !important;
   }
@@ -214,12 +213,29 @@ img { max-width: 100%; display: block; }
 
 /* Touch screens can't hover, and these hints use a costly blur filter */
 @media (hover: none) {
-  .photo-expand-hint,
-  .art-expand-hint { display: none; }
+  .gal-expand-hint { display: none; }
 }
 
 /* ── Phones: lighter painting ──
    The thin outline on the big section headings is expensive to paint on mobile CPUs. */
 @media (max-width: 768px) {
   h2.display { -webkit-text-stroke: 0 !important; }
+}
+/* ── Keyboard focus ──
+   Shows a clear ring only for keyboard users (not on mouse clicks). */
+:focus-visible {
+  outline: 2px solid var(--accent-y);
+  outline-offset: 3px;
+}
+
+/* ── Reduced motion ──
+   For visitors who turned on "reduce motion" in their device settings:
+   no smooth-scroll jumps, looping animations or long transitions. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

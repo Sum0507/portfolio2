@@ -9,6 +9,8 @@ const SERVICE_ID  = "service_r24rly3";
 const TEMPLATE_ID = "template_a7swzko";
 const PUBLIC_KEY  = "e3pn3AhmRJRhENZmR";
 
+const YEAR = new Date().getFullYear();
+
 const fadeUp = {
   hidden: { opacity: 0, y: 80, scale: 0.97 },
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: "easeOut" } }
@@ -62,13 +64,13 @@ export default function Contact({ siteData }) {
         >
           {/* Left: the form */}
           <motion.form ref={formRef} onSubmit={handleSubmit} className="contact-form" variants={fadeUp}>
-            <input type="text"  name="from_name"  placeholder="your name"    required />
-            <input type="email" name="from_email" placeholder="your email"   required />
-            <textarea           name="message"    placeholder="your message" rows={5} required />
+            <input type="text"  name="from_name"  placeholder="your name"    aria-label="Your name"    autoComplete="name"  required />
+            <input type="email" name="from_email" placeholder="your email"   aria-label="Your email"   autoComplete="email" required />
+            <textarea           name="message"    placeholder="your message" aria-label="Your message" rows={5} required />
             <button type="submit" disabled={status === "sending"}>
               {status === "sending" ? "sending..." : status === "sent" ? "sent ✓" : "send →"}
             </button>
-            {status === "error" && <p className="form-error">something went wrong. try emailing directly.</p>}
+            {status === "error" && <p className="form-error" role="alert">something went wrong. try emailing directly.</p>}
           </motion.form>
 
           {/* Right: intro text + socials, sitting lower than the form */}
@@ -79,7 +81,7 @@ export default function Contact({ siteData }) {
 
             <div className="contact-socials">
               {siteData.email && (
-                <a href={`mailto:${siteData.email}`} target="_blank" rel="noreferrer" className="social-icon" title={siteData.email} aria-label="Email">
+                <a href={`mailto:${siteData.email}`} className="social-icon" title={siteData.email} aria-label="Email">
                   <FiMail />
                 </a>
               )}
@@ -105,8 +107,8 @@ export default function Contact({ siteData }) {
 
       <div className="contact-ribbon">
         <span>
-          ✦ Jannatun Nur · dhaka · 2026 ✦ engineer · artist · photographer ✦
-          Jannatun Nur · dhaka · 2026 ✦ engineer · artist · photographer ✦&nbsp;
+          ✦ Jannatun Nur · dhaka · {YEAR} ✦ engineer · artist · photographer ✦
+          Jannatun Nur · dhaka · {YEAR} ✦ engineer · artist · photographer ✦&nbsp;
         </span>
       </div>
 
@@ -114,7 +116,7 @@ export default function Contact({ siteData }) {
         {siteData.tagline && (
           <em className="serif footer-tagline">"{siteData.tagline}"</em>
         )}
-        <p className="footer-credit">made with too much coffee · {siteData.name} © 2026</p>
+        <p className="footer-credit">made with too much coffee · {siteData.name} © {YEAR}</p>
       </footer>
     </section>
   );

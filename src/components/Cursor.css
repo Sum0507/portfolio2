@@ -1,55 +1,64 @@
-*, *::before, *::after { cursor: none !important; }
+/* The real cursor is hidden only when the custom one is actually running
+   (Cursor.jsx adds this class on mouse devices). Text fields keep the
+   normal text cursor so typing still feels right. */
+.has-custom-cursor,
+.has-custom-cursor *,
+.has-custom-cursor *::before,
+.has-custom-cursor *::after { cursor: none !important; }
+
+.has-custom-cursor input,
+.has-custom-cursor textarea { cursor: text !important; }
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  will-change: transform;
+  transform: translate3d(-100px, -100px, 0);
+}
 
 .cursor-dot {
-  position: fixed;
   width: 6px;
   height: 6px;
   background: var(--accent-y);
-  border-radius: 50%;
-  pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.15s, height 0.15s;
 }
 
 .cursor-ring {
-  position: fixed;
   width: 32px;
   height: 32px;
   border: 1px solid rgba(255,255,255,0.5);
-  border-radius: 50%;
-  pointer-events: none;
   z-index: 9998;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-}
-
-/* on photos/art — bigger, yellow border, + icon */
-.cursor-ring--zoom {
-  width: 52px;
-  height: 52px;
-  border-color: var(--accent-y);
-  background: rgba(255, 202, 38, 0.08);
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
 }
 
 .cursor-zoom-icon {
+  display: none;
   font-size: 18px;
   color: var(--accent-y);
   line-height: 1;
   font-weight: 300;
 }
 
-/* on buttons/links — filled slightly */
+/* on photos/art: bigger, yellow border, + icon */
+.cursor-ring--zoom {
+  width: 52px;
+  height: 52px;
+  border-color: var(--accent-y);
+  background: rgba(255, 202, 38, 0.08);
+}
+.cursor-ring--zoom .cursor-zoom-icon { display: block; }
+
+/* on buttons/links: filled slightly */
 .cursor-ring--link {
   width: 44px;
   height: 44px;
   border-color: rgba(255,255,255,0.8);
   background: rgba(255,255,255,0.06);
-}
-
-@media (max-width: 768px) {
-  *, *::before, *::after { cursor: auto !important; }
-  .cursor-dot, .cursor-ring { display: none; }
 }

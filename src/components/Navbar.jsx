@@ -5,7 +5,9 @@ import "./Navbar.css";
 
 const NAV_ITEMS = [
   { label: "about",       href: "#about" },
+  { label: "skills",      href: "#skills" },
   { label: "projects",    href: "#projects" },
+  { label: "research",    href: "#research" },
   { label: "photography", href: "#photography" },
   { label: "art",         href: "#art" },
   { label: "contact",     href: "#contact" },
@@ -33,9 +35,12 @@ export default function Navbar({ siteData }) {
   const [active, setActive] = useState("");
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
+  // Only show the links that actually exist in Sanity
   const SOCIALS = [
-    { label: "github", href: siteData?.github || "#" },
-  ];
+    { label: "github",    href: siteData?.github },
+    { label: "linkedin",  href: siteData?.linkedin },
+    { label: "instagram", href: siteData?.instagram },
+  ].filter((s) => s.href);
 
   useEffect(() => {
     const sections = ["about", "skills", "projects", "research", "photography", "art", "contact"];
@@ -52,6 +57,14 @@ export default function Navbar({ siteData }) {
     });
     return () => observers.forEach(o => o.disconnect());
   }, []);
+
+  // Escape closes the menu
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onKey = (e) => { if (e.key === "Escape") setMenuOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -77,7 +90,9 @@ export default function Navbar({ siteData }) {
         <button
           className={`nav-burger ${menuOpen ? "nav-burger--open" : ""}`}
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="menu"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="site-menu"
         >
           <span /><span /><span />
         </button>
@@ -87,6 +102,10 @@ export default function Navbar({ siteData }) {
         {menuOpen && (
           <motion.div
             className="fs-nav"
+            id="site-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
@@ -118,7 +137,7 @@ export default function Navbar({ siteData }) {
                   <a
                     href={item.href}
                     className={`fs-nav__link ${hoveredIndex === i ? "fs-nav__link--hovered" : ""} ${hoveredIndex !== null && hoveredIndex !== i ? "fs-nav__link--dimmed" : ""}`}
-                    onClick={() => handleNavClick(item.href)}
+                    onClick={(e) => { e.preventDefault(); handleNavClick(item.href); }}
                     onMouseEnter={() => setHoveredIndex(i)}
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
@@ -142,9 +161,11 @@ export default function Navbar({ siteData }) {
                   </a>
                 ))}
               </div>
-              <a href={siteData?.cvUrl || "#"} target="_blank" rel="noreferrer" className="fs-nav__cv">
-                download cv ↓
-              </a>
+              {siteData?.cvUrl && (
+                <a href={siteData.cvUrl} target="_blank" rel="noreferrer" className="fs-nav__cv">
+                  download cv ↓
+                </a>
+              )}
             </motion.div>
           </motion.div>
         )}
