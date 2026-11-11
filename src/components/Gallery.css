@@ -95,14 +95,16 @@
 
 /* Captions are hidden on filmstrip cards (still shown in lightbox + gallery) */
 /* Caption from Sanity, shown as a small quiet label on the card
-   (Lando-style "MIAMI GP, 2024"). The soft shadow keeps it readable
-   over any photo without adding a visible bar. */
+   (Lando-style "MIAMI GP, 2024"). The dark label matches the
+   "click to expand" hint, so it stays readable on light artwork too. */
 .gal-film-caption {
   position: absolute;
-  left: 14px;
+  left: 12px;
   bottom: 12px;
   margin: 0;
-  max-width: 65%;
+  max-width: 62%;
+  padding: 4px 8px;
+  background: rgba(13, 13, 13, 0.7);
   font-family: var(--font-mono, monospace);
   font-size: 10px;
   letter-spacing: 0.12em;
@@ -112,6 +114,11 @@
   pointer-events: none;
   z-index: 2;
 }
+
+/* On hover the "click to expand" hint takes over the bottom of the card,
+   so the caption steps aside (they would overlap on narrow cards) */
+.gal-film-caption { transition: opacity 0.25s ease; }
+.gal-film-card:hover .gal-film-caption { opacity: 0; }
 
 /* ─── Expand hint ─── */
 .gal-expand-hint {
