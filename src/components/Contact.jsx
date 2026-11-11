@@ -54,7 +54,7 @@ export default function Contact({ siteData }) {
         transition={{ duration: 0.9, ease: "easeOut" }}
       >
         <p className="label contact-eyebrow">— let's connect</p>
-        <h2 className="display contact-title">say hello.</h2>
+        <h2 className="display contact-title">say <span className="title-accent">hello</span>.</h2>
       </motion.div>
 
       <div className="section-inner">

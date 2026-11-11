@@ -41,7 +41,7 @@ export default function Cursor() {
       mouse.y = e.clientY;
       // e.target is free (no extra hit-testing like elementFromPoint)
       const el = e.target instanceof Element ? e.target : null;
-      if (el?.closest(".photo-film-card, .art-film-card, .photo-gallery-item, .art-gallery-item, .polaroid")) {
+      if (el?.closest(".gal-film-card, .gal-gallery-item, .polaroid")) {
         setType("zoom");
       } else if (el?.closest("button, a, [role='button'], input, textarea")) {
         setType("link");

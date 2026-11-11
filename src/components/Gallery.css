@@ -94,8 +94,23 @@
 }
 
 /* Captions are hidden on filmstrip cards (still shown in lightbox + gallery) */
+/* Caption from Sanity, shown as a small quiet label on the card
+   (Lando-style "MIAMI GP, 2024"). The soft shadow keeps it readable
+   over any photo without adding a visible bar. */
 .gal-film-caption {
-  display: none;
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  margin: 0;
+  max-width: 65%;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+  z-index: 2;
 }
 
 /* ─── Expand hint ─── */

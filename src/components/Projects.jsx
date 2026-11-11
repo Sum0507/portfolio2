@@ -117,7 +117,7 @@ export default function Projects({ projects = [] }) {
         transition={{ duration: 0.9, ease: "easeOut" }}
       >
         <p className="label proj-eyebrow">— cse stuff</p>
-        <h2 className="display proj-title">things i built.</h2>
+        <h2 className="display proj-title">things i <span className="title-accent">built</span>.</h2>
       </motion.div>
 
       <div className="section-inner">
