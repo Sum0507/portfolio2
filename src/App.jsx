@@ -13,6 +13,7 @@ import BackToTop from "./components/BackToTop";
 import Currently from "./components/Currently";
 import ThreadLine from "./components/ThreadLine";
 import DoodleDivider from "./components/Doodledivider";
+import LineMorph from "./components/LineMorph";
 
 // (sanityFetch retries failed requests a couple of times by itself.)
 // Used if Sanity can't be reached, so visitors still see who this is
@@ -44,7 +45,8 @@ function Home({ siteData, photos, artworks, projects, research, loading, extrasR
       <div className="page-content">
         <Navbar siteData={siteData} />
         <Hero siteData={siteData} />
-        <DoodleDivider variant="wave" />
+        {/* engineer → artist → photographer, drawn as one line */}
+        <LineMorph />
         <Skills siteData={siteData} />
         <DoodleDivider variant="loop" flip />
 
