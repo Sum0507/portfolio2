@@ -1,0 +1,48 @@
+/* ── Line morph — laptop → paintbrush → camera, between hero and skills ──
+   Same thin hand-drawn line as the doodle dividers, a little brighter so
+   the drawings read. */
+.line-morph {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 24px 0 8px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.line-morph svg {
+  display: block;
+  width: 100%;
+  height: clamp(170px, 19vw, 260px);
+}
+
+.line-morph__line {
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.line-morph__roles {
+  margin: 10px 0 0;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.line-morph__roles .is-active {
+  color: var(--accent-y);
+  transition: color 0.3s ease;
+}
+
+.line-morph__dot { color: rgba(255, 255, 255, 0.2); }
+
+/* Phones: the drawing is scaled down, so the line is thicker to still
+   read as a clear stroke (same as the doodle dividers) */
+@media (max-width: 768px) {
+  .line-morph svg { height: 190px; }
+  .line-morph__line { stroke-width: 3.2; }
+}
